@@ -3,7 +3,7 @@ import * as svg from '../utils/svg'
 import { Data } from '../data/data'
 import Easer from '../utils/easer'
 import Component from './component'
-import { DynamicSVG } from '../dynamic-svg'
+import { DVG } from '../dvg'
 
 interface Style {
   keys: Array<string>
@@ -64,7 +64,7 @@ export default class StyleComponent extends Component {
     }
   }
 
-  apply(data: Data, dynSVG: DynamicSVG) {
+  apply(data: Data, dynSVG: DVG) {
     const svgElem = this.element as SVGGraphicsElement
     for (let style of StyleComponent.styles) {
       const key = parse.firstObjectKey(this.opts, style.keys)

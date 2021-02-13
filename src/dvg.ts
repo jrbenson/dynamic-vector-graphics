@@ -5,18 +5,18 @@ import StyleComponent from './components/style'
 import { Data } from './data/data'
 import * as parse from './utils/parse'
 
-interface DynamicSVGOptions {
-  svg: string,
-  clean: string,
-  dynamics: string,
-} 
+interface DVGOptions {
+  svg: string
+  clean: string
+  dynamics: string
+}
 
 /**
  * The main class that controls the initialization and lifecycle of making the SVG
  * dynamic and responding to message events from the VA Data-driven Content framework.
  */
-export class DynamicSVG{
-  opts: DynamicSVGOptions
+export class DVG {
+  opts: DVGOptions
   data: Data = new Data('') // DataFrame for data response
   refs: Map<string, Element> = new Map()
 
@@ -29,8 +29,7 @@ export class DynamicSVG{
    * perform all parsing and precomputation steps.
    * @param element The root DOM element to use for placement of SVG.
    */
-  constructor(element: Element, opts: Partial<DynamicSVGOptions>) {
-
+  constructor(element: Element, opts: Partial<DVGOptions>) {
     this.element = element
 
     this.opts = {
@@ -47,10 +46,9 @@ export class DynamicSVG{
    * Handle initialiation of page based on URL options.
    */
   private init() {
-    
     const htmlElement = this.element as HTMLElement
     htmlElement.style.opacity = '0'
-  
+
     fetch(this.opts.svg.toString(), { method: 'GET' })
       .then((response) => response.text())
       .then((text) => {
@@ -67,9 +65,9 @@ export class DynamicSVG{
 
           svg.append(group)
 
-          this.refs = parse.elementsByName( svg )
+          this.refs = parse.elementsByName(svg)
 
-          this.dynamics = DynamicSVG.getDynamics(group)
+          this.dynamics = DVG.getDynamics(group)
           //this.instanceSVG = group.innerHTML
         }
         this.initComplete = true
@@ -140,9 +138,9 @@ export class DynamicSVG{
    * @param data Data object to apply
    */
   udpate(data: Data): void {
-    console.log( data ) 
+    console.log(data)
     this.data = data
-    this.data = parse.dataStats( this.data )
+    this.data = parse.dataStats(this.data)
     this.apply()
   }
 }

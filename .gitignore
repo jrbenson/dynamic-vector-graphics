@@ -4,7 +4,7 @@ Thumbs.db
 
 # Ignore built ts files
 dist/**/*
-!dist/dynsvg.min.js
+!dist/dvg.min.js
 
 tests/**/*
 !tests/*

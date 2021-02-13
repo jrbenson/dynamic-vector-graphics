@@ -3,7 +3,7 @@ import * as svg from '../utils/svg'
 import { Data } from '../data/data'
 import Easer from '../utils/easer'
 import Component from './component'
-import { DynamicSVG } from '../dynamic-svg'
+import { DVG } from '../dvg'
 
 interface Transform {
   keys: Array<string>
@@ -156,7 +156,7 @@ export default class TransformComponent extends Component {
     return svg.getAbsoluteOrigin(this.element as SVGGraphicsElement, relOrigin)
   }
 
-  apply(data: Data, dynSVG: DynamicSVG) {
+  apply(data: Data, dynSVG: DVG) {
     const svgElem = this.element as SVGGraphicsElement
 
     const gkey = parse.firstObjectKey(this.opts, ['guide', 'g'])

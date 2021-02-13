@@ -1,7 +1,7 @@
 import * as parse from '../utils/parse'
 import { Data } from '../data/data'
 import Component from './component'
-import { DynamicSVG } from '../dynamic-svg'
+import { DVG } from '../dvg'
 
 /**
  * The text component replaces mustache style double brace tags with a value from the data.
@@ -59,7 +59,7 @@ export default class TextComponent extends Component {
     return elems.map((e) => new TextComponent(e))
   }
 
-  apply(data: Data, dynSVG: DynamicSVG) {
+  apply(data: Data, dynSVG: DVG) {
     if (this.template) {
       this.element.textContent = this.template.replace(
         parse.RE_DOUBLEBRACE,

@@ -10,8 +10,8 @@ export default [
     input: 'src/index.ts',
     output: [
       {
-        file: 'dist/dynsvg.min.js',
-        name: 'dynsvg',
+        file: 'dist/dvg.min.js',
+        name: 'dvg',
         format: 'iife',
       },
       {

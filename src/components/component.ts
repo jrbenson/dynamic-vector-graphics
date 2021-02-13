@@ -1,6 +1,6 @@
 import * as parse from '../utils/parse'
 import { Data } from '../data/data'
-import { DynamicSVG } from '../dynamic-svg'
+import { DVG } from '../dvg'
 
 /**
  * Base class for components, which are called during update to apply data to the SVG.
@@ -31,7 +31,7 @@ export default class Component {
    * Override with static method for selecting viable elements for this dynamic from SVG.
    * @param {DataFrame} data The root SVG element to start the search from.
    */
-  apply(data: Data, state: DynamicSVG ) {}
+  apply(data: Data, state: DVG ) {}
 }
 
 
