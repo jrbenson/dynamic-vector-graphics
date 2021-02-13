@@ -1,0 +1,13 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist/**/*
+!dist/dynsvg.min.js
+
+tests/**/*
+!tests/*
+
+# Dependency directory
+node_modules

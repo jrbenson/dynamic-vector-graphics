@@ -1,0 +1,35 @@
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
+import typescript from 'rollup-plugin-typescript2'
+import del from 'rollup-plugin-delete'
+import copy from 'rollup-plugin-copy'
+
+export default [
+  {
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'dist/dynsvg.min.js',
+        name: 'dynsvg',
+        format: 'iife',
+      },
+      {
+        file: 'dist/index.es.js',
+        format: 'es',
+      },
+      {
+        file: 'dist/index.js',
+        format: 'cjs',
+      },
+    ],
+    plugins: [
+      del({ runOnce: true, targets: 'dist/**/*' }),
+      copy({targets: [{ src: ['src/*', '!**/*.ts'], dest: 'dist' }]}),
+      typescript(),
+      nodeResolve(),
+      commonjs(),
+      terser(),
+    ],
+  },
+]

@@ -1,0 +1,17 @@
+<svg width="300" height="150" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="150" fill="#E5E5E5"/>
+<g id="transform-rotate">
+<rect width="300" height="150" fill="#EEEEEE"/>
+<circle id="Ellipse 4" cx="75" cy="75" r="25" fill="black"/>
+<path id="Subtract" fill-rule="evenodd" clip-rule="evenodd" d="M150 100C163.807 100 175 88.8071 175 75C175 61.1929 163.807 50 150 50V100Z" fill="black"/>
+<rect id="{{r:#0,o:0.5;1}}" x="72" y="49" width="6" height="27" fill="#0478CE" stroke="#EEEEEE" stroke-width="2"/>
+<circle id="Ellipse 1" cx="75" cy="75" r="5" fill="#EEEEEE"/>
+<rect id="{{r:#0,rr:0.5,o:0.5;1}}" x="147" y="49" width="6" height="27" fill="#0478CE" stroke="#EEEEEE" stroke-width="2"/>
+<circle id="Ellipse 2" cx="150" cy="75" r="5" fill="#EEEEEE"/>
+<g id="Group 1">
+<path id="Intersect" fill-rule="evenodd" clip-rule="evenodd" d="M243.92 92.4767C253.683 82.7136 253.683 66.8844 243.92 57.1213L226.243 74.799L243.92 92.4767Z" fill="black"/>
+<rect id="{{r:#0,rr:0.25,o:0.5;1}}" x="242.506" y="54.2929" width="6" height="27" transform="rotate(45 242.506 54.2929)" fill="#0478CE" stroke="#EEEEEE" stroke-width="2"/>
+<circle id="Ellipse 3" cx="226.243" cy="73.6274" r="5" transform="rotate(45 226.243 73.6274)" fill="#EEEEEE"/>
+</g>
+</g>
+</svg>
