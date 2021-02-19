@@ -6,8 +6,7 @@ Thumbs.db
 dist/**/*
 !dist/dvg.min.js
 
-tests/**/*
-!tests/*
+tests/svg
 
 # Dependency directory
 node_modules

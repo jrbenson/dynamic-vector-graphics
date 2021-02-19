@@ -40,7 +40,6 @@ export interface Formatter {
 
 export interface SourceFormat {
   name?: string
-  type?: string
   precision?: number
   width?: number
 }
@@ -50,131 +49,70 @@ interface FormatterOptions extends Intl.NumberFormatOptions {
   notation?: string
 }
 
-export function parseFormat(format: SourceFormat) {
-  if (format.name !== undefined) {
-    if (format.type === 'number') {
-      let format_opts: FormatterOptions = {
-        maximumFractionDigits: format.precision,
-        minimumFractionDigits: format.precision,
-      }
-      let compact_format_opts: FormatterOptions = {
-        maximumFractionDigits: format.precision,
-        minimumFractionDigits: format.precision,
+export const defaultFormatter: Formatter = {
+  format: (value: number | string | Date) => {
+    if (typeof value === 'number') {
+      return new Intl.NumberFormat(navigator.language).format(value)
+    }
+    return '' + value
+  },
+  compactFormat: function (value: number | string | Date) {
+    if (typeof value === 'number') {
+      return new Intl.NumberFormat(navigator.language, {
         notation: 'compact',
         maximumSignificantDigits: 3,
-      }
+      }).format(value)
+    }
+    return '' + value
+  },
+}
 
-      for (let basic in BASIC_FORMATS) {
-        if (format.name === basic) {
-          format.name = BASIC_FORMATS[basic]
-        }
-      }
+export function parseFormat(format: SourceFormat) {
+  if (format.name !== undefined) {
+    let format_opts: FormatterOptions = {
+      maximumFractionDigits: format.precision,
+      minimumFractionDigits: format.precision,
+    }
 
-      if (format.name.startsWith('NLMNI')) {
-        const prefix = format.name.replace('NLMNI', '')
-        return {
-          format: (value: number | string | Date) => {
-            if (typeof value === 'number') {
-              return prefix + new Intl.NumberFormat(navigator.language, format_opts).format(value)
-            }
-          },
-          compactFormat: (value: number | string | Date) => {
-            if (typeof value === 'number') {
-              return prefix + new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
-            }
-          },
-        }
-      } else if (format.name.startsWith('TIME')) {
-        return {
-          format: (value: number | string | Date) => {
-            if (typeof value === 'number') {
-              const parts = timeFromSeconds(value)
-              return (
-                ('' + parts.h).padStart(2, '0') +
-                ':' +
-                ('' + parts.m).padStart(2, '0') +
-                ':' +
-                ('' + parts.s).padStart(2, '0')
-              )
-            }
-            return FORMAT_FAIL_OUTPUT
-          },
-          compactFormat: function (value: number | string | Date) {
-            return this.format(value)
-          },
-        }
-      } else if (format.name.startsWith('HOUR')) {
-        return {
-          format: (value: number | string | Date) => {
-            if (typeof value === 'number') {
-              const hours = Math.floor(value / (60 * 60))
-              return new Intl.NumberFormat(navigator.language).format(hours)
-            }
-            return FORMAT_FAIL_OUTPUT
-          },
-          compactFormat: function (value: number | string | Date) {
-            return this.format(value)
-          },
-        }
-      } else if (format.name.startsWith('HHMM')) {
-        return {
-          format: (value: number | string | Date) => {
-            if (typeof value === 'number') {
-              const parts = timeFromSeconds(value)
-              return ('' + parts.h).padStart(2, '0') + ':' + ('' + parts.m).padStart(2, '0')
-            }
-            return FORMAT_FAIL_OUTPUT
-          },
-          compactFormat: function (value: number | string | Date) {
-            return this.format(value)
-          },
-        }
-      } else if (format.name.startsWith('MMSS')) {
-        return {
-          format: (value: number | string | Date) => {
-            if (typeof value === 'number') {
-              const secs = Math.round(value)
-              const minutes = Math.floor(secs / 60)
-              const seconds = Math.ceil((secs % (60 * 60)) % 60)
-              return ('' + minutes).padStart(2, '0') + ':' + ('' + seconds).padStart(2, '0')
-            }
-            return FORMAT_FAIL_OUTPUT
-          },
-          compactFormat: function (value: number | string | Date) {
-            return this.format(value)
-          },
-        }
-      } else if (format.name.startsWith('NLMNL')) {
-        format_opts.style = 'currency'
-        format_opts.currency = format.name.replace('NLMNL', '')
-      } else if (format.name.startsWith('PERCENT')) {
-        format_opts.style = 'percent'
-      } else if (format.name.startsWith('F')) {
-        format_opts.useGrouping = false
-      } else if (format.name.startsWith('BEST')) {
-        delete format_opts.maximumFractionDigits
-        format_opts.maximumSignificantDigits = format.width
-        compact_format_opts.maximumSignificantDigits = 3
+    let compact_format_opts: FormatterOptions = {
+      maximumFractionDigits: format.precision,
+      minimumFractionDigits: format.precision,
+      notation: 'compact',
+      maximumSignificantDigits: 3,
+    }
+
+    for (let basic in BASIC_FORMATS) {
+      if (format.name === basic) {
+        format.name = BASIC_FORMATS[basic]
       }
+    }
+
+    if (format.name.startsWith('NLMNI')) {
+      const prefix = format.name.replace('NLMNI', '')
       return {
         format: (value: number | string | Date) => {
           if (typeof value === 'number') {
-            return new Intl.NumberFormat(navigator.language, format_opts).format(value)
+            return prefix + new Intl.NumberFormat(navigator.language, format_opts).format(value)
           }
-          return FORMAT_FAIL_OUTPUT
         },
-        compactFormat: function (value: number | string | Date) {
+        compactFormat: (value: number | string | Date) => {
           if (typeof value === 'number') {
-            return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+            return prefix + new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
           }
-          return FORMAT_FAIL_OUTPUT
         },
       }
-    } else if (format.type === 'date') {
+    } else if (format.name.startsWith('TIME')) {
       return {
         format: (value: number | string | Date) => {
-          if (typeof value === 'string') {
-            return value
+          if (typeof value === 'number') {
+            const parts = timeFromSeconds(value)
+            return (
+              ('' + parts.h).padStart(2, '0') +
+              ':' +
+              ('' + parts.m).padStart(2, '0') +
+              ':' +
+              ('' + parts.s).padStart(2, '0')
+            )
           }
           return FORMAT_FAIL_OUTPUT
         },
@@ -182,6 +120,72 @@ export function parseFormat(format: SourceFormat) {
           return this.format(value)
         },
       }
+    } else if (format.name.startsWith('HOUR')) {
+      return {
+        format: (value: number | string | Date) => {
+          if (typeof value === 'number') {
+            const hours = Math.floor(value / (60 * 60))
+            return new Intl.NumberFormat(navigator.language).format(hours)
+          }
+          return FORMAT_FAIL_OUTPUT
+        },
+        compactFormat: function (value: number | string | Date) {
+          return this.format(value)
+        },
+      }
+    } else if (format.name.startsWith('HHMM')) {
+      return {
+        format: (value: number | string | Date) => {
+          if (typeof value === 'number') {
+            const parts = timeFromSeconds(value)
+            return ('' + parts.h).padStart(2, '0') + ':' + ('' + parts.m).padStart(2, '0')
+          }
+          return FORMAT_FAIL_OUTPUT
+        },
+        compactFormat: function (value: number | string | Date) {
+          return this.format(value)
+        },
+      }
+    } else if (format.name.startsWith('MMSS')) {
+      return {
+        format: (value: number | string | Date) => {
+          if (typeof value === 'number') {
+            const secs = Math.round(value)
+            const minutes = Math.floor(secs / 60)
+            const seconds = Math.ceil((secs % (60 * 60)) % 60)
+            return ('' + minutes).padStart(2, '0') + ':' + ('' + seconds).padStart(2, '0')
+          }
+          return FORMAT_FAIL_OUTPUT
+        },
+        compactFormat: function (value: number | string | Date) {
+          return this.format(value)
+        },
+      }
+    } else if (format.name.startsWith('NLMNL')) {
+      format_opts.style = 'currency'
+      format_opts.currency = format.name.replace('NLMNL', '')
+    } else if (format.name.startsWith('PERCENT')) {
+      format_opts.style = 'percent'
+    } else if (format.name.startsWith('F')) {
+      format_opts.useGrouping = false
+    } else if (format.name.startsWith('BEST')) {
+      delete format_opts.maximumFractionDigits
+      format_opts.maximumSignificantDigits = format.width
+      compact_format_opts.maximumSignificantDigits = 3
+    }
+    return {
+      format: (value: number | string | Date) => {
+        if (typeof value === 'number') {
+          return new Intl.NumberFormat(navigator.language, format_opts).format(value)
+        }
+        return FORMAT_FAIL_OUTPUT
+      },
+      compactFormat: function (value: number | string | Date) {
+        if (typeof value === 'number') {
+          return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+        }
+        return FORMAT_FAIL_OUTPUT
+      },
     }
   }
 

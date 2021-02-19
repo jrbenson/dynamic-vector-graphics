@@ -2,8 +2,10 @@ import Component from './components/component'
 import TextComponent from './components/text'
 import TransformComponent from './components/transform'
 import StyleComponent from './components/style'
-import { Data } from './data/data'
+import Data from './data/data'
+import { SourceData } from './data/data'
 import * as parse from './utils/parse'
+import { cleanSVG } from './utils/svg'
 
 interface DVGOptions {
   svg: string
@@ -46,38 +48,39 @@ export class DVG {
    * Handle initialiation of page based on URL options.
    */
   private init() {
-    const htmlElement = this.element as HTMLElement
-    htmlElement.style.opacity = '0'
+    if (this.element.tagName.toLowerCase() === 'svg') {
+      this.initSVG(this.element as SVGSVGElement)
+    } else {
+      ;(this.element as HTMLElement).style.opacity = '0'
+      fetch(this.opts.svg.toString(), { method: 'GET' })
+        .then((response) => response.text())
+        .then((text) => {
+          const htmlElement = this.element as HTMLElement
+          htmlElement.innerHTML = text
+          const svg = htmlElement.querySelector('svg')
+          if (svg) {
+            this.initSVG(svg)
+          }
+          htmlElement.style.transition = 'opacity 0.5s ease 1s'
+          htmlElement.style.opacity = '1'
+        })
+        .catch((error) => console.error('Error: ', error))
+    }
+  }
 
-    fetch(this.opts.svg.toString(), { method: 'GET' })
-      .then((response) => response.text())
-      .then((text) => {
-        const htmlElement = this.element as HTMLElement
-        htmlElement.innerHTML = text
-        const svg = htmlElement.querySelector('svg')
-        if (svg) {
-          cleanSVG(svg, this.opts.clean.toString().split(','))
+  private initSVG(svg: SVGSVGElement) {
+    cleanSVG(svg, this.opts.clean.toString().split(','))
 
-          const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-          group.classList.add('__instance__')
-          group.id = '__instance_0001__'
-          group.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
+    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    group.classList.add('__instance__')
+    group.id = '__instance_0001__'
+    group.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
+    svg.append(group)
 
-          svg.append(group)
+    this.refs = parse.elementsByName(svg)
+    this.dynamics = DVG.getDynamics(group)
 
-          this.refs = parse.elementsByName(svg)
-
-          this.dynamics = DVG.getDynamics(group)
-          //this.instanceSVG = group.innerHTML
-        }
-        this.initComplete = true
-        htmlElement.style.transition = 'opacity 0.5s ease 1s'
-        htmlElement.style.opacity = '1'
-      })
-      .catch((error) => console.error('Error: ', error))
-
-    // ddc.setOnDataReceivedCallback(this.onDataReceived.bind(this))
-    // ddc.setupResizeListener(this.draw.bind(this))
+    this.initComplete = true
   }
 
   /**
@@ -137,34 +140,8 @@ export class DVG {
    * Callback to handle data update from VA DDC.
    * @param data Data object to apply
    */
-  udpate(data: Data): void {
-    console.log(data)
-    this.data = data
-    this.data = parse.dataStats(this.data)
+  update(data: SourceData): void {
+    this.data = new Data( data )
     this.apply()
-  }
-}
-
-/**
- * Performs cleaning tasks on SVG to allow for better dynamic behavior.
- *
- * @param svg SVG element to perform cleaning on.
- * @param methods Values: all | text
- */
-export function cleanSVG(svg: Element, methods: string[] = ['all']) {
-  if (methods.includes('all') || methods.includes('text')) {
-    svg.querySelectorAll('tspan').forEach(function (elem) {
-      if (elem.parentElement && elem.parentElement.hasAttribute('x')) {
-        elem.removeAttribute('x')
-      }
-      if (elem.parentElement && elem.parentElement.hasAttribute('y')) {
-        elem.removeAttribute('y')
-      }
-    })
-  }
-  if (methods.includes('all') || methods.includes('decode')) {
-    svg.querySelectorAll('*[id]').forEach(function (elem) {
-      elem.id = parse.decodeIllustrator(elem.id)
-    })
   }
 }

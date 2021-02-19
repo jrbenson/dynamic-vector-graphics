@@ -1,4 +1,5 @@
-import { Data, Column, ColumnType } from '../data/data'
+import Data from '../data/data'
+import { Column, ColumnType } from "../data/column"
 
 export const RE_DOUBLEBRACE = /{{([^}]+)}}/g
 export const RE_UNDERSCOREUNICODE = /_x([0-9A-Za-z]+)_/g

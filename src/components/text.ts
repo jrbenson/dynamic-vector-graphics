@@ -1,5 +1,5 @@
 import * as parse from '../utils/parse'
-import { Data } from '../data/data'
+import Data from '../data/data'
 import Component from './component'
 import { DVG } from '../dvg'
 

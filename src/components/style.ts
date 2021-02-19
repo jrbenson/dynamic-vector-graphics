@@ -1,6 +1,6 @@
 import * as parse from '../utils/parse'
 import * as svg from '../utils/svg'
-import { Data } from '../data/data'
+import Data from '../data/data'
 import Easer from '../utils/easer'
 import Component from './component'
 import { DVG } from '../dvg'

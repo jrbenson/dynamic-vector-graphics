@@ -16,6 +16,14 @@
       "group": "build",
       "label": "watch",
       "detail": "build package in watch mode"
+    },
+    {
+      "type": "npm",
+      "script": "test",
+      "problemMatcher": ["$tsc"],
+      "group": "build",
+      "label": "test",
+      "detail": "run tests"
     }
   ]
 }

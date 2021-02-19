@@ -1,117 +1,17 @@
-import { parseFormat, Formatter, SourceFormat } from './formats'
+import { parseFormat, defaultFormatter, Formatter, SourceFormat } from './formats'
+import { Column, ColumnType } from './column'
+import { Row, Value } from './row'
+import { dataStats } from '../utils/parse'
 
-type Value = string | number | Date | undefined
+import * as Papa from 'papaparse'
 
-export enum ColumnType {
-  String,
-  Number,
-  Date,
-}
-
-interface Stats {
-  min: number
-  max: number
-  sum: number
-  avg: number
-  manual?: boolean
-}
-
-export interface Column {
-  name: string
-  type: ColumnType
-  format?: Formatter
-  stats?: Stats
-}
-
-export class Row {
-  private _values: Array<Value> = []
-  private _cols_map: Map<string, number> = new Map()
-
-  constructor(data: Array<Value>, columns: Array<string>) {
-    for (let i = 0; i < columns.length; i += 1) {
-      if (i < data.length) {
-        this._values.push(data[i])
-        this._cols_map.set(columns[i], i)
-      }
-    }
-  }
-
-  get(column: string | number) {
-    if (typeof column === 'string') {
-      if (this._cols_map.has(column)) {
-        const index = this._cols_map.get(column)
-        if (index != undefined) {
-          return this._values[index]
-        }
-      }
-    } else {
-      return this._values[column]
-    }
-  }
-
-  set(column: string | number, value: Value) {
-    if (typeof column === 'string') {
-      if (this._cols_map.has(column)) {
-        const index = this._cols_map.get(column)
-        if (index != undefined) {
-          this._values[index] = value
-        }
-      }
-    } else {
-      this._values[column] = value
-    }
-  }
-
-  delete(column: string | number) {
-    if (typeof column === 'string') {
-      if (this._cols_map.has(column)) {
-        const index = this._cols_map.get(column)
-        if (index != undefined) {
-          this._values.splice(index, 1)
-          for (let [col_name, col_index] of this._cols_map) {
-            if (col_index > index) {
-              this._cols_map.set(col_name, col_index - 1)
-            }
-          }
-          this._cols_map.delete(column)
-        }
-      }
-    } else {
-      if (column >= 0 && column < this._values.length) {
-        this._values.splice(column, 1)
-        const key = Array.from(this._cols_map.keys())[column]
-        for (let [col_name, col_index] of this._cols_map) {
-          if (col_index > column) {
-            this._cols_map.set(col_name, col_index - 1)
-          }
-        }
-        this._cols_map.delete(key)
-      }
-    }
-  }
-
-  renameColumn(column: string | number, name: string) {
-    if (typeof column === 'string') {
-      const index = this._cols_map.get(column)
-      if (index !== undefined) {
-        this._cols_map.set(name, index)
-        this._cols_map.delete(column)
-      }
-    } else {
-      const key = Array.from(this._cols_map.keys())[column]
-      this._cols_map.set(name, column)
-      this._cols_map.delete(key)
-    }
-  }
-}
-
-interface SourceData {
+export interface SourceData {
   values: Array<Array<Value>>
   columns: Array<string>
   formats?: Array<SourceFormat>
 }
 
-export class Data {
+export default class Data {
   private _rows: Array<Row> = []
   private _cols: Array<Column> = []
   private _cols_map: Map<string, number> = new Map()
@@ -135,16 +35,17 @@ export class Data {
       }))
       source.columns.forEach((c, i) => this._cols_map.set(c, i))
 
-      if( source.formats !== undefined ) {
-        for ( let i = 0; i < source.columns.length; i += 1 ) {
-          if( i < source.formats.length ) {
+      if (source.formats !== undefined) {
+        for (let i = 0; i < source.columns.length; i += 1) {
+          if (i < source.formats.length) {
             const col = source.columns[i]
-            this.setColumnFormat( col, parseFormat( source.formats[i] ))
+            this.setColumnFormat(col, parseFormat(source.formats[i]))
           }
         }
       }
 
       this.calcColumnStats()
+      dataStats(this)
     }
   }
 
@@ -219,17 +120,20 @@ export class Data {
     const col = this.getColumn(column)
     if (col) {
       const val = this.get(row, col.name)
+      console.log( val )
       if (val !== undefined) {
-        console.log('Format', col.format)
         if (col.format) {
-          console.log(val, compact, col.format.format(val), col.format.compactFormat(val))
           if (compact) {
             return col.format.compactFormat(val) as string
           } else {
             return col.format.format(val) as string
           }
         } else {
-          return val.toString()
+          if (compact) {
+            return defaultFormatter.compactFormat(val) as string
+          } else {
+            return defaultFormatter.format(val) as string
+          }
         }
       }
     }
@@ -353,7 +257,6 @@ export class Data {
       }
       this._cols_map.delete(col.name)
       this._cols = this._cols.filter((c) => c.name !== col.name)
-      //console.log( column, this._cols )
     }
   }
 

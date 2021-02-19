@@ -1,2 +1,2 @@
 export { DVG } from './dvg'
-export { Data } from './data/data'
+export { default as Data } from './data/data'

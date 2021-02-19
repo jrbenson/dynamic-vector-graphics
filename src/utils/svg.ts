@@ -1,3 +1,5 @@
+import { decodeIllustrator } from './parse'
+
 export function getAbsoluteOrigin(element: SVGGraphicsElement, relativeOrigin: { x: number; y: number }) {
   const bbox = element.getBBox()
   return { x: bbox.x + bbox.width * relativeOrigin.x, y: bbox.y + bbox.height * relativeOrigin.y }
@@ -48,4 +50,28 @@ export function getBaseTransforms(element: SVGGraphicsElement) {
     }
   }
   return base_transforms
+}
+
+/**
+ * Performs cleaning tasks on SVG to allow for better dynamic behavior.
+ *
+ * @param svg SVG element to perform cleaning on.
+ * @param methods Values: all | text
+ */
+export function cleanSVG(svg: Element, methods: string[] = ['all']) {
+  if (methods.includes('all') || methods.includes('text')) {
+    svg.querySelectorAll('tspan').forEach(function (elem) {
+      if (elem.parentElement && elem.parentElement.hasAttribute('x')) {
+        elem.removeAttribute('x')
+      }
+      if (elem.parentElement && elem.parentElement.hasAttribute('y')) {
+        elem.removeAttribute('y')
+      }
+    })
+  }
+  if (methods.includes('all') || methods.includes('decode')) {
+    svg.querySelectorAll('*[id]').forEach(function (elem) {
+      elem.id = decodeIllustrator(elem.id)
+    })
+  }
 }

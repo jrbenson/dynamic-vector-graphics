@@ -1,5 +1,4 @@
-import { SAMPLE_MESSAGE_1 } from '../src/samples'
-import * as parse from '../src/parse'
+import * as parse from '../../src/utils/parse'
 
 test('Range Parsing', () => {
   let range
