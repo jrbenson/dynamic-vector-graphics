@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="768px" viewBox="0 0 512 768" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>test</title>
+    <g id="test" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <text id="Text" font-family="OpenSans-Regular, Open Sans" font-size="14" font-weight="normal" fill="#3F3F3F">
+            <tspan x="24" y="196">{{#0|name}}: {{#0}}</tspan>
+            <tspan x="24" y="215">Compact {{#0|name}}: {{#0|c}}</tspan>
+        </text>
+        <rect id="{{sx:#0}}" fill="#33A3FF" x="24" y="238" width="459" height="6"></rect>
+        <rect id="{{--sx-:-#0-,--origin-:-1-;--0.5--}}" fill="#33A3FF" x="24" y="256" width="459" height="6"></rect>
+        <rect id="{{sx:#0,origin:0.5;0.5}}" fill="#33A3FF" x="24" y="274" width="459" height="6"></rect>
+        <rect id="{{g1}}" fill="#DDDDDD" x="24" y="292" width="459" height="6"></rect>
+        <rect id="{{positionX:#0,guide:g1}}" fill="#2886C6" x="21" y="292" width="6" height="6"></rect>
+        <text id="{{positionX:#0,guide:g1}}" font-family="OpenSans-Regular, Open Sans" font-size="10" font-weight="normal" fill="#323130">
+            <tspan x="5.69873047" y="309">{{#0|c}}</tspan>
+        </text>
+        <line x1="26.5" y1="362.5" x2="69.5" y2="319.5" id="{{gline}}" stroke="#DDDDDD" stroke-linecap="square"></line>
+        <path d="M87.7560638,318.934056 C96.9448473,318.934056 103.66956,331.604945 98.3650612,347.030376 C93.0605625,362.455806 111.57305,369.066705 117.110109,355.844907 C122.647167,342.62311 115.812388,318.934056 131.756064,318.934056" id="{{gpath}}" stroke="#DDDDDD"></path>
+        <path d="M177.283997,319.238026 C199.2551,319.238026 207,329.337429 207,342.376704 C207,355.415978 180.597504,368.481878 163.900946,358.989087 C147.204388,349.496297 155.312894,319.238026 177.283997,319.238026 Z" id="{{gloop}}" stroke="#DDDDDD"></path>
+        <polyline id="{{glines}}" stroke="#DDDDDD" points="237 362.179506 249.458224 326.009856 266.075938 350.781042 279.571223 319.179506"></polyline>
+        <path d="M296,358.994799 C312.69645,367.521405 305.74522,319 318.842327,319" id="{{gsingle}}" stroke="#DDDDDD"></path>
+        <rect id="{{position:#0,guide:gline}}" fill="#2886C6" x="24" y="359" width="6" height="6"></rect>
+        <rect id="{{position:#0,guide:gpath}}" fill="#2886C6" x="85" y="316" width="6" height="6"></rect>
+        <rect id="{{position:#0,guide:gloop}}" fill="#2886C6" x="174" y="316" width="6" height="6"></rect>
+        <rect id="{{position:#0,guide:glines}}" fill="#2886C6" x="234" y="357" width="6" height="6"></rect>
+        <rect id="{{position:#0,guide:gsingle}}" fill="#2886C6" x="293" y="356" width="6" height="6"></rect>
+        <circle id="Oval" stroke="#DDDDDD" cx="361" cy="201" r="21"></circle>
+        <circle id="Oval" fill="#323130" cx="361" cy="180" r="2"></circle>
+        <rect id="{{rotate:#0,origin:0.5;1}}" fill="#2886C6" x="360" y="180" width="2" height="21"></rect>
+        <path d="M421,180 C432.59798,180 442,189.40202 442,201 L442,201 L400,201 C400,189.40202 409.40202,180 421,180 Z" id="Combined-Shape" stroke="#DDDDDD"></path>
+        <circle id="Oval" fill="#323130" cx="400" cy="201" r="2"></circle>
+        <circle id="Oval" fill="#323130" cx="442" cy="201" r="2"></circle>
+        <rect id="{{rotate:#0,origin:0.5;1,rotateRatio:0.5}}" fill="#2886C6" transform="translate(410.500000, 201.000000) rotate(-90.000000) translate(-410.500000, -201.000000) " x="409.5" y="190.5" width="2" height="21"></rect>
+        <g id="Group-Rotated" transform="translate(468.000000, 201.000000) rotate(-270.000000) translate(-468.000000, -201.000000) translate(451.000000, 190.000000)">
+            <path d="M17,0 C22.7505572,0 27.9612564,2.31140657 31.7537214,6.05584331 L17,21 L2.1507576,6.1507576 C5.95101013,2.35050506 11.2010101,0 17,0 Z" id="Combined-Shape" stroke="#DDDDDD"></path>
+            <circle id="Oval" fill="#323130" cx="2" cy="6" r="2"></circle>
+            <circle id="Oval" fill="#323130" cx="32" cy="6" r="2"></circle>
+            <rect id="{{rotate:#0,origin:0.5;1,rr:0.25}}" fill="#2886C6" transform="translate(9.575379, 13.575379) rotate(-45.000000) translate(-9.575379, -13.575379) " x="8.5753788" y="3.0753788" width="2" height="21"></rect>
+        </g>
+        <path d="M367.232759,358.526662 C378.169603,362.001887 413.941891,358.802393 411.663137,342.446811 C409.384383,326.091228 392.16114,314.507144 382.211926,320.299186 C372.262712,326.091228 370.969027,345.538034 380.055325,348.100986 C389.141623,350.663939 402.642639,338.83372 396.071319,334.200086 C389.5,329.566453 385.676774,334.200086 385.676774,337.675311" id="{{gspiral}}" stroke="#DDDDDD"></path>
+        <g id="{{r:#0,s:#0,p:#0,guide:gspiral,origin:0.5;0.5}}" transform="translate(335.000000, 326.000000)" fill="#33A3FF">
+            <circle id="Oval" cx="32" cy="32" r="12"></circle>
+            <rect id="{{s:#0,origin:0.5;1}}" x="26" y="0" width="12" height="12"></rect>
+            <rect id="{{s:#0,origin:0;0.5}}" x="52" y="26" width="12" height="12"></rect>
+            <rect id="{{s:#0,origin:0.5;0}}" x="26" y="52" width="12" height="12"></rect>
+            <rect id="{{s:#0,origin:1;0.5}}" x="-2.27373675e-13" y="26" width="12" height="12"></rect>
+        </g>
+        <text id="Text" font-family="OpenSans-Regular, Open Sans" font-size="10" font-weight="normal" fill="#323130">
+            <tspan x="24" y="30">Department: {{Department}}</tspan>
+            <tspan x="24" y="44">Expenses: {{Expenses}}</tspan>
+            <tspan x="24" y="58">Expenses Compact: {{Expenses|c}}</tspan>
+            <tspan x="24" y="72">Revenue: {{Revenue}}</tspan>
+            <tspan x="24" y="86">Revenue Compact: {{Revenue|c}}</tspan>
+            <tspan x="24" y="100">Date: {{Date}}</tspan>
+            <tspan x="24" y="114"></tspan>
+            <tspan x="24" y="128">Measure 0 is {{#0|name}}: {{#0}}</tspan>
+            <tspan x="24" y="142">Category 0 is {{@0|name}}: {{@0}}</tspan>
+            <tspan x="24" y="156">Date 0 is {{$0|name}}: {{$0}}</tspan>
+        </text>
+        <polygon id="{{r:#0,origin:0.5;0.5}}" fill="#33A3FF" transform="translate(473.000000, 38.000000) rotate(-270.000000) translate(-473.000000, -38.000000) " points="473 33 479 43 467 43"></polygon>
+    </g>
+</svg>

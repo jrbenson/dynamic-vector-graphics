@@ -1,0 +1,64 @@
+<svg width="256" height="512" viewBox="0 0 256 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="figma">
+<text id="Text" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="0" y="12.6553">First measure is {{#0|name}}: {{#0}}&#10;</tspan><tspan x="0" y="28.6553">First category is {{@0|name}}: {{@0}}&#10;</tspan><tspan x="0" y="44.6553">First date is {{$0|name}}: {{$0}}</tspan></text>
+<text id="Text_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="0" y="65.6553">{{#1|name}}: {{#1}}&#10;</tspan><tspan x="0" y="81.6553">Compact {{#1|name}}: {{#1|c}}</tspan></text>
+<rect id="Rectangle" y="177" width="123" height="6" fill="#CCCCCC"/>
+<rect id="Rectangle_2" y="165" width="123" height="6" fill="#CCCCCC"/>
+<rect id="Rectangle_3" y="153" width="123" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0}}" y="153" width="123" height="6" fill="#7E7E7E"/>
+<g id="{{filter:Character=Value B}}">
+<text id="Text_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="0" y="329.655">Value B&#10;</tspan><tspan x="0" y="345.655">{{#0}}</tspan></text>
+<rect id="Rectangle_4" y="354" width="60" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0}}_2" y="354" width="60" height="6" fill="#7E7E7E"/>
+</g>
+<g id="{{f:1}}">
+<text id="Text_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="154" y="329.655">Second&#10;</tspan><tspan x="154" y="345.655">{{#0}}</tspan></text>
+<rect id="Rectangle_5" x="154" y="354" width="60" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0}}_3" x="154" y="354" width="60" height="6" fill="#7E7E7E"/>
+</g>
+<text id="{{filter:@0=Value B}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="77" y="329.655">Value B&#10;</tspan><tspan x="77" y="345.655">{{#0}}</tspan></text>
+<rect id="Rectangle_6" x="77" y="354" width="60" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0,filter:@0=Value B}}" x="77" y="354" width="60" height="6" fill="#7E7E7E"/>
+<rect id="{{  sx : #0 ,  origin   :    1 ; .5  }}" y="165" width="123" height="6" fill="#7E7E7E"/>
+<rect id="{{sx:#0,origin:0.5;0.5}}" y="177" width="123" height="6" fill="#7E7E7E"/>
+<path id="{{g1}}" d="M24 207H232" stroke="#CCCCCC" stroke-width="4"/>
+<path id="Vector" d="M24 204H232V210H24V204Z" fill="#D8D8D8" fill-opacity="0.01"/>
+<rect id="{{positionX:#0,guide:g1}}" x="21" y="204" width="6" height="6" fill="#7E7E7E"/>
+<text id="{{positionX:#0,guide:g1,align:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="5.19141" y="220.879">{{#0|c}}</tspan></text>
+<text id="{{align:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="21" y="198.879">{{#0|c,r:0}}</tspan></text>
+<text id="{{align:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="179.461" y="198.879">{{#0|c,r:1}}</tspan></text>
+<text id="{{a:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="100.036" y="198.879">{{#0|c,r:0.5}}</tspan></text>
+<path id="{{g2}}" d="M12.5 279.5L55.5 236.5" stroke="#CCCCCC" stroke-width="4" stroke-linecap="square"/>
+<path id="{{g3}}" d="M70 236V278L89 236V278" stroke="#CCCCCC" stroke-width="4"/>
+<path id="{{g4}}" d="M127 246C125 241 119.5 236 113 236C106.5 236 101 241.5 101.5 246C102 250.5 106 256.5 113 257C120 257.5 127 260.5 127 263.5C127 266.5 128.5 277.5 116.5 277C106.9 276.6 102.5 272.167 101.5 270" stroke="#CCCCCC" stroke-width="4"/>
+<path id="{{g5}}" d="M166 277C166.833 263.5 173.1 236.5 191.5 236.5C214.5 236.5 213.5 253.5 210.5 262.5C207.5 271.5 195 274.5 189 271C183 267.5 179.5 257 185.5 251C191.5 245 201 249 201.5 254.5C202 260 195.5 263 194 260.5" stroke="#CCCCCC" stroke-width="4"/>
+<rect id="{{position:#0,guide:g2}}" x="10" y="276" width="6" height="6" fill="#7E7E7E"/>
+<rect id="{{position:#0,guide:g3}}" x="67" y="233" width="6" height="6" fill="#7E7E7E"/>
+<rect id="{{position:#0,guide:g4}}" x="124" y="243" width="6" height="6" fill="#7E7E7E"/>
+<circle id="Oval" cx="29.5" cy="119.5" r="23.5" stroke="#CCCCCC" stroke-width="4"/>
+<circle id="Oval_2" cx="29" cy="96" r="4" fill="#CCCCCC"/>
+<circle id="Oval_3" cx="29" cy="120" r="4" fill="#7E7E7E"/>
+<path id="{{rotate:#0,origin:0.5;1}}" d="M29 96L31 120L27 120L29 96Z" fill="#7E7E7E"/>
+<path id="Combined Shape" d="M72.9776 119.591V121.091H74.4776V119.591H72.9776ZM118.512 119.591H117.012V121.091H118.512V119.591ZM119.512 119.591V121.091H121.012V119.591H119.512ZM71.9776 119.591H70.4776V121.091H71.9776V119.591ZM95.7447 95.3239C82.3424 95.3239 71.4776 106.189 71.4776 119.591H74.4776C74.4776 107.846 83.9992 98.3239 95.7447 98.3239V95.3239ZM120.012 119.591C120.012 106.189 109.147 95.3239 95.7447 95.3239V98.3239C107.49 98.3239 117.012 107.846 117.012 119.591H120.012ZM118.512 121.091H119.512V118.091H118.512V121.091ZM95.7447 97.3239C108.043 97.3239 118.012 107.293 118.012 119.591H121.012C121.012 105.636 109.699 94.3239 95.7447 94.3239V97.3239ZM73.4776 119.591C73.4776 107.293 83.4469 97.3239 95.7447 97.3239V94.3239C81.7901 94.3239 70.4776 105.636 70.4776 119.591H73.4776ZM71.9776 121.091H72.9776V118.091H71.9776V121.091Z" fill="#CCCCCC"/>
+<circle id="Oval_4" cx="73" cy="120" r="4" fill="#CCCCCC"/>
+<circle id="Oval_5" cx="96" cy="120" r="4" fill="#7E7E7E"/>
+<circle id="Oval_6" cx="137" cy="120" r="4" fill="#7E7E7E"/>
+<circle id="Oval_7" cx="119" cy="120" r="4" fill="#CCCCCC"/>
+<path id="{{rotate:#0,origin:1;0.5,rotateRatio:0.5}}" d="M72 120.333L96 118V122L72 120.333Z" fill="#7E7E7E"/>
+<g id="Group Rotated">
+<path id="Combined Shape_2" d="M152.513 103.492L151.453 102.432L150.392 103.492L151.453 104.553L152.513 103.492ZM152.617 135.586L151.549 134.532L150.495 135.6L151.563 136.654L152.617 135.586ZM153.328 136.289L152.274 137.356L153.342 138.41L154.396 137.343L153.328 136.289ZM153.221 102.785L154.281 101.724L153.221 100.664L152.16 101.724L153.221 102.785ZM160.682 119.591C160.682 112.89 157.964 106.821 153.574 102.432L151.453 104.553C155.303 108.403 157.682 113.718 157.682 119.591H160.682ZM153.684 136.64C158.009 132.259 160.682 126.236 160.682 119.591H157.682C157.682 125.415 155.343 130.69 151.549 134.532L153.684 136.64ZM154.382 135.221L153.67 134.519L151.563 136.654L152.274 137.356L154.382 135.221ZM158.682 119.591C158.682 125.689 156.233 131.212 152.261 135.235L154.396 137.343C158.899 132.781 161.682 126.51 161.682 119.591H158.682ZM152.16 103.846C156.191 107.877 158.682 113.442 158.682 119.591H161.682C161.682 112.614 158.852 106.295 154.281 101.724L152.16 103.846ZM153.574 104.553L154.281 103.846L152.16 101.724L151.453 102.432L153.574 104.553Z" fill="#CCCCCC"/>
+<circle id="Oval_8" cx="153.176" cy="102.829" r="3.81783" transform="rotate(90 153.176 102.829)" fill="#CCCCCC"/>
+<circle id="Oval_9" cx="152.54" cy="136.704" r="3.81783" transform="rotate(90 152.54 136.704)" fill="#CCCCCC"/>
+<path id="{{rotate:#0,origin:0;1,rr:0.25}}" d="M153 102.5L140 120L137 117L153 102.5Z" fill="#7E7E7E"/>
+</g>
+<g id="{{r:#0,s:#0,p:#0,g:g5,o:0.5;0.5}}">
+<circle id="Oval_10" cx="166" cy="277" r="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:0.5;1}}" x="160" y="245" width="12" height="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:0;0.5}}" x="186" y="271" width="12" height="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:0.5;0}}" x="160" y="297" width="12" height="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:1;0.5}}" x="134" y="271" width="12" height="12" fill="#7E7E7E"/>
+</g>
+<rect id="Rectangle 8" x="179" y="101" width="36" height="36" stroke="#CCCCCC" stroke-width="4"/>
+<rect id="{{a:#0}}" x="183" y="105" width="28" height="28" fill="#7E7E7E"/>
+</g>
+</svg>
