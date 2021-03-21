@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Vector Graphics Harness</title>
+    <script src="../dist/dvg.min.js"></script>
+    <style>
+      html {
+        font-size: 16px;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        padding: 2rem;
+      }
+      input,
+      textarea,
+      #result {
+        font-size: 1rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        border: solid 1px #888;
+        padding: 0.5rem;
+      }
+      label {
+        color: #888;
+      }
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="csv">CSV</label>
+    <textarea id="csv" rows="4">
+"Character","Number{{0..100|f:dollar}}"
+"Value",42</textarea
+    >
+    <label for="url">URL</label>
+    <input id="url" type="url" value="http://localhost:8888/examples/index.svg" />
+    <label for="result">Result</label>
+    <div id="result"></div>
+
+    <script>
+      document.getElementById('url').addEventListener('input', applyURL)
+      document.getElementById('csv').addEventListener('input', applyCSV)
+
+      applyURL()
+
+      var result = undefined
+
+      function applyURL() {
+        const url = document.getElementById('url').value
+        result = new dvg.DVG(document.getElementById('result'), { svg: url })
+        applyCSV()
+      }
+
+      function applyCSV() {
+        if (result !== undefined) {
+          const csv = document.getElementById('csv').value
+          result.update(csv)
+        }
+      }
+    </script>
+  </body>
+</html>
