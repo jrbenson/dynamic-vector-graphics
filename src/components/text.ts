@@ -1,5 +1,5 @@
 import * as parse from '../utils/parse'
-import Data from '../data/data'
+import { DataView } from '../data/data'
 import Component from './component'
 import { DVG } from '../dvg'
 
@@ -46,7 +46,7 @@ export default class TextComponent extends Component {
     }
   }
 
-  static getDynamics(svg: Element): Array<Component> {
+  static getComponents(svg: Element): Array<Component> {
     let elems: Array<Element> = []
     svg.querySelectorAll('text').forEach(function (text) {
       if (text.children.length) {
@@ -59,25 +59,40 @@ export default class TextComponent extends Component {
     return elems.map((e) => new TextComponent(e))
   }
 
-  apply(data: Data, dynSVG: DVG) {
+  apply(data: DataView, dynSVG: DVG) {
     if (this.template) {
       this.element.textContent = this.template.replace(
         parse.RE_DOUBLEBRACE,
         function (match: string) {
           const syntax = parse.syntax(match)
-          // const col_id = parse.columnIdentifier(syntax.name)
-          //let col
-          // if (col_id) {
-          //   const [type, index] = col_id
-          //   col = data.getColumn(index, type)
-          // } else {
-          //   col = data.getColumn(syntax.name)
-          // }
           const col = parse.columnFromData(syntax.name, data)
           if (col) {
             const nkey = parse.firstObjectKey(syntax.opts, ['name', 'n'])
+            const rkey = parse.firstObjectKey(syntax.opts, ['range', 'r'])
             if (nkey && syntax.opts[nkey]) {
               return col.name
+            } else if ( rkey ) {
+              let ratio = 1.0
+              if ( syntax.opts[rkey] !== undefined ) {
+                ratio = Number( syntax.opts[rkey] )
+                const format = data.getColumnFormat( col.name )
+                const min = data.min( col.name )
+                const max = data.max( col.name )
+                if ( min !== undefined && max !== undefined ) {
+                  const value = min + ratio * ( max - min )
+                  let str_value
+                  const ckey = parse.firstObjectKey(syntax.opts, ['compact', 'c'])
+                  if (ckey && syntax.opts[ckey]) {
+                    str_value = format.compactFormat( value )
+                  } else {
+                    str_value = format.format( value )
+                  }
+                  if ( str_value !== undefined ) {
+                    return str_value
+                  }
+                }
+              }
+              return '???'
             } else {
               const ckey = parse.firstObjectKey(syntax.opts, ['compact', 'c'])
               if (ckey && syntax.opts[ckey]) {

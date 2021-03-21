@@ -2,15 +2,15 @@ import Component from './components/component'
 import TextComponent from './components/text'
 import TransformComponent from './components/transform'
 import StyleComponent from './components/style'
-import Data from './data/data'
+import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
-import * as parse from './utils/parse'
 import { cleanSVG } from './utils/svg'
+import * as parse from './utils/parse'
 
 interface DVGOptions {
   svg: string
   clean: string
-  dynamics: string
+  types: string
 }
 
 /**
@@ -24,20 +24,24 @@ export class DVG {
 
   private element: Element
   private initComplete: boolean = false // Flag to help delay update execution
-  private dynamics: Component[] = []
+  private components: Component[] = []
 
   /**
    * Attach to the indicate element DOM element and fill it with the target SVG. Also
    * perform all parsing and precomputation steps.
    * @param element The root DOM element to use for placement of SVG.
    */
-  constructor(element: Element, opts: Partial<DVGOptions>) {
-    this.element = element
+  constructor(element?: Element, opts?: Partial<DVGOptions>) {
+    if (element !== undefined) {
+      this.element = element
+    } else {
+      this.element = document.body
+    }
 
     this.opts = {
       svg: 'index.svg',
       clean: 'all',
-      dynamics: 'all',
+      types: 'all',
     }
     this.opts = { ...this.opts, ...opts }
 
@@ -71,14 +75,13 @@ export class DVG {
   private initSVG(svg: SVGSVGElement) {
     cleanSVG(svg, this.opts.clean.toString().split(','))
 
-    const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-    group.classList.add('__instance__')
-    group.id = '__instance_0001__'
-    group.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
-    svg.append(group)
+    // Wrap everything in a group
+    // const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    // group.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
+    // svg.append(group)
 
     this.refs = parse.elementsByName(svg)
-    this.dynamics = DVG.getDynamics(group)
+    this.components = DVG.getComponents(svg)
 
     this.initComplete = true
   }
@@ -86,30 +89,41 @@ export class DVG {
   /**
    * Performs cleaning tasks on SVG to allow for better dynamic behavior.
    * @param svg SVG element to perform cleaning on.
-   * @param types Values: all | text
+   * @param types Values: all | text | transforms | styles
    */
-  static getDynamics(svg: Element, types: string[] | undefined = ['all']): Array<Component> {
-    let dynamics: Array<Component> = []
+  static getComponents(svg: Element, types: string[] | undefined = ['all']): Array<Component> {
+    let components: Array<Component> = []
     if (types.includes('all') || types.includes('text')) {
-      dynamics.push(...TextComponent.getDynamics(svg))
+      components.push(...TextComponent.getComponents(svg))
     }
     if (types.includes('all') || types.includes('transforms')) {
-      dynamics.push(...TransformComponent.getDynamics(svg))
+      components.push(...TransformComponent.getComponents(svg))
     }
     if (types.includes('all') || types.includes('styles')) {
-      dynamics.push(...StyleComponent.getDynamics(svg))
+      components.push(...StyleComponent.getComponents(svg))
     }
-    return dynamics
+    return components
   }
 
   /**
-   * Applies the current _data to all dynamics.
+   * Applies the current data to all dynamics.
    */
   private apply(): void {
     if (!this.initComplete) {
       window.setTimeout(this.apply.bind(this), 100)
     } else {
-      this.dynamics.forEach((d) => d.apply(this.data, this))
+      const full = this.data.fullView()
+      for (let comp of this.components) {
+        if (comp.filters.length <= 0) {
+          comp.apply(full, this)
+        } else {
+          let dv = this.data.fullView()
+          for (let filter of comp.filters) {
+            dv = dv.filteredView(filter)
+          }
+          comp.apply(dv, this)
+        }
+      }
     }
   }
 
@@ -121,27 +135,11 @@ export class DVG {
   }
 
   /**
-   * Callback to handle data update from VA DDC.
-   * @param message Message object from VA DDC data update.
-   */
-  // onDataReceived2(message: ddc.VAMessage): void {
-  //   //console.log(JSON.stringify(message))
-  //   this.message = message
-  //   this.resultName = this.message.resultName
-  //   this.data = Data.fromVA(this.message)
-
-  //   this.data = parse.dataStats( this.data )
-
-  //   this.apply()
-
-  // }
-
-  /**
-   * Callback to handle data update from VA DDC.
+   * Sets a new base data object for the dynamic object.
    * @param data Data object to apply
    */
   update(data: SourceData): void {
-    this.data = new Data( data )
+    this.data = new Data(data)
     this.apply()
   }
 }

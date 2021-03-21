@@ -1,7 +1,7 @@
 import { parseFormat, defaultFormatter, Formatter, SourceFormat } from './formats'
 import { Column, ColumnType } from './column'
 import { Row, Value } from './row'
-import { dataStats } from '../utils/parse'
+import * as parse from '../utils/parse'
 
 import * as Papa from 'papaparse'
 
@@ -11,41 +11,146 @@ export interface SourceData {
   formats?: Array<SourceFormat>
 }
 
-export default class Data {
+const PAPA_CONFIG = {
+  dynamicTyping: true,
+  skipEmptyLines: true,
+}
+
+export class DataView {
+  private data: Data
+  private index: number[]
+
+  constructor(data: Data, index: number[]) {
+    this.index = index
+    this.data = data
+  }
+
+  private indexRemap(row: number) {
+    if (row < this.index.length) {
+      return this.index[row]
+    }
+  }
+
+  getColumn(column: string | number, type?: ColumnType) {
+    return this.data.getColumn(column, type)
+  }
+
+  getRow(row: number): Row | undefined {
+    const srcRow = this.indexRemap(row)
+    if (srcRow != undefined) {
+      return this.data.getRow(srcRow)
+    }
+  }
+
+  get(row: number, column: string | number): Value {
+    const srcRow = this.indexRemap(row)
+    if (srcRow != undefined) {
+      return this.data.get(srcRow, column)
+    }
+  }
+
+  getFormatted(row: number, column: string | number, compact = false): string {
+    const srcRow = this.indexRemap(row)
+    if (srcRow != undefined) {
+      return this.data.getFormatted(srcRow, column, compact)
+    }
+    return '???'
+  }
+
+  getColumnFormat(column: string | number) {
+    return this.data.getColumnFormat(column)
+  }
+
+  min(column: string | number) {
+    return this.data.getColumn(column)?.stats?.min
+  }
+
+  max(column: string | number) {
+    return this.data.getColumn(column)?.stats?.max
+  }
+
+  sum(column: string | number) {
+    return this.data.getColumn(column)?.stats?.sum
+  }
+
+  avg(column: string | number) {
+    return this.data.getColumn(column)?.stats?.avg
+  }
+
+  filteredView(filter: parse.Filter | string): DataView {
+    let f = undefined
+    if (typeof filter === 'string') {
+      f = parse.filter(filter)
+    } else {
+      f = filter
+    }
+    if (f !== undefined) {
+      if (f.index !== undefined && f.index < this.index.length) {
+        return new DataView(this.data, [this.index[f.index]])
+      } else if (f.condition !== undefined) {
+        const c = f.condition
+        const col = parse.columnFromData(c.column, this)
+        if (col !== undefined) {
+          const newIndex = []
+          for (let i = 0; i < this.index.length; i += 1) {
+            if (this.getRow(i)?.evaluate(col.name, c.value, c.comparison)) {
+              newIndex.push(this.index[i])
+            }
+          }
+          return new DataView(this.data, newIndex)
+        }
+      }
+    }
+    return this
+  }
+}
+
+export class Data {
   private _rows: Array<Row> = []
   private _cols: Array<Column> = []
   private _cols_map: Map<string, number> = new Map()
 
-  // constructor(data: Array<Array<Value>>, columns: Array<string>) {
   constructor(source: SourceData | string) {
     if (typeof source === 'string') {
+      const parsed = Papa.parse(source, PAPA_CONFIG)
+      if (parsed.data.length > 1) {
+        this.initialize({
+          values: parsed.data.slice(1) as Value[][],
+          columns: parsed.data[0] as string[],
+        })
+      }
     } else {
-      for (let row_data of source.values) {
-        this._rows.push(new Row(row_data, source.columns))
-      }
+      this.initialize(source)
+    }
+  }
 
-      let types: string[] = []
-      let first_row = source.values[0]
-      if (first_row) {
-        types = source.values[0].map((d) => typeof d)
-      }
-      this._cols = source.columns.map((c, i) => ({
-        name: c,
-        type: types[i] === 'string' ? ColumnType.String : ColumnType.Number,
-      }))
-      source.columns.forEach((c, i) => this._cols_map.set(c, i))
+  private initialize(source: SourceData) {
+    for (let row_data of source.values) {
+      this._rows.push(new Row(row_data, source.columns))
+    }
 
-      if (source.formats !== undefined) {
-        for (let i = 0; i < source.columns.length; i += 1) {
-          if (i < source.formats.length) {
-            const col = source.columns[i]
-            this.setColumnFormat(col, parseFormat(source.formats[i]))
-          }
+    let types: string[] = []
+    let first_row = source.values[0]
+    if (first_row) {
+      types = source.values[0].map((d) => typeof d)
+    }
+    this._cols = source.columns.map((c, i) => ({
+      name: c,
+      type: types[i] === 'string' ? ColumnType.String : ColumnType.Number,
+    }))
+    source.columns.forEach((c, i) => this._cols_map.set(c, i))
+
+    this.calcColumnStats()
+
+    this.extractColumnMetadata()
+
+    if (source.formats !== undefined) {
+      for (let i = 0; i < source.columns.length; i += 1) {
+        if (i < source.formats.length) {
+          const col = source.columns[i]
+          this.setColumnFormat(col, parseFormat(source.formats[i]))
         }
       }
-
-      this.calcColumnStats()
-      dataStats(this)
     }
   }
 
@@ -120,7 +225,6 @@ export default class Data {
     const col = this.getColumn(column)
     if (col) {
       const val = this.get(row, col.name)
-      console.log( val )
       if (val !== undefined) {
         if (col.format) {
           if (compact) {
@@ -138,6 +242,16 @@ export default class Data {
       }
     }
     return '???'
+  }
+
+  getColumnFormat(column: string | number) {
+    const col = this.getColumn(column)
+    if (col) {
+      if (col.format) {
+        return col.format
+      }
+    }
+    return defaultFormatter
   }
 
   setColumnFormat(column: string | number, format: Formatter) {
@@ -278,6 +392,41 @@ export default class Data {
           break
         case ColumnType.Date:
           break
+      }
+    }
+  }
+
+  fullView(): DataView {
+    const index = []
+    for (let i = 0; i < this.rows.length; i += 1) {
+      index.push(i)
+    }
+    return new DataView(this, index)
+  }
+
+  filteredView(filter: parse.Filter | string): DataView {
+    return this.fullView().filteredView(filter)
+  }
+
+  private extractColumnMetadata() {
+    for (let col_name of this.cols) {
+      const match = col_name.match(parse.RE_DOUBLEBRACE)
+      if (match) {
+        const col = this.getColumn(col_name)
+        if (col) {
+          const s = parse.syntax(col_name)
+          const col_base_name = col_name.replace(parse.RE_DOUBLEBRACE, '').trim()
+          this.renameColumn(col.name, col_base_name)
+          const r = parse.range(s.name)
+          if (r[0] !== undefined && r[1] !== undefined) {
+            this.setColumnStats(col_base_name, { min: r[0], max: r[1] })
+          }
+          const key = parse.firstObjectKey(s.opts, ['format', 'f'])
+          if (key) {
+            const format_str = s.opts[key].toString()
+            this.setColumnFormat(col_base_name, parseFormat(format_str))
+          }
+        }
       }
     }
   }

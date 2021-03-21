@@ -1,6 +1,6 @@
 import * as parse from '../utils/parse'
 import * as svg from '../utils/svg'
-import Data from '../data/data'
+import { DataView } from '../data/data'
 import Easer from '../utils/easer'
 import Component from './component'
 import { DVG } from '../dvg'
@@ -32,7 +32,7 @@ export default class StyleComponent extends Component {
     },
   ]
 
-  static getDynamics(svg: Element): Array<Component> {
+  static getComponents(svg: Element): Array<Component> {
     const options = ([] as string[]).concat(...StyleComponent.styles.map((s) => s.keys))
     return parse.elementsWithOptions(svg, options).map((e) => new StyleComponent(e))
   }
@@ -50,7 +50,6 @@ export default class StyleComponent extends Component {
     transProps.push('fill')
     transProps.push('stroke')
     transProps.push('opacity')
-    console.log( transProps )
     svgElem.style.transitionProperty = transProps.join(',')
     svgElem.style.transitionDuration = '1s'
 
@@ -64,7 +63,7 @@ export default class StyleComponent extends Component {
     }
   }
 
-  apply(data: Data, dynSVG: DVG) {
+  apply(data: DataView, dynSVG: DVG) {
     const svgElem = this.element as SVGGraphicsElement
     for (let style of StyleComponent.styles) {
       const key = parse.firstObjectKey(this.opts, style.keys)

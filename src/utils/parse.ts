@@ -1,5 +1,5 @@
-import Data from '../data/data'
-import { Column, ColumnType } from "../data/column"
+import { DataView } from '../data/data'
+import { Column, ColumnType } from '../data/column'
 
 export const RE_DOUBLEBRACE = /{{([^}]+)}}/g
 export const RE_UNDERSCOREUNICODE = /_x([0-9A-Za-z]+)_/g
@@ -8,15 +8,17 @@ export const RE_NONJSONCHAR = /([^:,]+)/g
 export const RE_NUMBER = /[-+]?[0-9]*\.?[0-9]+/g
 export const RE_NUMBERONLY = /^[-+]?[0-9]*\.?[0-9]+$/g
 export const RE_COLUMNID = /^[@#$][0-9]+$/g
+export const RE_CONDITION = /([^<>=]+)([<>=]+)([^<>=]+)/
 
-export const TRIM_CHARS = [' ', '-', '_']
+export const TRIM_CHARS = [' ', '_']
+export const RANGE_TRIM_CHARS = [' ', '_', '-']
 
 const COL_ID_TYPE_PREFIXES: Record<string, ColumnType> = {
   '@': ColumnType.String,
   '#': ColumnType.Number,
-  '$': ColumnType.Date,
+  $: ColumnType.Date,
 }
- 
+
 /**
  * Converts unicode character back to orignal string.
  *
@@ -26,7 +28,7 @@ export function decodeIllustrator(text: string) {
   return text.replace(RE_UNDERSCOREUNICODE, function (match, g1) {
     return String.fromCharCode(parseInt('0x' + g1))
   })
-} 
+}
 
 /**
  * Encodes simplpified object literal into formal JSON syntax with quotes.
@@ -95,7 +97,6 @@ export function syntax(text: string): SyntaxParse {
       obj.name = trimChars(text, TRIM_CHARS)
     }
   }
- 
   return obj
 }
 
@@ -105,7 +106,7 @@ export function syntax(text: string): SyntaxParse {
  * @param svg The parent element to search through the children of.
  * @param options List of option strings to match against.
  */
-export function elementsWithOptions(svg: Element, options: Array<string>) {
+export function elementsWithOptions(svg: Element, options: string[]) {
   return Array.from(svg.querySelectorAll<SVGElement>('*[id]'))
     .filter((e) => e.id?.match(RE_DOUBLEBRACE))
     .filter(function (e) {
@@ -117,6 +118,18 @@ export function elementsWithOptions(svg: Element, options: Array<string>) {
       }
       return false
     })
+}
+
+export function elementHasOptions(element: Element, options: string[]) {
+  if (element.id?.match(RE_DOUBLEBRACE)) {
+    let syn = syntax(element.id)
+    for (let option in syn.opts) {
+      if (options.includes(option)) {
+        return true
+      }
+    }
+  }
+  return false
 }
 
 /**
@@ -155,7 +168,7 @@ export function range(text: string) {
   if (delim) {
     let vals = text.split(delim)
     if (delim === ';') {
-      vals = vals.map((v) => trimChars(v, TRIM_CHARS))
+      vals = vals.map((v) => trimChars(v, RANGE_TRIM_CHARS))
     } else {
       vals = vals.map(function (v) {
         while (v.includes('--')) {
@@ -205,7 +218,7 @@ export function columnIdentifier(col_id: string): [ColumnType, number] | undefin
  *
  * @param col_str The string that is either a name or type/index.
  */
-export function columnFromData(col_str: string, data: Data) {
+export function columnFromData(col_str: string, data: DataView) {
   const col_id = columnIdentifier(col_str)
   let col: Column | undefined
   if (col_id) {
@@ -217,47 +230,56 @@ export function columnFromData(col_str: string, data: Data) {
   return col
 }
 
-/**
- * Extracts {{min}} and {{max}} tagged columns from data and converts to stats, or pulls {{0 100}} range directly
- *
- * @param data The data object to parse the stats from.
- */
-export function dataStats(data: Data) {
-  for (let col_name of data.cols) {
-    const match = col_name.match(RE_DOUBLEBRACE)
-    if (match) {
-      const col = data.getColumn(col_name)
-      if (col) {
-        const stat = syntax(col_name).name.toLowerCase()
-        const col_base_name = col_name.replace(RE_DOUBLEBRACE, '').trim()
-        const r = range(match[0].slice(2, -2))
-        if (r[1] !== undefined) {
-          const min = Number(r[0])
-          const max = Number(r[1])
-          data.renameColumn(col.name, col_base_name)
-          data.setColumnStats(col_base_name, { min: min, max: max })
-        } else {
-          const target_col = data.getColumn(col_base_name)
-          if (target_col) {
-            switch (stat) {
-              case 'min':
-                data.setColumnStats(target_col.name, { min: col.stats?.min })
-                break
-              case 'max':
-                data.setColumnStats(target_col.name, { max: col.stats?.max })
-                break
-              case 'sum':
-                data.setColumnStats(target_col.name, { sum: col.stats?.sum })
-                break
-              case 'avg':
-                data.setColumnStats(target_col.name, { avg: col.stats?.avg })
-                break
-            }
-            data.dropColumn(col.name)
-          }
+export interface Filter {
+  index?: number
+  condition?: Condition
+}
+
+export interface Condition {
+  column: string
+  value: string
+  comparison?: string
+}
+
+export function condition(text: string): Condition | undefined {
+  const matches = text.match(RE_CONDITION)
+  if (matches && matches.length >= 4) {
+    return {
+      column: matches[1],
+      value: matches[3],
+      comparison: matches[2],
+    }
+  }
+}
+
+export function filter(text: string): Filter | undefined {
+  const cond = condition( text )
+  if( cond ) {
+    return {
+      condition: cond
+    }
+  } else if ( isFinite(Number(text))) {
+    return {
+      index: Number(text)
+    }
+  }
+}
+
+export function filtersForElement(element: Element | null) {
+  const filters: Filter[] = []
+  while (element && element.tagName !== 'SVG') {
+    if (elementHasOptions(element, ['f', 'filter'])) {
+      let syn = syntax(element.id)
+      let key = firstObjectKey(syn.opts, ['f', 'filter'])
+      if (key) {
+        const filter_str = syn.opts[key].toString()
+        const f = filter( filter_str )
+        if( f ) {
+          filters.unshift( f )
         }
       }
     }
+    element = element.parentElement
   }
-  return data
+  return filters
 }

@@ -4,6 +4,7 @@ import { terser } from 'rollup-plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
 import del from 'rollup-plugin-delete'
 import copy from 'rollup-plugin-copy'
+import nodePolyfills from 'rollup-plugin-node-polyfills'
 
 export default [
   {
@@ -30,6 +31,7 @@ export default [
       nodeResolve(),
       commonjs(),
       terser(),
+      nodePolyfills()
     ],
   },
 ]

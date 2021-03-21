@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Vector Graphics Showcase - Default SVG</title>
+    <script src="../dist/dvg.min.js"></script>
+    <style>
+      html,
+      body,
+      svg {
+        overflow: hidden;
+        margin: 0px;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const mydvg = new dvg.DVG()
+      mydvg.update({
+        values: [['Foo', 42]],
+        columns: ['Char', 'Num {{0..100|f:dollar}}'],
+      })
+    </script>
+  </body>
+</html>

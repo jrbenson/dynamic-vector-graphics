@@ -1,4 +1,4 @@
-import Data from '../../src/data/data'
+import { Data } from '../../src/data/data'
 import { ColumnType } from '../../src/data/column'
 
 import { DATA_MINIMAL } from './data-construction.test'

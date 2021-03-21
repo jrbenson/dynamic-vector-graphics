@@ -1,6 +1,9 @@
 import * as parse from '../utils/parse'
-import Data from '../data/data'
+import { DataView } from '../data/data'
 import { DVG } from '../dvg'
+
+
+
 
 /**
  * Base class for components, which are called during update to apply data to the SVG.
@@ -8,6 +11,7 @@ import { DVG } from '../dvg'
 export default class Component {
   element: Element
   opts: Record<string, string | number | boolean>
+  filters: parse.Filter[] = []
 
   /**
    * Override with dynamic specific parsing and precomputation.
@@ -16,14 +20,15 @@ export default class Component {
   constructor(element: Element) {
     this.element = element
     this.opts = parse.syntax(element.id).opts
+    this.filters = parse.filtersForElement( this.element )
   }
 
   /**
    * Override with static method for selecting viable elements for this dynamic from SVG.
-   * @param svg {SVGElement} The root SVG element to start the search from.
+   * @param svg The root SVG element to start the search from.
    * @return Array of components that match the desired pattern.
    */
-  static getDynamics(svg: Element): Array<Component> {
+  static getComponents(svg: Element): Array<Component> {
     return []
   }
 
@@ -31,7 +36,7 @@ export default class Component {
    * Override with static method for selecting viable elements for this dynamic from SVG.
    * @param {DataFrame} data The root SVG element to start the search from.
    */
-  apply(data: Data, state: DVG ) {}
+  apply(data: DataView, state: DVG ) {}
 }
 
 

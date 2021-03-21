@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Vector Graphics Examples</title>
+    <script src="../dist/dvg.min.js"></script>
+    <style>
+      html {
+        font-family: sans-serif;
+        font-size: 16px;
+        padding: 0rem 3rem;
+        color: #555;
+        background-color: #fff;
+      }
+      body {
+        max-width: 42rem;
+        padding: 2rem 3rem;
+        margin: auto;
+        border-left: #555 solid 0.5rem;
+      }
+      svg {
+        width: 100%;
+        height: 100%;
+        padding-left: 2rem;
+        padding-top: 1.5rem;
+      }
+      h1 {
+        margin-left: -3.55rem;
+        font-weight: 100;
+        font-size: 4rem;
+        padding-bottom: 2rem;
+      }
+      h2 {
+        margin-left: -5rem;
+        font-weight: 500;
+        background: #fff;
+        padding: 0.5rem 0rem;
+      }
+      input,
+      textarea {
+        border: #555 solid 0.25rem;
+        padding: 0.5rem 1rem;
+        margin-bottom: 0.25rem;
+      }
+      input[type='date'] {
+        padding: 0.3433rem 0.9rem;
+      }
+      textarea {
+        width: 20rem;
+      }
+      p {
+        margin-left: -5rem;
+        background: #fff;
+        padding: 0.5rem 0rem;
+      }
+      a {
+        color: #555;
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      pre {
+        margin-top: -1rem;
+        margin-left: -2rem;
+        font-size: small;
+        overflow-x: scroll;
+      }
+      .small-inputs input {
+        width: 5.5rem;
+      }
+      .small-inputs input[type='date'] {
+        width: 5.7rem;
+      }
+      .input-row {
+        margin-left: -5rem;
+        margin-top: 0;
+        margin-bottom: 0.25rem;
+      }
+      .input-row input:not(:first-child) {
+        margin-left: -0.47rem;
+      }
+      .columns {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .column-left {
+        flex: 10rem;
+        min-width: 18rem;
+        margin-bottom: 1.2rem;
+      }
+      .column-right {
+        flex: 50%;
+      }
+      .true-center {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .column-right a {
+        font-size: 1.5rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        html,
+        input,
+        textarea,
+        a {
+          color: #ccc;
+        }
+        p,
+        h2,
+        input,
+        textarea,
+        html {
+          background-color: #000;
+        }
+        body,
+        input,
+        textarea {
+          border-color: #ccc;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Dynamic Vector Graphics</h1>
+
+    <h2>Inline SVG</h2>
+    <div class="columns">
+      <div class="column-left">
+        <p>This example shows how an inline SVG tag can be used to embed dynamic graphics.</p>
+        <pre><code><br />&lt;svg id="mydvg"&gt;...&lt;/svg&gt;<br/>&lt;script&gt;<br />  const mydvg = new dvg.DVG(document.getElementById('mysvg'))<br />  mydvg.update({<br />    values: [['Foo', 42]],<br />    columns: ['Char', 'Num {{0..100|f:dollar}}'],<br />  })<br />&lt;/script&gt;</code></pre>
+        <p>Change the names and values of the variables used by the graphic below:</p>
+        <div class="input-row">
+          <input id="dvgInline_colA_name" type="text" value="Character" />
+          <input id="dvgInline_colA_value" type="text" value="Value" />
+        </div>
+        <div class="input-row">
+          <input id="dvgInline_colB_name" type="text" value="Number {{0..100|f:dollar12.2}}" />
+          <input id="dvgInline_colB_value" type="number" value="40" />
+        </div>
+      </div>
+      <div class="column-right">
+        <svg id="dvg_inline" width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="index">
+          <g id="Core {{r:#0,o:0.5;0.5}}">
+          <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="51" y="51" width="410" height="410">
+          <circle id="Ellipse 5" cx="256" cy="256" r="205" fill="#C4C4C4"/>
+          </mask>
+          <g mask="url(#mask0)">
+          <g id="Group 1">
+          <rect id="Rectangle 6" x="99" y="397" width="53" height="282" transform="rotate(-180 99 397)" fill="black" fill-opacity="0.25"/>
+          <rect id="Rectangle 7" x="466" y="397" width="53" height="282" transform="rotate(-180 466 397)" fill="black" fill-opacity="0.25"/>
+          <path id="Rectangle 5" d="M418 397L418 115M95 397L95 115" stroke="#7E7E7E" stroke-width="8"/>
+          </g>
+          </g>
+          </g>
+          <text id="{{a:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Arial" font-size="18" letter-spacing="0em"><tspan x="191.214" y="345.74">{{#0|n}} : {{#0|c}}</tspan></text>
+          <text id="{{a:middle}}_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Arial" font-size="18" letter-spacing="0em"><tspan x="189.29" y="173.74">{{@0|n}} : {{@0}}</tspan></text>
+          <g id="DVG" clip-path="url(#clip0)">
+          <g id="Acronym">
+          <path id="D" d="M183 256C183 277.72 165.583 295 144.5 295C140.504 295 136.639 294.379 133 293.225V317.936C136.728 318.635 140.571 319 144.5 319C179.018 319 207 290.794 207 256C207 221.206 179.018 193 144.5 193C140.571 193 136.728 193.365 133 194.064V218.775C136.639 217.621 140.504 217 144.5 217C165.583 217 183 234.28 183 256Z" fill="#7E7E7E"/>
+          <path id="G" d="M355 293.225C339.44 288.29 328 273.603 328 256C328 234.28 345.417 217 366.5 217C370.864 217 375.072 217.741 379 219.108V194.26C374.961 193.434 370.781 193 366.5 193C331.982 193 304 221.206 304 256C304 290.794 331.982 319 366.5 319C370.781 319 374.961 318.566 379 317.74V256H355V293.225Z" fill="#7E7E7E"/>
+          <path id="V" d="M274.95 193H300.368L256.468 318.87L211 193H236.518L256.071 247.13L274.95 193Z" fill="#7E7E7E"/>
+          </g>
+          </g>
+          <circle id="Outer Ring" cx="256" cy="256" r="252" stroke="#7E7E7E" stroke-width="8"/>
+          <circle id="Inner Ring" cx="256" cy="256" r="204" stroke="#7E7E7E" stroke-width="8"/>
+          </g>
+          <defs>
+          <clipPath id="clip0">
+          <rect width="246" height="126" fill="white" transform="translate(133 193)"/>
+          </clipPath>
+          </defs>
+          </svg>
+          
+      </div>
+    </div>
+
+    <h2>External SVG</h2>
+    <div class="columns">
+      <div class="column-left">
+        <p>This example shows how an external svg can be used to embed dynamic graphics.</p>
+        <pre><code><br />&lt;div id="mydvg"&gt;&lt;/svg&gt;<br/>&lt;script&gt;<br />  const mydvg = new dvg.DVG(<br />    document.getElementById('mydvg'),<br />    { svg: 'path/to/file.svg' }<br />  )<br />  mydvg.update({<br />    values: [['Foo', 42]],<br />    columns: ['Char', 'Num {{0..100|f:dollar}}'],<br />  })<br />&lt;/script&gt;</code></pre>
+        <p>Change the names and values of the variables used by the graphic below:</p>
+        <div class="input-row">
+          <input id="dvgExternal_colA_name" type="text" value="Character" />
+          <input id="dvgExternal_colA_value" type="text" value="Value" />
+        </div>
+        <div class="input-row">
+          <input id="dvgExternal_colB_name" type="text" value="Number {{0..100|f:dollar12.2}}" />
+          <input id="dvgExternal_colB_value" type="number" value="40" />
+        </div>
+      </div>
+      <div class="column-right">
+        <div id="dvg_external"></div>
+      </div>
+    </div>
+
+    <h2>Using CSV</h2>
+    <div class="columns">
+      <div class="column-left">
+        <p>This example shows how a csv string can represent the data. Change CSV used by the graphic below:</p>
+        <div class="input-row">
+          <textarea id="dataTest2_csv" rows="4">
+"Character","Number{{0..100|f:dollar}}"
+"Value",42
+          </textarea>
+        </div>
+      </div>
+      <div class="column-right">
+        <div id="dvg_csv"></div>
+      </div>
+    </div>
+
+    <h2>Default SVG</h2>
+    <div class="columns">
+      <div class="column-left">
+        <p>
+          If a DVG class is initialized with no element it will replace the body of the page. And if it is provided no
+          URL to an svg it will look for "./index.svg".
+        </p>
+        <pre><code><br />&lt;script&gt;<br />  const mydvg = new dvg.DVG()<br />  mydvg.update({<br />    values: [['Foo', 42]],<br />    columns: ['Char', 'Num {{0..100|f:dollar}}'],<br />  })<br />&lt;/script&gt;</code></pre>
+        <p>
+          This can be convenient for cases where the entire page is an infographic. The link below is to a page using
+          the defaults:
+        </p>
+      </div>
+      <div class="column-right">
+        <div class="true-center">
+          <a href="./default.html">Default SVG Example</a>
+        </div>
+      </div>
+    </div>
+
+    <h2>Test SVG</h2>
+    <div class="columns">
+      <div class="column-left small-inputs">
+        <p>
+          This example utilizes many of the features of the DVG library. Change the names and values of the variables
+          used by the graphic below:
+        </p>
+        <div class="input-row">
+          <input id="dataTest_strA_name" type="text" value="Character" />
+          <input id="dataTest_strA_value1" type="text" value="Value A" />
+          <input id="dataTest_strA_value2" type="text" value="Value B" />
+        </div>
+        <div class="input-row">
+          <input id="dataTest_numA_name" type="text" value="Number A {{0..100}}" />
+          <input id="dataTest_numA_value1" type="number" value="42" />
+          <input id="dataTest_numA_value2" type="number" value="78" />
+        </div>
+        <div class="input-row">
+          <input id="dataTest_numB_name" type="text" value="Number B {{0..10000|f:dollar}}" />
+          <input id="dataTest_numB_value1" type="number" value="8765.43" />
+          <input id="dataTest_numB_value2" type="number" value="2578.32" />
+        </div>
+        <div class="input-row">
+          <input id="dataTest_dateA_name" type="text" value="Date" />
+          <input id="dataTest_dateA_value1" type="date" value="2021-02-21" />
+          <input id="dataTest_dateA_value2" type="date" value="2020-11-14" />
+        </div>
+      </div>
+      <div class="column-right">
+        <div id="dvg_test"></div>
+      </div>
+    </div>
+
+    <script>
+      const dvgInline = new dvg.DVG(document.getElementById('dvg_inline'))
+      const dvgExternal = new dvg.DVG(document.getElementById('dvg_external'), { svg: './index.svg' })
+      const dvgCSV = new dvg.DVG(document.getElementById('dvg_csv'))
+      const dvgTest = new dvg.DVG(document.getElementById('dvg_test'), { svg: '../tests/svg/figma.svg' })
+
+      let inputs = Array.from(document.getElementsByTagName('input'))
+      inputs = inputs.concat(Array.from(document.getElementsByTagName('textarea')))
+      for (let input of inputs) {
+        input.addEventListener('input', applyInputs)
+      }
+      applyInputs()
+
+      function val(id) {
+        const input = document.getElementById(id)
+        if (input.type === 'number') {
+          return Number(input.value)
+        }
+        return input.value
+      }
+
+      function applyInputs() {
+        dvgInline.update({
+          values: [[val('dvgInline_colA_value'), val('dvgInline_colB_value')]],
+          columns: [val('dvgInline_colA_name'), val('dvgInline_colB_name')],
+        })
+
+        dvgExternal.update({
+          values: [[val('dvgExternal_colA_value'), val('dvgExternal_colB_value')]],
+          columns: [val('dvgExternal_colA_name'), val('dvgExternal_colB_name')],
+        })
+
+        dvgTest.update({
+          values: [
+            [
+              val('dataTest_strA_value1'),
+              val('dataTest_numA_value1'),
+              val('dataTest_numB_value1'),
+              val('dataTest_dateA_value1'),
+            ],[
+              val('dataTest_strA_value2'),
+              val('dataTest_numA_value2'),
+              val('dataTest_numB_value2'),
+              val('dataTest_dateA_value2'),
+            ],
+          ],
+          columns: [
+            val('dataTest_strA_name'),
+            val('dataTest_numA_name'),
+            val('dataTest_numB_name'),
+            val('dataTest_dateA_name'),
+          ],
+        })
+
+        dvgCSV.update(val('dataTest2_csv'))
+      }
+    </script>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 import * as parse from '../utils/parse'
 import * as svg from '../utils/svg'
-import Data from '../data/data'
+import { DataView } from '../data/data'
 import Easer from '../utils/easer'
 import Component from './component'
 import { DVG } from '../dvg'
@@ -108,7 +108,7 @@ export default class TransformComponent extends Component {
     },
   ]
 
-  static getDynamics(svg: Element): Array<Component> {
+  static getComponents(svg: Element): Array<Component> {
     const options = ([] as string[]).concat(...TransformComponent.transforms.map((t) => t.keys))
     return parse.elementsWithOptions(svg, options).map((e) => new TransformComponent(e))
   }
@@ -156,7 +156,7 @@ export default class TransformComponent extends Component {
     return svg.getAbsoluteOrigin(this.element as SVGGraphicsElement, relOrigin)
   }
 
-  apply(data: Data, dynSVG: DVG) {
+  apply(data: DataView, dynSVG: DVG) {
     const svgElem = this.element as SVGGraphicsElement
 
     const gkey = parse.firstObjectKey(this.opts, ['guide', 'g'])

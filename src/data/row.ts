@@ -1,4 +1,6 @@
-export type Value = string | number | Date | undefined;
+import { condition, Condition, columnIdentifier } from '../utils/parse'
+
+export type Value = string | number | Date | undefined
 
 export class Row {
   private _values: Array<Value> = []
@@ -79,5 +81,30 @@ export class Row {
       this._cols_map.set(name, column)
       this._cols_map.delete(key)
     }
+  }
+
+  evaluate(column: string | number, value: Value, comparison?: string): boolean {
+    const rowValue = this.get(column)
+    if (rowValue !== undefined && value !== undefined) {
+      if (comparison === undefined) {
+        return rowValue == value
+      } else {
+        switch (comparison) {
+          case '<=':
+            return rowValue <= value
+          case '>=':
+            return rowValue >= value
+          case '<':
+            return rowValue < value
+          case '>':
+            return rowValue > value
+          case '=':
+          case '==':
+          default:
+            return rowValue == value
+        }
+      }
+    }
+    return false
   }
 }
