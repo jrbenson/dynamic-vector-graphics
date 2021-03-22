@@ -247,7 +247,6 @@ export function condition(text: string, clean: boolean = true): Condition | unde
     let value = matches[3]
     if (clean) {
       value = value.replace(/_/g, ' ')
-      value = value.replace(/-/g, ' ')
     }
     return {
       column: matches[1],
