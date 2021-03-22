@@ -241,26 +241,31 @@ export interface Condition {
   comparison?: string
 }
 
-export function condition(text: string): Condition | undefined {
+export function condition(text: string, clean: boolean = true): Condition | undefined {
   const matches = text.match(RE_CONDITION)
   if (matches && matches.length >= 4) {
+    let value = matches[3]
+    if (clean) {
+      value = value.replace(/_/g, ' ')
+      value = value.replace(/-/g, ' ')
+    }
     return {
       column: matches[1],
-      value: matches[3],
+      value: value,
       comparison: matches[2],
     }
   }
 }
 
-export function filter(text: string): Filter | undefined {
-  const cond = condition( text )
-  if( cond ) {
+export function filter(text: string, clean: boolean = true): Filter | undefined {
+  const cond = condition(text, clean)
+  if (cond) {
     return {
-      condition: cond
+      condition: cond,
     }
-  } else if ( isFinite(Number(text))) {
+  } else if (isFinite(Number(text))) {
     return {
-      index: Number(text)
+      index: Number(text),
     }
   }
 }
@@ -268,14 +273,14 @@ export function filter(text: string): Filter | undefined {
 export function filtersForElement(element: Element | null) {
   const filters: Filter[] = []
   while (element && element.tagName !== 'SVG') {
-    if (elementHasOptions(element, ['f', 'filter'])) {
+    if (elementHasOptions(element, ['filter', 'f'])) {
       let syn = syntax(element.id)
-      let key = firstObjectKey(syn.opts, ['f', 'filter'])
+      let key = firstObjectKey(syn.opts, ['filter', 'f'])
       if (key) {
         const filter_str = syn.opts[key].toString()
-        const f = filter( filter_str )
-        if( f ) {
-          filters.unshift( f )
+        const f = filter(filter_str)
+        if (f) {
+          filters.unshift(f)
         }
       }
     }
