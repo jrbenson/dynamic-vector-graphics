@@ -1,6 +1,7 @@
 import * as parse from '../utils/parse'
 import { DataView } from '../data/data'
 import { DVG } from '../dvg'
+import { Filter } from "../data/filter"
 
 
 
@@ -11,7 +12,7 @@ import { DVG } from '../dvg'
 export default class Component {
   element: Element
   opts: Record<string, string | number | boolean>
-  filters: parse.Filter[] = []
+  filters: Filter[] = []
 
   /**
    * Override with dynamic specific parsing and precomputation.

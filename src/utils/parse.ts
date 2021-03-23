@@ -1,5 +1,6 @@
 import { DataView } from '../data/data'
 import { Column, ColumnType } from '../data/column'
+import { Condition, Filter } from '../data/filter'
 
 export const RE_DOUBLEBRACE = /{{([^}]+)}}/g
 export const RE_UNDERSCOREUNICODE = /_x([0-9A-Za-z]+)_/g
@@ -228,17 +229,6 @@ export function columnFromData(col_str: string, data: DataView) {
     col = data.getColumn(col_str)
   }
   return col
-}
-
-export interface Filter {
-  index?: number
-  condition?: Condition
-}
-
-export interface Condition {
-  column: string
-  value: string
-  comparison?: string
 }
 
 export function condition(text: string, clean: boolean = true): Condition | undefined {

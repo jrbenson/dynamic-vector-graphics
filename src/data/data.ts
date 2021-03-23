@@ -1,6 +1,7 @@
 import { parseFormat, defaultFormatter, Formatter, SourceFormat } from './formats'
 import { Column, ColumnType } from './column'
 import { Row, Value } from './row'
+import { Filter } from "./filter"
 import * as parse from '../utils/parse'
 
 import * as Papa from 'papaparse'
@@ -77,7 +78,7 @@ export class DataView {
     return this.data.getColumn(column)?.stats?.avg
   }
 
-  filteredView(filter: parse.Filter | string): DataView {
+  filteredView(filter: Filter | string): DataView {
     let f = undefined
     if (typeof filter === 'string') {
       f = parse.filter(filter)
@@ -402,9 +403,9 @@ export class Data {
       index.push(i)
     }
     return new DataView(this, index)
-  }
+  } 
 
-  filteredView(filter: parse.Filter | string): DataView {
+  filteredView(filter: Filter | string): DataView {
     return this.fullView().filteredView(filter)
   }
 
