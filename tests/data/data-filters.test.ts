@@ -30,4 +30,9 @@ test('Data View Filtering', () => {
 
   expect(d.filteredView('ColumnInt>1').get(0, 'ColumnFloat')).toBeCloseTo(4.4)
   expect(d.filteredView('#0>1').get(1, 'ColumnFloat')).toBeCloseTo(8.3)
+
+  expect(d.filteredView('ColumnFloat>5.7').get(0, 'ColumnStr')).toBe('Gamma')
+  
+  expect(d.filteredView('ColumnInt>-4').get(0, 'ColumnStr')).toBe('Alpha')
+  expect(d.filteredView('ColumnInt<0').get(0, 'ColumnStr')).toBeUndefined()
 })

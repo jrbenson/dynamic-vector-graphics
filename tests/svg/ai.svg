@@ -1,78 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 24.3.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 512 768" style="enable-background:new 0 0 512 768;" xml:space="preserve">
+<!-- Generator: Adobe Illustrator 25.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="ai" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 256 512" style="enable-background:new 0 0 256 512;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;}
-	.st1{font-family:'OpenSans-Regular';}
-	.st2{font-size:10px;}
-	.st3{font-size:14px;}
-	.st4{fill:none;stroke:#E6E7E8;stroke-width:2;stroke-miterlimit:10;}
-	.st5{fill:#E6E7E8;}
-	.st6{fill:#0082C5;}
-	.st7{fill:#4E98D2;}
-	.st8{fill:none;stroke:#E6E7E8;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:#7E7E7E;}
+	.st2{font-family:'OpenSans-Regular';}
+	.st3{font-size:12px;}
+	.st4{font-size:10px;}
+	.st5{fill:none;stroke:#CCCCCC;stroke-width:2;stroke-miterlimit:10;}
+	.st6{fill:#CCCCCC;}
+	.st7{fill:none;stroke:#CCCCCC;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 </style>
-<g id="Airplane_Top">
-	<g id="plane_parts_1_">
-	</g>
-	<g id="data_bar">
-	</g>
-	<g id="label_1_">
-	</g>
+<rect x="0" class="st0" width="255" height="43"/>
+<text id="Text_Sample" transform="matrix(1 0 0 1 0 9.1203)"><tspan x="0" y="0" class="st1 st2 st3">First measure is {{#0|name}}: {{#0}}</tspan><tspan x="0" y="14.4" class="st1 st2 st3">First category is {{@0|name}}: {{@0}}</tspan><tspan x="0" y="28.8" class="st1 st2 st3">First date is {{$0|name}}: {{$0}}</tspan></text>
+<rect x="0" y="50" class="st0" width="256" height="30.25"/>
+<text id="Text_Sample_2" transform="matrix(1.0068 0 0 1 0 59.12)"><tspan x="0" y="0" class="st1 st2 st3">{{#1|name}}: {{#1}}</tspan><tspan x="0" y="14.4" class="st1 st2 st3">Compact {{#1|name}}: {{#1|c}}</tspan></text>
+<rect x="5.14" y="208.99" class="st0" width="40.09" height="13.35"/>
+<text id="_x7B__x7B_p:_x23_0_x2C_g:g1_x2C_a:middle_x7D__x7D_" transform="matrix(1 0 0 1 5.1358 216.5867)" class="st1 st2 st4">{{#0|c}}</text>
+<path class="st5" d="M117.85,125.31c3.62-3.62,5.86-8.62,5.86-14.14c0-5.52-2.24-10.52-5.86-14.14l-14.14,14.14L117.85,125.31z"/>
+<circle class="st6" cx="117.71" cy="97.16" r="2"/>
+<circle class="st6" cx="117.71" cy="125.16" r="2"/>
+<circle class="st1" cx="103.71" cy="111.16" r="2"/>
+<path class="st5" d="M91.71,109.16h-40c0-11.05,8.95-20,20-20S91.71,98.12,91.71,109.16z"/>
+<circle class="st6" cx="51.71" cy="109.16" r="2"/>
+<circle class="st6" cx="91.71" cy="109.16" r="2"/>
+<circle class="st1" cx="71.71" cy="109.16" r="2"/>
+<circle class="st5" cx="21.71" cy="109.16" r="20"/>
+<circle class="st6" cx="21.71" cy="89.16" r="2"/>
+<circle class="st1" cx="21.71" cy="109.16" r="2"/>
+<polygon id="Dial_3__x7B__x7B__r:____x23_0_x2C____rr____:____.25____x2C_____o_:_0_x3B_1____x7D__x7D_" class="st1" points="
+	103.71,111.16 107.95,109.75 117.85,97.02 105.12,106.92 "/>
+<polygon id="Dial_2__x7B__x7B_rotate:_x23_0_x2C_origin:1_x3B_.5_x2C_rotateRatio:0.5_x7D__x7D_" class="st1" points="71.71,109.16 
+	67.71,107.16 51.71,109.16 67.71,111.16 "/>
+<polygon id="Dial_1__x7B__x7B_r:_x23_0_x2C_o:.5_x3B_1_x7D__x7D__1_" class="st1" points="21.71,109.16 23.71,105.16 21.71,89.16 
+	19.71,105.16 "/>
+<rect y="150" class="st6" width="128" height="5"/>
+<rect y="160" class="st6" width="128" height="5"/>
+<rect y="140" class="st6" width="128" height="5"/>
+<rect id="_x7B__x7B_scaleX:_x23_0_x2C_origin:1_x3B_1_x7D__x7D__1_" y="150" class="st1" width="128" height="5"/>
+<rect id="_x7B__x7B___sx___:____x23_0_x2C____o__:_____.5__x3B____0.5____x7D__x7D__1_" y="160" class="st1" width="128" height="5"/>
+<rect x="4.35" y="231.21" class="st5" width="48" height="48"/>
+<line id="_x7B__x7B_g2_x7D__x7D_" class="st5" x1="4.35" y1="279.21" x2="52.35" y2="231.21"/>
+<line id="_x7B__x7B_g1_x7D__x7D__2_" class="st5" x1="24.06" y1="198.16" x2="230.78" y2="198.21"/>
+<polyline id="_x7B__x7B_g3_x7D__x7D_" class="st7" points="66.94,279.21 66.94,231.21 80.93,279.21 80.93,231.21 "/>
+<path id="_x7B__x7B_g4_x7D__x7D_" class="st7" d="M111.64,236c-7-9-15.29,2.05-16,7c-1,7-0.33,13,10,13c13,0,11,36-11,20"/>
+<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g1_x7D__x7D__2_" x="20" y="194" class="st1" width="8" height="8"/>
+<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g2_x7D__x7D__1_" x="0.35" y="275.21" class="st1" width="8" height="8"/>
+<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g3_x7D__x7D_" x="62.64" y="275" class="st1" width="8" height="8"/>
+<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g4_x7D__x7D_" x="107.64" y="232" class="st1" width="8" height="8"/>
+<rect x="19.14" y="178.99" class="st0" width="53.86" height="13.35"/>
+<text id="_x7B__x7B_align:start_x7D__x7D_" transform="matrix(1 0 0 1 19.1358 186.5867)" class="st1 st2 st4">{{#0|c,r:0}}</text>
+<rect x="95" y="178.99" class="st0" width="64.35" height="13.35"/>
+<text id="_x7B__x7B_align:middle_x7D__x7D_" transform="matrix(1 0 0 1 95.0001 186.5867)" class="st1 st2 st4">{{#0|c,r:0.5}}</text>
+<rect x="177.13" y="178.63" class="st0" width="53.86" height="13.35"/>
+<text id="_x7B__x7B_align:end_x7D__x7D_" transform="matrix(1 0 0 1 178.478 186.2274)" class="st1 st2 st4">{{#0|c,r:1}}</text>
+<rect x="137" y="91" class="st5" width="32" height="32"/>
+<rect id="_x7B__x7B_a:_x23_0_x7D__x7D_" x="140" y="94" class="st1" width="26" height="26"/>
+<rect id="_x7B__x7B_sx:_x23_0_x7D__x7D__2_" y="140" class="st1" width="128" height="5"/>
+<g id="_x7B__x7B_filter:Character_x3D_Value_B_x7D__x7D_">
+	<rect x="-0.32" y="302.88" class="st0" width="67.32" height="30.25"/>
+	<text id="Text_Sample_2_1_" transform="matrix(1.0068 0 0 1 -0.3196 311.9954)"><tspan x="0" y="0" class="st1 st2 st3">Value B</tspan><tspan x="0" y="14.4" class="st1 st2 st3">{{#0|c}}</tspan></text>
+	<rect y="334" class="st6" width="70" height="5"/>
+	<rect id="_x7B__x7B_sx:_x23_0_x7D__x7D__1_" y="334" class="st1" width="70" height="5"/>
 </g>
-<g id="Airplane_Profile">
-	<g id="plane_parts">
-	</g>
-	<g id="data_bar_1_">
-	</g>
-	<g id="label">
-	</g>
+<g id="FIlter_Test_1_">
+	<rect x="89.68" y="302.88" class="st0" width="67.32" height="30.25"/>
+	<text id="_x7B__x7B_filter:_x40_0_x3D_Value_B_x7D__x7D_" transform="matrix(1.0068 0 0 1 89.6804 311.9954)"><tspan x="0" y="0" class="st1 st2 st3">Value B</tspan><tspan x="0" y="14.4" class="st1 st2 st3">{{#0|c}}</tspan></text>
+	<rect x="90" y="334" class="st6" width="70" height="5"/>
+	<rect id="_x7B__x7B_scaleX:_x23_0_x2C_filter:_x40_0_x3D_Value_B_x7D__x7D_" x="90" y="334" class="st1" width="70" height="5"/>
 </g>
-<g id="Comprehensive">
-	<g id="Dial_Base_3">
-	</g>
-	<g id="Dial_Base_2">
-	</g>
-	<g id="Dial_Base_1">
-	</g>
-</g>
-<g id="test">
-	<rect x="16.8" y="16.5" class="st0" width="471.3" height="123.5"/>
-	<text id="Text_Sample" transform="matrix(1 0 0 1 16.8195 24.0942)"><tspan x="0" y="0" class="st1 st2">Department: {{Department}}</tspan><tspan x="0" y="12" class="st1 st2">Expenses: {{Expenses}}</tspan><tspan x="0" y="24" class="st1 st2">Expenses Compact: {{Expenses|c}}</tspan><tspan x="0" y="36" class="st1 st2">Revenue: {{Revenue}}</tspan><tspan x="0" y="48" class="st1 st2">Revenue Compact: {{Revenue|c}}</tspan><tspan x="0" y="60" class="st1 st2">Date: {{Date}}</tspan><tspan x="0" y="84" class="st1 st2">Measure 0 is {{#0|name}}: {{#0}}</tspan><tspan x="0" y="96" class="st1 st2">Category 0 is {{@0|name}}: {{@0}}</tspan><tspan x="0" y="108" class="st1 st2">Date 0 is {{$0|name}}: {{$0}}</tspan></text>
-	<rect x="16.2" y="152.8" class="st0" width="254.3" height="42.8"/>
-	<text transform="matrix(1 0 0 1 16.1956 163.3916)"><tspan x="0" y="0" class="st1 st3">{{#0|name}}: {{#0}}</tspan><tspan x="0" y="16.8" class="st1 st3">Compact {{#0|name}}: {{#0|c}}</tspan></text>
-	<rect x="9.1" y="242" class="st0" width="40.1" height="13.4"/>
-	<text id="_x7B__x7B_p:_x23_0_x2C_g:g1_x7D__x7D__1_" transform="matrix(1 0 0 1 9.1358 249.5867)" class="st1 st2">{{#0|c}}</text>
-	<path class="st4" d="M472.9,191.3c3.6-3.6,5.9-8.6,5.9-14.1s-2.2-10.5-5.9-14.1l-14.1,14.1L472.9,191.3z"/>
-	<circle class="st5" cx="472.7" cy="163.2" r="2"/>
-	<circle class="st5" cx="472.7" cy="191.2" r="2"/>
-	<circle class="st6" cx="458.7" cy="177.2" r="2"/>
-	<path class="st4" d="M446.7,175.2h-40c0-11,9-20,20-20C437.8,155.2,446.7,164.1,446.7,175.2z"/>
-	<circle class="st5" cx="406.7" cy="175.2" r="2"/>
-	<circle class="st5" cx="446.7" cy="175.2" r="2"/>
-	<circle class="st6" cx="426.7" cy="175.2" r="2"/>
-	<circle class="st4" cx="376.7" cy="175.2" r="20"/>
-	<circle class="st5" cx="376.7" cy="155.2" r="2"/>
-	<circle class="st6" cx="376.7" cy="175.2" r="2"/>
-	<polygon id="Dial_3__x7B__x7B__r:____x23_0_x2C____rr____:____.25____x2C_____o_:_0_x3B_1____x7D__x7D_" class="st6" points="
-		458.7,177.2 463,175.7 472.9,163 460.1,172.9 	"/>
-	<polygon id="Dial_2__x7B__x7B_rotate:_x23_0_x2C_origin:1_x3B_.5_x2C_rotateRatio:0.5_x7D__x7D_" class="st6" points="426.7,175.2 
-		422.7,173.2 406.7,175.2 422.7,177.2 	"/>
-	<polygon id="Dial_1__x7B__x7B_r:_x23_0_x2C_o:.5_x3B_1_x7D__x7D__1_" class="st6" points="376.7,175.2 378.7,171.2 376.7,155.2 
-		374.7,171.2 	"/>
-	<rect id="_x7B__x7B_sx:_x23_0_x7D__x7D__1_" x="18.7" y="201.2" class="st7" width="460" height="5"/>
-	<rect id="_x7B__x7B_scaleX:_x23_0_x2C_origin:1_x3B_1_x7D__x7D__1_" x="18.7" y="211.2" class="st7" width="460" height="5"/>
-	
-		<rect id="_x7B__x7B___sx___:____x23_0_x2C____o__:_____.5__x3B____0.5____x7D__x7D__1_" x="18.7" y="221.2" class="st7" width="460" height="5"/>
-	<rect x="28.3" y="267.2" class="st4" width="48" height="48"/>
-	<line id="_x7B__x7B_g2_x7D__x7D_" class="st4" x1="28.3" y1="315.2" x2="76.3" y2="267.2"/>
-	<line id="_x7B__x7B_g1_x7D__x7D__2_" class="st4" x1="28.7" y1="236.2" x2="468.3" y2="236.2"/>
-	<polyline id="_x7B__x7B_g3_x7D__x7D_" class="st8" points="105.9,315.2 105.9,267.2 119.9,315.2 119.9,267.2 	"/>
-	<path id="_x7B__x7B_g4_x7D__x7D_" class="st8" d="M160.6,272c-7-9-15.3,2.1-16,7c-1,7-0.3,13,10,13c13,0,11,36-11,20"/>
-	<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g1_x7D__x7D__2_" x="24.7" y="232.2" class="st7" width="8" height="8"/>
-	<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g2_x7D__x7D__1_" x="24.3" y="311.2" class="st7" width="8" height="8"/>
-	<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g3_x7D__x7D_" x="101.6" y="311" class="st7" width="8" height="8"/>
-	<rect id="_x7B__x7B_position:_x23_0_x2C_guide:g4_x7D__x7D_" x="156.6" y="268" class="st7" width="8" height="8"/>
+<g id="_x7B__x7B_f:1_x7D__x7D_">
+	<rect x="179.68" y="302.88" class="st0" width="67.32" height="30.25"/>
+	<text id="Text_Sample_2_3_" transform="matrix(1.0068 0 0 1 179.6804 311.9954)"><tspan x="0" y="0" class="st1 st2 st3">Second</tspan><tspan x="0" y="14.4" class="st1 st2 st3">{{#0|c}}</tspan></text>
+	<rect x="180" y="334" class="st6" width="70" height="5"/>
+	<rect id="_x7B__x7B_sx:_x23_0_x7D__x7D__4_" x="180" y="334" class="st1" width="70" height="5"/>
 </g>
 </svg>

@@ -263,7 +263,8 @@
         </div>
       </div>
       <div class="column-right">
-        <div id="dvg_test"></div>
+        <div id="dvg_test_figma"></div>
+        <div id="dvg_test_ai"></div>
       </div>
     </div>
 
@@ -271,7 +272,8 @@
       const dvgInline = new dvg.DVG(document.getElementById('dvg_inline'))
       const dvgExternal = new dvg.DVG(document.getElementById('dvg_external'), { svg: './index.svg' })
       const dvgCSV = new dvg.DVG(document.getElementById('dvg_csv'))
-      const dvgTest = new dvg.DVG(document.getElementById('dvg_test'), { svg: '../tests/svg/figma.svg' })
+      const dvgTestFigma = new dvg.DVG(document.getElementById('dvg_test_figma'), { svg: '../tests/svg/figma.svg' })
+      const dvgTestAI = new dvg.DVG(document.getElementById('dvg_test_ai'), { svg: '../tests/svg/ai.svg' })
 
       let inputs = Array.from(document.getElementsByTagName('input'))
       inputs = inputs.concat(Array.from(document.getElementsByTagName('textarea')))
@@ -299,7 +301,29 @@
           columns: [val('dvgExternal_colA_name'), val('dvgExternal_colB_name')],
         })
 
-        dvgTest.update({
+        dvgTestFigma.update({
+          values: [
+            [
+              val('dataTest_strA_value1'),
+              val('dataTest_numA_value1'),
+              val('dataTest_numB_value1'),
+              val('dataTest_dateA_value1'),
+            ],[
+              val('dataTest_strA_value2'),
+              val('dataTest_numA_value2'),
+              val('dataTest_numB_value2'),
+              val('dataTest_dateA_value2'),
+            ],
+          ],
+          columns: [
+            val('dataTest_strA_name'),
+            val('dataTest_numA_name'),
+            val('dataTest_numB_name'),
+            val('dataTest_dateA_name'),
+          ],
+        })
+
+        dvgTestAI.update({
           values: [
             [
               val('dataTest_strA_value1'),
