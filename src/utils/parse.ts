@@ -279,6 +279,11 @@ export function filtersForElement(element: Element | null) {
   return filters
 }
 
+export function convertCamelToTitle(text: string) {
+  const result = text.replace(/(?<! |^)([A-Z])/g, ' $1') // May not work on Safari due to negative lookbehind
+  return result.charAt(0).toUpperCase() + result.slice(1)
+}
+
 export function requiredFonts(svg: Element) {
   const families = new Map<string, Set<string>>()
   Array.from(svg.querySelectorAll<SVGElement>('text, tspan')).forEach(function (e) {
@@ -291,15 +296,15 @@ export function requiredFonts(svg: Element) {
     }
     const fs = style.getPropertyValue('font-style')
     const fw = style.getPropertyValue('font-weight')
-    const variant = (fs.includes('ital') ? 'i' : '' ) + fw
-    if ( variant ) {
-      families.get( family )?.add( variant )
+    const variant = (fs.includes('ital') ? 'i' : '') + fw
+    if (variant) {
+      families.get(family)?.add(variant)
     }
   })
   const fonts = []
-  for ( let [ font, variants ] of families) {
-    fonts.push( font + ':' + [...variants].join(',') )
+  for (let [font, variants] of families) {
+    fonts.push(font + ':' + [...variants].join(','))
   }
-  console.log( fonts)
+  console.log(fonts)
   return fonts
 }
