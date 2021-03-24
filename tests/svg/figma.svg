@@ -1,64 +1,66 @@
-<svg width="256" height="512" viewBox="0 0 256 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="257" height="512" viewBox="0 0 257 512" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="figma">
-<text id="Text" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="0" y="12.6553">First measure is {{#0|name}}: {{#0}}&#10;</tspan><tspan x="0" y="28.6553">First category is {{@0|name}}: {{@0}}&#10;</tspan><tspan x="0" y="44.6553">First date is {{$0|name}}: {{$0}}</tspan></text>
-<text id="Text_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="0" y="65.6553">{{#1|name}}: {{#1}}&#10;</tspan><tspan x="0" y="81.6553">Compact {{#1|name}}: {{#1|c}}</tspan></text>
-<rect id="Rectangle" y="177" width="123" height="6" fill="#CCCCCC"/>
-<rect id="Rectangle_2" y="165" width="123" height="6" fill="#CCCCCC"/>
-<rect id="Rectangle_3" y="153" width="123" height="6" fill="#CCCCCC"/>
-<rect id="{{scaleX:#0}}" y="153" width="123" height="6" fill="#7E7E7E"/>
+<text id="Text" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="1" y="12.6553">First measure is {{#0|name}}: {{#0}}&#10;</tspan><tspan x="1" y="28.6553">First category is {{@0|name}}: {{@0}}&#10;</tspan><tspan x="1" y="44.6553">First date is {{$0|name}}: {{$0}}</tspan></text>
+<text id="Text_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="10" font-style="italic" font-weight="300" letter-spacing="2px"><tspan x="1" y="60.418">Compact {{#1|name}}: {{#1|c}}</tspan></text>
+<text id="Text_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="10" font-style="italic" letter-spacing="2px"><tspan x="0" y="72.418">{{#1|n}}: {{#1|c}}</tspan></text>
+<text id="Text_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="10" font-style="italic" font-weight="bold" letter-spacing="2px"><tspan x="0" y="84.418">{{#1|n}}: {{#1|c}}</tspan></text>
+<rect id="Rectangle" x="1" y="177" width="123" height="6" fill="#CCCCCC"/>
+<rect id="Rectangle_2" x="1" y="165" width="123" height="6" fill="#CCCCCC"/>
+<rect id="Rectangle_3" x="1" y="153" width="123" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0}}" x="1" y="153" width="123" height="6" fill="#7E7E7E"/>
 <g id="{{filter:Character=Value B}}">
-<text id="Text_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="0" y="329.655">Value B&#10;</tspan><tspan x="0" y="345.655">{{#0}}</tspan></text>
-<rect id="Rectangle_4" y="354" width="60" height="6" fill="#CCCCCC"/>
-<rect id="{{scaleX:#0}}_2" y="354" width="60" height="6" fill="#7E7E7E"/>
+<text id="Text_5" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="1" y="329.655">Value B&#10;</tspan><tspan x="1" y="345.655">{{#0}}</tspan></text>
+<rect id="Rectangle_4" x="1" y="354" width="60" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0}}_2" x="1" y="354" width="60" height="6" fill="#7E7E7E"/>
 </g>
 <g id="{{f:1}}">
-<text id="Text_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="154" y="329.655">Second&#10;</tspan><tspan x="154" y="345.655">{{#0}}</tspan></text>
-<rect id="Rectangle_5" x="154" y="354" width="60" height="6" fill="#CCCCCC"/>
-<rect id="{{scaleX:#0}}_3" x="154" y="354" width="60" height="6" fill="#7E7E7E"/>
+<text id="Text_6" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="155" y="329.655">Second&#10;</tspan><tspan x="155" y="345.655">{{#0}}</tspan></text>
+<rect id="Rectangle_5" x="155" y="354" width="60" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0}}_3" x="155" y="354" width="60" height="6" fill="#7E7E7E"/>
 </g>
-<text id="{{filter:@0=Value B}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="77" y="329.655">Value B&#10;</tspan><tspan x="77" y="345.655">{{#0}}</tspan></text>
-<rect id="Rectangle_6" x="77" y="354" width="60" height="6" fill="#CCCCCC"/>
-<rect id="{{scaleX:#0,filter:@0=Value B}}" x="77" y="354" width="60" height="6" fill="#7E7E7E"/>
-<rect id="{{  sx : #0 ,  origin   :    1 ; .5  }}" y="165" width="123" height="6" fill="#7E7E7E"/>
-<rect id="{{sx:#0,origin:0.5;0.5}}" y="177" width="123" height="6" fill="#7E7E7E"/>
-<path id="{{g1}}" d="M24 207H232" stroke="#CCCCCC" stroke-width="4"/>
-<path id="Vector" d="M24 204H232V210H24V204Z" fill="#D8D8D8" fill-opacity="0.01"/>
-<rect id="{{positionX:#0,guide:g1}}" x="21" y="204" width="6" height="6" fill="#7E7E7E"/>
-<text id="{{positionX:#0,guide:g1,align:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="5.19141" y="220.879">{{#0|c}}</tspan></text>
-<text id="{{align:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="21" y="198.879">{{#0|c,r:0}}</tspan></text>
-<text id="{{align:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="179.461" y="198.879">{{#0|c,r:1}}</tspan></text>
-<text id="{{a:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="100.036" y="198.879">{{#0|c,r:0.5}}</tspan></text>
-<path id="{{g2}}" d="M12.5 279.5L55.5 236.5" stroke="#CCCCCC" stroke-width="4" stroke-linecap="square"/>
-<path id="{{g3}}" d="M70 236V278L89 236V278" stroke="#CCCCCC" stroke-width="4"/>
-<path id="{{g4}}" d="M127 246C125 241 119.5 236 113 236C106.5 236 101 241.5 101.5 246C102 250.5 106 256.5 113 257C120 257.5 127 260.5 127 263.5C127 266.5 128.5 277.5 116.5 277C106.9 276.6 102.5 272.167 101.5 270" stroke="#CCCCCC" stroke-width="4"/>
-<path id="{{g5}}" d="M166 277C166.833 263.5 173.1 236.5 191.5 236.5C214.5 236.5 213.5 253.5 210.5 262.5C207.5 271.5 195 274.5 189 271C183 267.5 179.5 257 185.5 251C191.5 245 201 249 201.5 254.5C202 260 195.5 263 194 260.5" stroke="#CCCCCC" stroke-width="4"/>
-<rect id="{{position:#0,guide:g2}}" x="10" y="276" width="6" height="6" fill="#7E7E7E"/>
-<rect id="{{position:#0,guide:g3}}" x="67" y="233" width="6" height="6" fill="#7E7E7E"/>
-<rect id="{{position:#0,guide:g4}}" x="124" y="243" width="6" height="6" fill="#7E7E7E"/>
-<circle id="Oval" cx="29.5" cy="119.5" r="23.5" stroke="#CCCCCC" stroke-width="4"/>
-<circle id="Oval_2" cx="29" cy="96" r="4" fill="#CCCCCC"/>
-<circle id="Oval_3" cx="29" cy="120" r="4" fill="#7E7E7E"/>
-<path id="{{rotate:#0,origin:0.5;1}}" d="M29 96L31 120L27 120L29 96Z" fill="#7E7E7E"/>
-<path id="Combined Shape" d="M72.9776 119.591V121.091H74.4776V119.591H72.9776ZM118.512 119.591H117.012V121.091H118.512V119.591ZM119.512 119.591V121.091H121.012V119.591H119.512ZM71.9776 119.591H70.4776V121.091H71.9776V119.591ZM95.7447 95.3239C82.3424 95.3239 71.4776 106.189 71.4776 119.591H74.4776C74.4776 107.846 83.9992 98.3239 95.7447 98.3239V95.3239ZM120.012 119.591C120.012 106.189 109.147 95.3239 95.7447 95.3239V98.3239C107.49 98.3239 117.012 107.846 117.012 119.591H120.012ZM118.512 121.091H119.512V118.091H118.512V121.091ZM95.7447 97.3239C108.043 97.3239 118.012 107.293 118.012 119.591H121.012C121.012 105.636 109.699 94.3239 95.7447 94.3239V97.3239ZM73.4776 119.591C73.4776 107.293 83.4469 97.3239 95.7447 97.3239V94.3239C81.7901 94.3239 70.4776 105.636 70.4776 119.591H73.4776ZM71.9776 121.091H72.9776V118.091H71.9776V121.091Z" fill="#CCCCCC"/>
-<circle id="Oval_4" cx="73" cy="120" r="4" fill="#CCCCCC"/>
-<circle id="Oval_5" cx="96" cy="120" r="4" fill="#7E7E7E"/>
-<circle id="Oval_6" cx="137" cy="120" r="4" fill="#7E7E7E"/>
-<circle id="Oval_7" cx="119" cy="120" r="4" fill="#CCCCCC"/>
-<path id="{{rotate:#0,origin:1;0.5,rotateRatio:0.5}}" d="M72 120.333L96 118V122L72 120.333Z" fill="#7E7E7E"/>
+<text id="{{filter:@0=Value B}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0px"><tspan x="78" y="329.655">Value B&#10;</tspan><tspan x="78" y="345.655">{{#0}}</tspan></text>
+<rect id="Rectangle_6" x="78" y="354" width="60" height="6" fill="#CCCCCC"/>
+<rect id="{{scaleX:#0,filter:@0=Value B}}" x="78" y="354" width="60" height="6" fill="#7E7E7E"/>
+<rect id="{{  sx : #0 ,  origin   :    1 ; .5  }}" x="1" y="165" width="123" height="6" fill="#7E7E7E"/>
+<rect id="{{sx:#0,origin:0.5;0.5}}" x="1" y="177" width="123" height="6" fill="#7E7E7E"/>
+<path id="{{g1}}" d="M25 207H233" stroke="#CCCCCC" stroke-width="4"/>
+<path id="Vector" d="M25 204H233V210H25V204Z" fill="#D8D8D8" fill-opacity="0.01"/>
+<rect id="{{positionX:#0,guide:g1}}" x="22" y="204" width="6" height="6" fill="#7E7E7E"/>
+<text id="{{positionX:#0,guide:g1,align:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="6.19141" y="220.879">{{#0|c}}</tspan></text>
+<text id="{{align:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="22" y="198.879">{{#0|c,r:0}}</tspan></text>
+<text id="{{align:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="180.461" y="198.879">{{#0|c,r:1}}</tspan></text>
+<text id="{{a:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="101.036" y="198.879">{{#0|c,r:0.5}}</tspan></text>
+<path id="{{g2}}" d="M13.5 279.5L56.5 236.5" stroke="#CCCCCC" stroke-width="4" stroke-linecap="square"/>
+<path id="{{g3}}" d="M71 236V278L90 236V278" stroke="#CCCCCC" stroke-width="4"/>
+<path id="{{g4}}" d="M128 246C126 241 120.5 236 114 236C107.5 236 102 241.5 102.5 246C103 250.5 107 256.5 114 257C121 257.5 128 260.5 128 263.5C128 266.5 129.5 277.5 117.5 277C107.9 276.6 103.5 272.167 102.5 270" stroke="#CCCCCC" stroke-width="4"/>
+<path id="{{g5}}" d="M167 277C167.833 263.5 174.1 236.5 192.5 236.5C215.5 236.5 214.5 253.5 211.5 262.5C208.5 271.5 196 274.5 190 271C184 267.5 180.5 257 186.5 251C192.5 245 202 249 202.5 254.5C203 260 196.5 263 195 260.5" stroke="#CCCCCC" stroke-width="4"/>
+<rect id="{{position:#0,guide:g2}}" x="11" y="276" width="6" height="6" fill="#7E7E7E"/>
+<rect id="{{position:#0,guide:g3}}" x="68" y="233" width="6" height="6" fill="#7E7E7E"/>
+<rect id="{{position:#0,guide:g4}}" x="125" y="243" width="6" height="6" fill="#7E7E7E"/>
+<circle id="Oval" cx="30.5" cy="119.5" r="23.5" stroke="#CCCCCC" stroke-width="4"/>
+<circle id="Oval_2" cx="30" cy="96" r="4" fill="#CCCCCC"/>
+<circle id="Oval_3" cx="30" cy="120" r="4" fill="#7E7E7E"/>
+<path id="{{rotate:#0,origin:0.5;1}}" d="M30 96L32 120L28 120L30 96Z" fill="#7E7E7E"/>
+<path id="Combined Shape" d="M73.9776 119.591V121.091H75.4776V119.591H73.9776ZM119.512 119.591H118.012V121.091H119.512V119.591ZM120.512 119.591V121.091H122.012V119.591H120.512ZM72.9776 119.591H71.4776V121.091H72.9776V119.591ZM96.7447 95.3239C83.3424 95.3239 72.4776 106.189 72.4776 119.591H75.4776C75.4776 107.846 84.9992 98.3239 96.7447 98.3239V95.3239ZM121.012 119.591C121.012 106.189 110.147 95.3239 96.7447 95.3239V98.3239C108.49 98.3239 118.012 107.846 118.012 119.591H121.012ZM119.512 121.091H120.512V118.091H119.512V121.091ZM96.7447 97.3239C109.043 97.3239 119.012 107.293 119.012 119.591H122.012C122.012 105.636 110.699 94.3239 96.7447 94.3239V97.3239ZM74.4776 119.591C74.4776 107.293 84.4469 97.3239 96.7447 97.3239V94.3239C82.7901 94.3239 71.4776 105.636 71.4776 119.591H74.4776ZM72.9776 121.091H73.9776V118.091H72.9776V121.091Z" fill="#CCCCCC"/>
+<circle id="Oval_4" cx="74" cy="120" r="4" fill="#CCCCCC"/>
+<circle id="Oval_5" cx="97" cy="120" r="4" fill="#7E7E7E"/>
+<circle id="Oval_6" cx="138" cy="120" r="4" fill="#7E7E7E"/>
+<circle id="Oval_7" cx="120" cy="120" r="4" fill="#CCCCCC"/>
+<path id="{{rotate:#0,origin:1;0.5,rotateRatio:0.5}}" d="M73 120.333L97 118V122L73 120.333Z" fill="#7E7E7E"/>
 <g id="Group Rotated">
-<path id="Combined Shape_2" d="M152.513 103.492L151.453 102.432L150.392 103.492L151.453 104.553L152.513 103.492ZM152.617 135.586L151.549 134.532L150.495 135.6L151.563 136.654L152.617 135.586ZM153.328 136.289L152.274 137.356L153.342 138.41L154.396 137.343L153.328 136.289ZM153.221 102.785L154.281 101.724L153.221 100.664L152.16 101.724L153.221 102.785ZM160.682 119.591C160.682 112.89 157.964 106.821 153.574 102.432L151.453 104.553C155.303 108.403 157.682 113.718 157.682 119.591H160.682ZM153.684 136.64C158.009 132.259 160.682 126.236 160.682 119.591H157.682C157.682 125.415 155.343 130.69 151.549 134.532L153.684 136.64ZM154.382 135.221L153.67 134.519L151.563 136.654L152.274 137.356L154.382 135.221ZM158.682 119.591C158.682 125.689 156.233 131.212 152.261 135.235L154.396 137.343C158.899 132.781 161.682 126.51 161.682 119.591H158.682ZM152.16 103.846C156.191 107.877 158.682 113.442 158.682 119.591H161.682C161.682 112.614 158.852 106.295 154.281 101.724L152.16 103.846ZM153.574 104.553L154.281 103.846L152.16 101.724L151.453 102.432L153.574 104.553Z" fill="#CCCCCC"/>
-<circle id="Oval_8" cx="153.176" cy="102.829" r="3.81783" transform="rotate(90 153.176 102.829)" fill="#CCCCCC"/>
-<circle id="Oval_9" cx="152.54" cy="136.704" r="3.81783" transform="rotate(90 152.54 136.704)" fill="#CCCCCC"/>
-<path id="{{rotate:#0,origin:0;1,rr:0.25}}" d="M153 102.5L140 120L137 117L153 102.5Z" fill="#7E7E7E"/>
+<path id="Combined Shape_2" d="M153.513 103.492L152.453 102.432L151.392 103.492L152.453 104.553L153.513 103.492ZM153.617 135.586L152.549 134.532L151.495 135.6L152.563 136.654L153.617 135.586ZM154.328 136.289L153.274 137.356L154.342 138.41L155.396 137.343L154.328 136.289ZM154.221 102.785L155.281 101.724L154.221 100.664L153.16 101.724L154.221 102.785ZM161.682 119.591C161.682 112.89 158.964 106.821 154.574 102.432L152.453 104.553C156.303 108.403 158.682 113.718 158.682 119.591H161.682ZM154.684 136.64C159.009 132.259 161.682 126.236 161.682 119.591H158.682C158.682 125.415 156.343 130.69 152.549 134.532L154.684 136.64ZM155.382 135.221L154.67 134.519L152.563 136.654L153.274 137.356L155.382 135.221ZM159.682 119.591C159.682 125.689 157.233 131.212 153.261 135.235L155.396 137.343C159.899 132.781 162.682 126.51 162.682 119.591H159.682ZM153.16 103.846C157.191 107.877 159.682 113.442 159.682 119.591H162.682C162.682 112.614 159.852 106.295 155.281 101.724L153.16 103.846ZM154.574 104.553L155.281 103.846L153.16 101.724L152.453 102.432L154.574 104.553Z" fill="#CCCCCC"/>
+<circle id="Oval_8" cx="154.176" cy="102.829" r="3.81783" transform="rotate(90 154.176 102.829)" fill="#CCCCCC"/>
+<circle id="Oval_9" cx="153.54" cy="136.704" r="3.81783" transform="rotate(90 153.54 136.704)" fill="#CCCCCC"/>
+<path id="{{rotate:#0,origin:0;1,rr:0.25}}" d="M154 102.5L141 120L138 117L154 102.5Z" fill="#7E7E7E"/>
 </g>
 <g id="{{r:#0,s:#0,p:#0,g:g5,o:0.5;0.5}}">
-<circle id="Oval_10" cx="166" cy="277" r="12" fill="#7E7E7E"/>
-<rect id="{{s:#0,origin:0.5;1}}" x="160" y="245" width="12" height="12" fill="#7E7E7E"/>
-<rect id="{{s:#0,origin:0;0.5}}" x="186" y="271" width="12" height="12" fill="#7E7E7E"/>
-<rect id="{{s:#0,origin:0.5;0}}" x="160" y="297" width="12" height="12" fill="#7E7E7E"/>
-<rect id="{{s:#0,origin:1;0.5}}" x="134" y="271" width="12" height="12" fill="#7E7E7E"/>
+<circle id="Oval_10" cx="167" cy="277" r="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:0.5;1}}" x="161" y="245" width="12" height="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:0;0.5}}" x="187" y="271" width="12" height="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:0.5;0}}" x="161" y="297" width="12" height="12" fill="#7E7E7E"/>
+<rect id="{{s:#0,origin:1;0.5}}" x="135" y="271" width="12" height="12" fill="#7E7E7E"/>
 </g>
-<rect id="Rectangle 8" x="179" y="101" width="36" height="36" stroke="#CCCCCC" stroke-width="4"/>
-<rect id="{{a:#0}}" x="183" y="105" width="28" height="28" fill="#7E7E7E"/>
+<rect id="Rectangle 8" x="180" y="101" width="36" height="36" stroke="#CCCCCC" stroke-width="4"/>
+<rect id="{{a:#0}}" x="184" y="105" width="28" height="28" fill="#7E7E7E"/>
 </g>
 </svg>

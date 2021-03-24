@@ -10,6 +10,7 @@ export const RE_NUMBER = /[-+]?[0-9]*\.?[0-9]+/g
 export const RE_NUMBERONLY = /^[-+]?[0-9]*\.?[0-9]+$/g
 export const RE_COLUMNID = /^[@#$][0-9]+$/g
 export const RE_CONDITION = /([^<>=]+)([<>=]+)([^<>=]+)/
+export const RE_FONTFAMILY = /font-family:['"]*([^'";]*)['"]*/g
 
 export const TRIM_CHARS = [' ', '_']
 export const RANGE_TRIM_CHARS = [' ', '_', '-']
@@ -276,4 +277,29 @@ export function filtersForElement(element: Element | null) {
     element = element.parentElement
   }
   return filters
+}
+
+export function requiredFonts(svg: Element) {
+  const families = new Map<string, Set<string>>()
+  Array.from(svg.querySelectorAll<SVGElement>('text, tspan')).forEach(function (e) {
+    const style = window.getComputedStyle(e)
+    let family = style.getPropertyValue('font-family')
+    family = family.replace(/"/g, '')
+    family = family.replace(/'/g, '')
+    if (!families.has(family)) {
+      families.set(family, new Set())
+    }
+    const fs = style.getPropertyValue('font-style')
+    const fw = style.getPropertyValue('font-weight')
+    const variant = (fs.includes('ital') ? 'i' : '' ) + fw
+    if ( variant ) {
+      families.get( family )?.add( variant )
+    }
+  })
+  const fonts = []
+  for ( let [ font, variants ] of families) {
+    fonts.push( font + ':' + [...variants].join(',') )
+  }
+  console.log( fonts)
+  return fonts
 }

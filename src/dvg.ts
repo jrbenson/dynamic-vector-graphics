@@ -4,7 +4,7 @@ import TransformComponent from './components/transform'
 import StyleComponent from './components/style'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
-import { cleanSVG } from './utils/svg'
+import { cleanSVG, initFonts } from './utils/svg'
 import * as parse from './utils/parse'
 
 interface DVGOptions {
@@ -74,6 +74,7 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     cleanSVG(svg, this.opts.clean.toString().split(','))
+    initFonts( svg )
 
     // Wrap everything in a group
     // const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')

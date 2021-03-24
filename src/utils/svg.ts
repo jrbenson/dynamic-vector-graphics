@@ -1,4 +1,5 @@
-import { decodeIllustrator } from './parse'
+import { decodeIllustrator, requiredFonts } from './parse'
+import WebFont from 'webfontloader'
 
 export function getAbsoluteOrigin(element: SVGGraphicsElement, relativeOrigin: { x: number; y: number }) {
   const bbox = element.getBBox()
@@ -14,7 +15,7 @@ export function wrapWithGroup(element: SVGGraphicsElement, transferStyles: boole
       group.classList.add(...element.classList)
       element.classList.remove(...element.classList)
     }
-    if (element.style.cssText) { 
+    if (element.style.cssText) {
       group.style.cssText = element.style.cssText
       element.style.cssText = ''
     }
@@ -72,6 +73,17 @@ export function cleanSVG(svg: Element, methods: string[] = ['all']) {
   if (methods.includes('all') || methods.includes('decode')) {
     svg.querySelectorAll('*[id]').forEach(function (elem) {
       elem.id = decodeIllustrator(elem.id)
+    })
+  }
+}
+
+export function initFonts(svg: Element) {
+  const fonts = requiredFonts(svg)
+  if (fonts.length > 0) {
+    WebFont.load({
+      google: {
+        families: fonts,
+      },
     })
   }
 }
