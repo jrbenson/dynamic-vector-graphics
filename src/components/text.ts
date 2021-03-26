@@ -8,11 +8,22 @@ import { DVG } from '../dvg'
  */
 export default class TextComponent extends Component {
   template: string | null
+  initialX: number
+  initialY: number
 
   constructor(element: Element) {
     super(element)
     this.template = this.element.textContent
 
+    const svgElem = this.element as SVGGraphicsElement
+    const bbox = svgElem.getBBox()
+    this.initialX = bbox.x
+    this.initialY = bbox.y
+
+    this.setAnchor()
+  }
+
+  private setAnchor() {
     const svgElem = this.element as SVGGraphicsElement
     const bbox = svgElem.getBBox()
     let anchor = undefined
@@ -37,10 +48,10 @@ export default class TextComponent extends Component {
         case 'start':
           break
         case 'middle':
-          svgElem.setAttribute('x', bbox.x + bbox.width / 2 + 'px')
+          svgElem.setAttribute('x', this.initialX + bbox.width / 2 + 'px')
           break
         case 'end':
-          svgElem.setAttribute('x', bbox.x + bbox.width + 'px')
+          svgElem.setAttribute('x', this.initialX + bbox.width + 'px')
           break
       }
     }
@@ -60,6 +71,8 @@ export default class TextComponent extends Component {
   }
 
   apply(data: DataView, dynSVG: DVG) {
+    this.element.textContent = this.template
+    this.setAnchor()
     if (this.template) {
       this.element.textContent = this.template.replace(
         parse.RE_DOUBLEBRACE,

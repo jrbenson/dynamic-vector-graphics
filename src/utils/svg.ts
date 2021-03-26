@@ -83,7 +83,9 @@ export function initFonts(svg: Element) {
     WebFont.load({
       google: {
         families: fonts,
-      },
+      }
     })
+    return true
   }
+  return false
 }

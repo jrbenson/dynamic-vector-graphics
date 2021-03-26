@@ -74,7 +74,7 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     cleanSVG(svg, this.opts.clean.toString().split(','))
-    initFonts( svg )
+    const fontsNeeded = initFonts( svg )
 
     // Wrap everything in a group
     // const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
@@ -84,6 +84,9 @@ export class DVG {
     this.refs = parse.elementsByName(svg)
     this.components = DVG.getComponents(svg)
 
+    if( fontsNeeded ) {
+      window.setTimeout( this.apply.bind(this), 1000 )
+    }
     this.initComplete = true
   }
 
