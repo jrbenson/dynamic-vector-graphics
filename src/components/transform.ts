@@ -12,33 +12,39 @@ interface Transform {
 
 class Guide {
   element: SVGGraphicsElement
-  tag: string
-  linear: boolean
+  tag: string = ''
+  linear: boolean = true
   constructor(element: SVGGraphicsElement) {
     this.element = element
-    this.tag = this.element.tagName
-    switch (this.tag) {
-      case 'polyline':
-      case 'path':
-        this.linear = false
-        break
-      default:
-        this.linear = true
+    if (this.element) {
+      this.tag = this.element.tagName
+      switch (this.tag) {
+        case 'polyline':
+        case 'path':
+          this.linear = false
+          break
+        default:
+          this.linear = true
+      }
     }
   }
+
   get(t: number) {
-    switch (this.tag) {
-      case 'polyline':
-      case 'path':
-      case 'line':
-        const geom = this.element as SVGGeometryElement
-        let cur_pos = geom.getPointAtLength(geom.getTotalLength() * t)
-        let beg_pos = geom.getPointAtLength(0)
-        return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
-      default:
-        const gbox = this.element.getBBox()
-        return { x: gbox.width * t, y: gbox.height * t }
+    if (this.element) {
+      switch (this.tag) {
+        case 'polyline':
+        case 'path':
+        case 'line':
+          const geom = this.element as SVGGeometryElement
+          let cur_pos = geom.getPointAtLength(geom.getTotalLength() * t)
+          let beg_pos = geom.getPointAtLength(0)
+          return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
+        default:
+          const gbox = this.element.getBBox()
+          return { x: gbox.width * t, y: gbox.height * t }
+      }
     }
+    return { x: 0, y: 0 }
   }
 }
 
@@ -133,7 +139,7 @@ export default class TransformComponent extends Component {
 
     svgElem.setAttribute('vector-effect', 'non-scaling-stroke')
     let transProps: Array<string> = []
-    transProps.concat( ...svgElem.style.transitionProperty.split(',') )
+    transProps.concat(...svgElem.style.transitionProperty.split(','))
     transProps.push('transform')
     svgElem.style.transitionProperty = transProps.join(',')
     svgElem.style.transitionDuration = '1s'
