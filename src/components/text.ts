@@ -10,6 +10,7 @@ export default class TextComponent extends Component {
   template: string | null
   initialX: number
   initialY: number
+  anchor: string | undefined
 
   constructor(element: Element) {
     super(element)
@@ -21,30 +22,22 @@ export default class TextComponent extends Component {
     this.initialY = bbox.y
 
     this.setAnchor()
+    this.setOffset()
   }
 
   private setAnchor() {
     const svgElem = this.element as SVGGraphicsElement
-    const bbox = svgElem.getBBox()
-    let anchor = undefined
-    let key = parse.firstObjectKey(this.opts, ['align', 'a'])
-    if (key) {
-      anchor = this.opts[key].toString()
-    } else {
-      const p = this.element.parentElement
-      if (p) {
-        const pOpts = parse.syntax(p.id)?.opts
-        if (pOpts) {
-          key = parse.firstObjectKey(pOpts, ['align', 'a'])
-          if (key) {
-            anchor = pOpts[key].toString()
-          }
-        }
-      }
+    this.anchor = parse.textAlignmentForElement(svgElem)
+    if (this.anchor !== undefined) {
+      svgElem.setAttribute('text-anchor', this.anchor)
     }
-    if (anchor !== undefined) {
-      svgElem.setAttribute('text-anchor', anchor)
-      switch (anchor) {
+  }
+
+  private setOffset() {
+    const svgElem = this.element as SVGGraphicsElement
+    const bbox = svgElem.getBBox()
+    if (this.anchor !== undefined) {
+      switch (this.anchor) {
         case 'start':
           break
         case 'middle':
@@ -72,7 +65,7 @@ export default class TextComponent extends Component {
 
   apply(data: DataView, dynSVG: DVG) {
     this.element.textContent = this.template
-    this.setAnchor()
+    this.setOffset()
     if (this.template) {
       this.element.textContent = this.template.replace(
         parse.RE_DOUBLEBRACE,
@@ -84,23 +77,23 @@ export default class TextComponent extends Component {
             const rkey = parse.firstObjectKey(syntax.opts, ['range', 'r'])
             if (nkey && syntax.opts[nkey]) {
               return col.name
-            } else if ( rkey ) {
+            } else if (rkey) {
               let ratio = 1.0
-              if ( syntax.opts[rkey] !== undefined ) {
-                ratio = Number( syntax.opts[rkey] )
-                const format = data.getColumnFormat( col.name )
-                const min = data.min( col.name )
-                const max = data.max( col.name )
-                if ( min !== undefined && max !== undefined ) {
-                  const value = min + ratio * ( max - min )
+              if (syntax.opts[rkey] !== undefined) {
+                ratio = Number(syntax.opts[rkey])
+                const format = data.getColumnFormat(col.name)
+                const min = data.min(col.name)
+                const max = data.max(col.name)
+                if (min !== undefined && max !== undefined) {
+                  const value = min + ratio * (max - min)
                   let str_value
                   const ckey = parse.firstObjectKey(syntax.opts, ['compact', 'c'])
                   if (ckey && syntax.opts[ckey]) {
-                    str_value = format.compactFormat( value )
+                    str_value = format.compactFormat(value)
                   } else {
-                    str_value = format.format( value )
+                    str_value = format.format(value)
                   }
-                  if ( str_value !== undefined ) {
+                  if (str_value !== undefined) {
                     return str_value
                   }
                 }

@@ -248,6 +248,19 @@ export function columnFromData(col_str: string, data: DataView) {
   return col
 }
 
+export function textAlignmentForElement(element: Element | null) {
+  while (element && element.tagName !== 'SVG') {
+    if (elementHasOptions(element, ['textAlign', 'ta'])) {
+      let syn = syntax(element.id)
+      let key = firstObjectKey(syn.opts, ['textAlign', 'ta'])
+      if (key) {
+        return syn.opts[key].toString()
+      }
+    }
+    element = element.parentElement
+  }
+}
+
 export function condition(text: string, clean: boolean = true): Condition | undefined {
   const matches = text.match(RE_CONDITION)
   if (matches && matches.length >= 4) {
