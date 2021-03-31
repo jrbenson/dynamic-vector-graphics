@@ -351,7 +351,7 @@ export function requiredFonts(svg: Element) {
     let family = style.getPropertyValue('font-family')
     family = family.replace(/"/g, '')
     family = family.replace(/'/g, '')
-    if (!GENERIC_FONT_FAMILIES.includes(family)) {
+    if (!GENERIC_FONT_FAMILIES.includes(family.toLowerCase())) {
       if (family.includes('-')) {
         const inferred = inferFont(family)
         family = inferred.family
