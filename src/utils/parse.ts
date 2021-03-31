@@ -29,6 +29,7 @@ export const GENERIC_FONT_FAMILIES = [
   'emoji',
   'math',
   'fangsong',
+  'times',
 ]
 
 const COL_ID_TYPE_PREFIXES: Record<string, ColumnType> = {
