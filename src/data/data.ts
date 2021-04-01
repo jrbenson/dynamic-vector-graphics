@@ -1,7 +1,7 @@
 import { parseFormat, defaultFormatter, Formatter, SourceFormat } from './formats'
 import { Column, ColumnType } from './column'
 import { Row, Value } from './row'
-import { Filter } from "./filter"
+import { Filter } from './filter'
 import * as parse from '../utils/parse'
 
 import * as Papa from 'papaparse'
@@ -146,10 +146,15 @@ export class Data {
     this.extractColumnMetadata()
 
     if (source.formats !== undefined) {
-      for (let i = 0; i < source.columns.length; i += 1) {
+      for (let i = 0; i < this.cols.length; i += 1) {
         if (i < source.formats.length) {
-          const col = source.columns[i]
-          this.setColumnFormat(col, parseFormat(source.formats[i]))
+          const col = this.getColumn(i)
+          if (col !== undefined) {
+            const format = source.formats[i]
+            if (format) {
+              this.setColumnFormat(col.name, parseFormat(format))
+            }
+          }
         }
       }
     }
@@ -227,19 +232,19 @@ export class Data {
     if (col) {
       const val = this.get(row, col.name)
       if (val !== undefined) {
-        if (col.format) {
-          if (compact) {
-            return col.format.compactFormat(val) as string
+          if (col.format) {
+            if (compact) {
+              return col.format.compactFormat(val) as string
+            } else {
+              return col.format.format(val) as string
+            }
           } else {
-            return col.format.format(val) as string
+            if (compact) {
+              return defaultFormatter.compactFormat(val) as string
+            } else {
+              return defaultFormatter.format(val) as string
+            }
           }
-        } else {
-          if (compact) {
-            return defaultFormatter.compactFormat(val) as string
-          } else {
-            return defaultFormatter.format(val) as string
-          }
-        }
       }
     }
     return '???'
@@ -403,7 +408,7 @@ export class Data {
       index.push(i)
     }
     return new DataView(this, index)
-  } 
+  }
 
   filteredView(filter: Filter | string): DataView {
     return this.fullView().filteredView(filter)

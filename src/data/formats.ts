@@ -229,13 +229,34 @@ function getFormatter(format: SourceFormat) {
   return {
     format: (value: number | string | Date) => {
       if (typeof value === 'number') {
-        return new Intl.NumberFormat(navigator.language, format_opts).format(value)
+        try {
+          return new Intl.NumberFormat(navigator.language, format_opts).format(value)
+        } catch (e) {
+          console.error(`DVG ${e.name}: ${e.message} Using defaults.`)
+          delete format_opts.minimumSignificantDigits
+          delete format_opts.maximumSignificantDigits
+          delete format_opts.minimumFractionDigits
+          delete format_opts.maximumFractionDigits
+          delete format_opts.minimumIntegerDigits
+
+          return new Intl.NumberFormat(navigator.language, format_opts).format(value)
+        }
       }
       return '' + value
     },
     compactFormat: function (value: number | string | Date) {
       if (typeof value === 'number') {
-        return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+        try {
+          return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+        } catch (e) {
+          console.error(`DVG ${e.name}: ${e.message} Using defaults.`)
+          delete compact_format_opts.minimumSignificantDigits
+          delete compact_format_opts.maximumSignificantDigits
+          delete compact_format_opts.minimumFractionDigits
+          delete compact_format_opts.maximumFractionDigits
+          delete compact_format_opts.minimumIntegerDigits
+          return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+        }
       }
       return '' + value
     },
