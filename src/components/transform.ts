@@ -36,7 +36,11 @@ class Guide {
         case 'path':
         case 'line':
           const geom = this.element as SVGGeometryElement
-          let cur_pos = geom.getPointAtLength(geom.getTotalLength() * t)
+          let end_length = 0
+          if (isFinite(t)) {
+            end_length = geom.getTotalLength() * t
+          }
+          let cur_pos = geom.getPointAtLength(end_length)
           let beg_pos = geom.getPointAtLength(0)
           return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
         default:
