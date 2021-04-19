@@ -1,16 +1,13 @@
 import Component from './components/component'
-import TextComponent from './components/text'
-import TransformComponent from './components/transform'
-import StyleComponent from './components/style'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
 import { cleanSVG, initFonts } from './utils/svg'
+import { getComponents } from './utils/components'
 import * as parse from './utils/parse'
 
 interface DVGOptions {
   svg: string
   clean: string
-  types: string
 }
 
 /**
@@ -42,7 +39,6 @@ export class DVG {
     this.opts = {
       svg: 'index.svg',
       clean: 'all',
-      types: 'all',
     }
     this.opts = { ...this.opts, ...opts }
 
@@ -76,8 +72,8 @@ export class DVG {
   private initSVG(svg: SVGSVGElement) {
     cleanSVG(svg, this.opts.clean.toString().split(','))
     let fontsNeeded = false
-    if ( !this.fontsLoaded ) {
-      initFonts( svg )
+    if (!this.fontsLoaded) {
+      initFonts(svg)
     }
 
     // Wrap everything in a group
@@ -86,33 +82,14 @@ export class DVG {
     // svg.append(group)
 
     this.refs = parse.elementsByName(svg)
-    this.components = DVG.getComponents(svg)
+    this.components = getComponents(svg)
 
-    if( !this.fontsLoaded && fontsNeeded ) {
-      window.setTimeout( this.apply.bind(this), 1000 )
+    if (!this.fontsLoaded && fontsNeeded) {
+      window.setTimeout(this.apply.bind(this), 1000)
     }
     this.initComplete = true
     this.fontsLoaded = true
     this.apply()
-  }
-
-  /**
-   * Performs cleaning tasks on SVG to allow for better dynamic behavior.
-   * @param svg SVG element to perform cleaning on.
-   * @param types Values: all | text | transforms | styles
-   */
-  static getComponents(svg: Element, types: string[] | undefined = ['all']): Array<Component> {
-    let components: Array<Component> = []
-    if (types.includes('all') || types.includes('text')) {
-      components.push(...TextComponent.getComponents(svg))
-    }
-    if (types.includes('all') || types.includes('transforms')) {
-      components.push(...TransformComponent.getComponents(svg))
-    }
-    if (types.includes('all') || types.includes('styles')) {
-      components.push(...StyleComponent.getComponents(svg))
-    }
-    return components
   }
 
   /**

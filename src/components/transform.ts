@@ -4,52 +4,11 @@ import { DataView } from '../data/data'
 import Easer from '../utils/easer'
 import Component from './component'
 import { DVG } from '../dvg'
+import { Guide } from './guide'
 
 interface Transform {
   keys: Array<string>
   get: (x: number, opts: Record<string, string | number | boolean>, guide?: Guide) => string
-}
-
-class Guide {
-  element: SVGGraphicsElement
-  tag: string = ''
-  linear: boolean = true
-  constructor(element: SVGGraphicsElement) {
-    this.element = element
-    if (this.element) {
-      this.tag = this.element.tagName
-      switch (this.tag) {
-        case 'polyline':
-        case 'path':
-          this.linear = false
-          break
-        default:
-          this.linear = true
-      }
-    }
-  }
-
-  get(t: number) {
-    if (this.element) {
-      switch (this.tag) {
-        case 'polyline':
-        case 'path':
-        case 'line':
-          const geom = this.element as SVGGeometryElement
-          let end_length = 0
-          if (isFinite(t)) {
-            end_length = geom.getTotalLength() * t
-          }
-          let cur_pos = geom.getPointAtLength(end_length)
-          let beg_pos = geom.getPointAtLength(0)
-          return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
-        default:
-          const gbox = this.element.getBBox()
-          return { x: gbox.width * t, y: gbox.height * t }
-      }
-    }
-    return { x: 0, y: 0 }
-  }
 }
 
 /**
@@ -169,7 +128,7 @@ export default class TransformComponent extends Component {
   apply(data: DataView, dynSVG: DVG) {
     const svgElem = this.element as SVGGraphicsElement
 
-    const gkey = parse.firstObjectKey(this.opts, ['guide', 'g'])
+    const gkey = parse.firstObjectKey(this.opts, Guide.keys)
     if (gkey && !this.guide) {
       this.guide = new Guide(dynSVG.refs.get(this.opts[gkey].toString()) as SVGGraphicsElement)
     }
@@ -196,7 +155,10 @@ export default class TransformComponent extends Component {
         if (col?.stats) {
           const val = data.get(0, col.name) as number
           if (val !== undefined) {
-            const norm = (val - col.stats.min) / (col.stats.max - col.stats.min)
+            let norm = (val - col.stats.min) / (col.stats.max - col.stats.min)
+            if (!isFinite(norm)) {
+              norm = 0
+            }
             if (this.guide) {
               transform_strs.push(transform.get(norm, this.opts, this.guide))
             } else {
