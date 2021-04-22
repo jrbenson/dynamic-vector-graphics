@@ -30,6 +30,7 @@ export const GENERIC_FONT_FAMILIES = [
   'math',
   'fangsong',
   'times',
+  'times new roman',
 ]
 
 const COL_ID_TYPE_PREFIXES: Record<string, ColumnType> = {
