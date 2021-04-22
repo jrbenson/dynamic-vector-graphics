@@ -27,9 +27,11 @@ export class Guide {
         case 'line':
           const geom = this.element as SVGGeometryElement
           let end_length = 0
-          if (isFinite(t)) {
-            end_length = geom.getTotalLength() * t
-          }
+          try {
+            if (isFinite(t)) {
+              end_length = geom.getTotalLength() * t
+            }
+          } catch {}
           let cur_pos = geom.getPointAtLength(end_length)
           let beg_pos = geom.getPointAtLength(0)
           return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
