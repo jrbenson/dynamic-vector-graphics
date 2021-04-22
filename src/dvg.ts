@@ -21,7 +21,6 @@ export class DVG {
 
   private element: Element
   private initComplete: boolean = false // Flag to help delay update execution
-  private fontsLoaded: boolean = false
   private components: Component[] = []
 
   /**
@@ -71,10 +70,7 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     cleanSVG(svg, this.opts.clean.toString().split(','))
-    let fontsNeeded = false
-    if (!this.fontsLoaded) {
-      initFonts(svg)
-    }
+    const fontsNeeded = initFonts(svg)
 
     // Wrap everything in a group
     // const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
@@ -84,11 +80,10 @@ export class DVG {
     this.refs = parse.elementsByName(svg)
     this.components = getComponents(svg)
 
-    if (!this.fontsLoaded && fontsNeeded) {
+    if (fontsNeeded) {
       window.setTimeout(this.apply.bind(this), 1000)
     }
     this.initComplete = true
-    this.fontsLoaded = true
     this.apply()
   }
 
