@@ -113,11 +113,11 @@ export class DVG {
    * Handle resize events or other layout changes.
    */
   private draw(): void {
-    this.initComplete = false
-    const htmlElement = this.element as HTMLElement
-    htmlElement.style.transition = ''
-    htmlElement.style.opacity = '0'
-    this.init()
+    // this.initComplete = false
+    // const htmlElement = this.element as HTMLElement
+    // htmlElement.style.transition = ''
+    // htmlElement.style.opacity = '0'
+    // this.init()
   }
 
   /**
