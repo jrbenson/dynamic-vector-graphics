@@ -311,7 +311,15 @@ export function filtersForElement(element: Element | null) {
 }
 
 export function convertCamelToTitle(text: string) {
-  const result = text.replace(/(?<! |^)([A-Z])/g, ' $1') // May not work on Safari due to negative lookbehind
+  //const result = text.replace(/(?<! |^)([A-Z])/g, ' $1') // May not work on Safari due to negative lookbehind
+  let result = text.charAt(0)
+  for (let i = 1; i < text.length; i += 1) {
+    if (/[a-z]/.test(text.charAt(i - 1)) && /[A-Z]/.test(text.charAt(i))) {
+      result += ' ' + text.charAt(i)
+    } else {
+      result += text.charAt(i)
+    }
+  }
   return result.charAt(0).toUpperCase() + result.slice(1)
 }
 
