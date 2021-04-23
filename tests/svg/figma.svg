@@ -1,19 +1,27 @@
 <svg width="256" height="512" viewBox="0 0 256 512" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="figma">
-<text id="{{align:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="83" y="7.87939">{{#0|name}}&#10;</tspan><tspan x="83" y="27.8794">{{@0|name}}&#10;</tspan><tspan x="83" y="47.8794">{{$0|n}}</tspan></text>
+<g id="Advanced Text {{textAlign:end}}">
+<g id="Multi-part Text">
+<text id="{{textAlign:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" font-weight="bold" letter-spacing="0px"><tspan x="83" y="7.87939">{{#0|name}}&#10;</tspan><tspan x="83" y="27.8794">{{@0|name}}&#10;</tspan><tspan x="83" y="47.8794">{{$0|n}}</tspan></text>
+<g id="Static Labels">
 <text id="Text" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="5" letter-spacing="0px"><tspan x="83" y="15.4397">First Numeric</tspan></text>
 <text id="Text_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="5" letter-spacing="0px"><tspan x="83" y="35.4397">First Character</tspan></text>
 <text id="Text_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="5" letter-spacing="0px"><tspan x="83" y="55.4397">First Date</tspan></text>
-<text id="{{align:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" font-style="italic" letter-spacing="0px"><tspan x="27.8398" y="10.6553">{{#0|c}}&#10;</tspan><tspan x="37.4375" y="30.6553">{{@0}}&#10;</tspan><tspan x="41" y="50.6553">{{$0}}</tspan></text>
+</g>
+<g id="Dividers">
 <path id="Vector 1" d="M77 1V15.5" stroke="#CCCCCC"/>
 <path id="Vector 2" d="M77 21V35.5" stroke="#CCCCCC"/>
 <path id="Vector 3" d="M77 41V55.5" stroke="#CCCCCC"/>
-<text id="{{align:end}}_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-weight="300" letter-spacing="1px"><tspan x="189.516" y="16.2344">{{#1|n}}: {{#1|c}}</tspan></text>
-<text id="{{align:end}}_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-weight="300" letter-spacing="1px"><tspan x="196.914" y="7.23438">{{#1|n}}: {{#1}}</tspan></text>
-<text id="{{align:end}}_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-style="italic" letter-spacing="1px"><tspan x="150.414" y="25.2344">{{#1|n}} (min): {{#1|c,r:0}}</tspan></text>
-<text id="{{align:end}}_5" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-style="italic" font-weight="bold" letter-spacing="1px"><tspan x="147.828" y="34.2344">{{#1|n}} (max): {{#1|c,r:1}}</tspan></text>
-<text id="{{filter:2,align:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Covered By Your Grace" font-size="8" letter-spacing="0em"><tspan x="184.922" y="43.8867">Index 2 {{#0|n}}: {{#0|c}}</tspan></text>
-<text id="{{align:end,filter:@0=Value B}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Covered By Your Grace" font-size="8" letter-spacing="0em"><tspan x="184.523" y="52.8867">Value B {{#0|n}}: {{#0|c}}</tspan></text>
+</g>
+<text id="Values" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" font-style="italic" letter-spacing="0px"><tspan x="27.8398" y="10.6553">{{#0|c}}&#10;</tspan><tspan x="37.4375" y="30.6553">{{@0}}&#10;</tspan><tspan x="41" y="50.6553">{{$0}}</tspan></text>
+</g>
+</g>
+<text id="{{ta:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-weight="300" letter-spacing="1px"><tspan x="189.516" y="16.2344">{{#1|n}}: {{#1|c}}</tspan></text>
+<text id="{{ta:end}}_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-weight="300" letter-spacing="1px"><tspan x="196.914" y="7.23438">{{#1|n}}: {{#1}}</tspan></text>
+<text id="{{ta:end}}_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-style="italic" letter-spacing="1px"><tspan x="150.414" y="25.2344">{{#1|n}} (min): {{#1|c,r:0}}</tspan></text>
+<text id="{{ta:end}}_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="8" font-style="italic" font-weight="bold" letter-spacing="1px"><tspan x="147.828" y="34.2344">{{#1|n}} (max): {{#1|c,r:1}}</tspan></text>
+<text id="{{filter:2,textAlign:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Covered By Your Grace" font-size="8" letter-spacing="0em"><tspan x="184.922" y="43.8867">Index 2 {{#0|n}}: {{#0|c}}</tspan></text>
+<text id="{{ta:end,filter:@0=Value B}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Covered By Your Grace" font-size="8" letter-spacing="0em"><tspan x="184.523" y="52.8867">Value B {{#0|n}}: {{#0|c}}</tspan></text>
 <rect id="Rectangle" y="154" width="123" height="6" fill="#CCCCCC"/>
 <rect id="Rectangle_2" y="142" width="123" height="6" fill="#CCCCCC"/>
 <rect id="Rectangle_3" y="130" width="123" height="6" fill="#CCCCCC"/>
@@ -36,10 +44,10 @@
 <path id="{{g1}}" d="M24 184H232" stroke="#CCCCCC" stroke-width="4"/>
 <path id="Vector" d="M24 181H232V187H24V181Z" fill="#D8D8D8" fill-opacity="0.01"/>
 <rect id="{{positionX:#0,guide:g1}}" x="21" y="181" width="6" height="6" fill="#7E7E7E"/>
-<text id="{{positionX:#0,guide:g1,align:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="5.19141" y="197.879">{{#0|c}}</tspan></text>
-<text id="{{align:start}}_2" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="21" y="175.879">{{#0|c,r:0}}</tspan></text>
-<text id="{{align:end}}_6" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="179.461" y="175.879">{{#0|c,r:1}}</tspan></text>
-<text id="{{a:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="100.036" y="175.879">{{#0|c,r:0.5}}</tspan></text>
+<text id="{{positionX:#0,guide:g1,ta:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="5.19141" y="197.879">{{#0|c}}</tspan></text>
+<text id="{{ta:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="21" y="175.879">{{#0|c,r:0}}</tspan></text>
+<text id="{{textAlign:end}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="179.461" y="175.879">{{#0|c,r:1}}</tspan></text>
+<text id="{{ta:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="100.036" y="175.879">{{#0|c,r:0.5}}</tspan></text>
 <path id="{{g2}}" d="M12.5 256.5L55.5 213.5" stroke="#CCCCCC" stroke-width="4" stroke-linecap="square"/>
 <path id="{{g3}}" d="M70 213V255L89 213V255" stroke="#CCCCCC" stroke-width="4"/>
 <path id="{{g4}}" d="M127 223C125 218 119.5 213 113 213C106.5 213 101 218.5 101.5 223C102 227.5 106 233.5 113 234C120 234.5 127 237.5 127 240.5C127 243.5 128.5 254.5 116.5 254C106.9 253.6 102.5 249.167 101.5 247" stroke="#CCCCCC" stroke-width="4"/>
