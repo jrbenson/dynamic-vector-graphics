@@ -181,4 +181,19 @@ export default class TransformComponent extends Component {
       this.nonlinear_pos_group.style.transform = 'translate(' + coord.x + 'px,' + coord.y + 'px)'
     }
   }
+
+  draw( state: DVG) {
+    // console.log( this.origin, this.bbox, this.guide )
+    const svgElem = this.element as SVGGraphicsElement
+    svgElem.style.transform = ''
+    this.bbox = svgElem.getBBox()
+    this.origin = this.getOrigin()
+    svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
+    // const gkey = parse.firstObjectKey(this.opts, Guide.keys)
+    // if (gkey) {
+    //   console.log( 'YES')
+    //   this.guide = new Guide(state.refs.get(this.opts[gkey].toString()) as SVGGraphicsElement)
+    // }
+    // console.log( this.origin, this.bbox, this.guide )
+  }
 }

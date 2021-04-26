@@ -33,11 +33,9 @@ export default class Component {
     return []
   }
 
-  /**
-   * Override with static method for selecting viable elements for this dynamic from SVG.
-   * @param {DataFrame} data The root SVG element to start the search from.
-   */
   apply(data: DataView, state: DVG ) {}
+
+  draw(state: DVG ) {}
 }
 
 

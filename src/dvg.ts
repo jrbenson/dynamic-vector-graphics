@@ -113,6 +113,10 @@ export class DVG {
    * Handle resize events or other layout changes.
    */
   private draw(): void {
+    for (let comp of this.components) {
+      comp.draw(this)
+    }
+    this.apply()
     // this.initComplete = false
     // const htmlElement = this.element as HTMLElement
     // htmlElement.style.transition = ''
