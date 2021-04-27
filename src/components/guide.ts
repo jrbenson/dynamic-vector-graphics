@@ -1,3 +1,5 @@
+import { getBBox } from '../utils/svg'
+
 export class Guide {
   static keys: string[] = ['guide', 'g']
 
@@ -36,7 +38,7 @@ export class Guide {
           let beg_pos = geom.getPointAtLength(0)
           return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
         default:
-          const gbox = this.element.getBBox()
+          const gbox = getBBox(this.element)
           return { x: gbox.width * t, y: gbox.height * t }
       }
     }

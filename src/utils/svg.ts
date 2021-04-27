@@ -1,8 +1,30 @@
 import { decodeIllustrator, requiredFonts } from './parse'
 import WebFont from 'webfontloader'
 
+export function getBBox( element: SVGGraphicsElement ) {
+  const mask = getMask( element )
+  if ( mask != undefined ) {
+    const copy = element.cloneNode( true )
+    mask.before( copy )
+    const bbox = (copy as SVGGraphicsElement).getBBox()
+    mask?.parentNode?.removeChild( copy )
+    return bbox
+  }
+  return element.getBBox()
+}
+
+export function getMask( element: Element | null ) {
+  while (element && element.tagName !== 'SVG') {
+    if ( element.tagName == 'mask' ) {
+      return element
+    }
+    element = element.parentElement
+  }
+  return undefined
+}
+
 export function getAbsoluteOrigin(element: SVGGraphicsElement, relativeOrigin: { x: number; y: number }) {
-  const bbox = element.getBBox()
+  const bbox = getBBox( element )
   return { x: bbox.x + bbox.width * relativeOrigin.x, y: bbox.y + bbox.height * relativeOrigin.y }
 }
 

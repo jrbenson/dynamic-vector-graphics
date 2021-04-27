@@ -2,6 +2,7 @@ import * as parse from '../utils/parse'
 import { DataView } from '../data/data'
 import Component from './component'
 import { DVG } from '../dvg'
+import { getBBox } from '../utils/svg'
 
 /**
  * The text component replaces mustache style double brace tags with a value from the data.
@@ -17,7 +18,7 @@ export default class TextComponent extends Component {
     this.template = this.element.textContent
 
     const svgElem = this.element as SVGGraphicsElement
-    const bbox = svgElem.getBBox()
+    const bbox = getBBox(svgElem)
     this.initialX = bbox.x
     this.initialY = bbox.y
 
@@ -35,7 +36,7 @@ export default class TextComponent extends Component {
 
   private setOffset() {
     const svgElem = this.element as SVGGraphicsElement
-    const bbox = svgElem.getBBox()
+    const bbox = getBBox(svgElem)
     if (this.anchor !== undefined) {
       switch (this.anchor) {
         case 'start':

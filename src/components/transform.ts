@@ -94,7 +94,7 @@ export default class TransformComponent extends Component {
 
     const svgElem = this.element as SVGGraphicsElement
 
-    this.bbox = svgElem.getBBox()
+    this.bbox = svg.getBBox(svgElem)
     this.origin = this.getOrigin()
     this.base_transforms = svg.getBaseTransforms(svgElem)
     svg.wrapWithGroup(svgElem)
@@ -186,7 +186,7 @@ export default class TransformComponent extends Component {
     // console.log( this.origin, this.bbox, this.guide )
     const svgElem = this.element as SVGGraphicsElement
     svgElem.style.transform = ''
-    this.bbox = svgElem.getBBox()
+    this.bbox = svg.getBBox(svgElem)
     this.origin = this.getOrigin()
     svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
     // const gkey = parse.firstObjectKey(this.opts, Guide.keys)
