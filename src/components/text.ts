@@ -1,4 +1,4 @@
-import * as parse from '../utils/parse'
+import * as parse from '../utils/syntax'
 import { DataView } from '../data/data'
 import Component from './component'
 import { DVG } from '../dvg'
@@ -71,7 +71,7 @@ export default class TextComponent extends Component {
       this.element.textContent = this.template.replace(
         parse.RE_DOUBLEBRACE,
         function (match: string) {
-          const syntax = parse.syntax(match)
+          const syntax = parse.markup(match)
           const col = parse.columnFromData(syntax.name, data)
           if (col) {
             const nkey = parse.firstObjectKey(syntax.opts, ['name', 'n'])

@@ -1,4 +1,4 @@
-import * as parse from '../utils/parse'
+import * as parse from '../utils/syntax'
 import { DataView } from '../data/data'
 import { DVG } from '../dvg'
 import { Filter } from "../data/filter"
@@ -20,7 +20,7 @@ export default class Component {
    */
   constructor(element: Element) {
     this.element = element
-    this.opts = parse.syntax(element.id).opts
+    this.opts = parse.markup(element.id).opts
     this.filters = parse.filtersForElement( this.element )
   }
 

@@ -1,4 +1,5 @@
-import { decodeIllustrator, requiredFonts } from './parse'
+import { requiredFonts } from "./font"
+import { decodeUnicode } from './string'
 import WebFont from 'webfontloader'
 
 export function getBBox( element: SVGGraphicsElement ) {
@@ -94,7 +95,7 @@ export function cleanSVG(svg: Element, methods: string[] = ['all']) {
   }
   if (methods.includes('all') || methods.includes('decode')) {
     svg.querySelectorAll('*[id]').forEach(function (elem) {
-      elem.id = decodeIllustrator(elem.id)
+      elem.id = decodeUnicode(elem.id)
     })
   }
 }

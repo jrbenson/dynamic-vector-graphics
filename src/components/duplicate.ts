@@ -1,4 +1,4 @@
-import * as parse from '../utils/parse'
+import * as parse from '../utils/syntax'
 import * as svg from '../utils/svg'
 import { DataView } from '../data/data'
 import Easer from '../utils/easer'

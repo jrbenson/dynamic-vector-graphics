@@ -3,7 +3,7 @@ import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
 import { cleanSVG, initFonts } from './utils/svg'
 import { getComponents } from './utils/components'
-import * as parse from './utils/parse'
+import * as parse from './utils/syntax'
 
 interface DVGOptions {
   svg: string

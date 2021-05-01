@@ -2,7 +2,7 @@ import { parseFormat, defaultFormatter, Formatter, SourceFormat } from './format
 import { Column, ColumnType } from './column'
 import { Row, Value } from './row'
 import { Filter } from './filter'
-import * as parse from '../utils/parse'
+import * as parse from '../utils/syntax'
 
 import * as Papa from 'papaparse'
 
@@ -420,7 +420,7 @@ export class Data {
       if (match) {
         const col = this.getColumn(col_name)
         if (col) {
-          const s = parse.syntax(col_name)
+          const s = parse.markup(col_name)
           const col_base_name = col_name.replace(parse.RE_DOUBLEBRACE, '').trim()
           this.renameColumn(col.name, col_base_name)
           const r = parse.range(s.name)

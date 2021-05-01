@@ -42,7 +42,15 @@
 <rect id="{{  sx : #0 ,  origin   :    1 ; .5  }}" y="142" width="123" height="6" fill="#7E7E7E"/>
 <rect id="{{sx:#0,origin:0.5;0.5}}" y="154" width="123" height="6" fill="#7E7E7E"/>
 <path id="{{g1}}" d="M24 184H232" stroke="#CCCCCC" stroke-width="4"/>
-<path id="Vector" d="M24 181H232V187H24V181Z" fill="#D8D8D8" fill-opacity="0.01"/>
+<g id="masked">
+<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="127" y="130" width="125" height="13">
+<path id="Vector" d="M251.5 142.5H127.5V139.5L251.5 130V142.5Z" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask0)">
+<rect id="{{scaleX:#0}}_4" x="128" y="130" width="123" height="12" fill="#7E7E7E"/>
+</g>
+</g>
+<path id="Vector_2" d="M24 181H232V187H24V181Z" fill="#D8D8D8" fill-opacity="0.01"/>
 <rect id="{{positionX:#0,guide:g1}}" x="21" y="181" width="6" height="6" fill="#7E7E7E"/>
 <text id="{{positionX:#0,guide:g1,ta:middle}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="5.19141" y="197.879">{{#0|c}}</tspan></text>
 <text id="{{ta:start}}" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="10" letter-spacing="0px"><tspan x="21" y="175.879">{{#0|c,r:0}}</tspan></text>
@@ -80,5 +88,13 @@
 </g>
 <rect id="Rectangle 8" x="179" y="78" width="36" height="36" stroke="#CCCCCC" stroke-width="4"/>
 <rect id="{{a:#0}}" x="183" y="82" width="28" height="28" fill="#7E7E7E"/>
+<g id="Group 1">
+<mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="128" y="147" width="123" height="14">
+<rect id="{{scaleX:#0}}_5" x="128" y="147" width="123" height="14" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask1)">
+<rect id="Rectangle_7" x="128" y="148" width="123" height="12" fill="#7E7E7E"/>
+</g>
+</g>
 </g>
 </svg>

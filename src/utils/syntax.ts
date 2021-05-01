@@ -1,9 +1,10 @@
 import { DataView } from '../data/data'
 import { Column, ColumnType } from '../data/column'
 import { Condition, Filter } from '../data/filter'
+import { trimChars } from './string'
 
 export const RE_DOUBLEBRACE = /{{([^}]+)}}/g
-export const RE_UNDERSCOREUNICODE = /_x([0-9A-Za-z]+)_/g
+
 export const RE_NOVALUEKEY = /(?:^|,)(\w+)(?:$|,)/g
 export const RE_NONJSONCHAR = /([^:,]+)/g
 export const RE_NUMBER = /[-+]?[0-9]*\.?[0-9]+/g
@@ -39,16 +40,7 @@ const COL_ID_TYPE_PREFIXES: Record<string, ColumnType> = {
   $: ColumnType.Date,
 }
 
-/**
- * Converts unicode character back to orignal string.
- *
- * @param text The text to decode.
- */
-export function decodeIllustrator(text: string) {
-  return text.replace(RE_UNDERSCOREUNICODE, function (match, g1) {
-    return String.fromCharCode(parseInt('0x' + g1))
-  })
-}
+
 
 /**
  * Encodes simplpified object literal into formal JSON syntax with quotes.
@@ -72,24 +64,9 @@ function jsonEncodeLiteral(text: string) {
   )
 }
 
-/**
- * Trims any of the specified characters from the star and end of the text.
- *
- * @param text The text to trim.
- * @param chars List of characters to trim.
- */
-function trimChars(text: string, chars: string[]) {
-  var start = 0,
-    end = text.length
 
-  while (start < end && chars.indexOf(text[start]) >= 0) ++start
 
-  while (end > start && chars.indexOf(text[end - 1]) >= 0) --end
-
-  return start > 0 || end < text.length ? text.substring(start, end) : text
-}
-
-interface SyntaxParse {
+interface Markup {
   name: string
   opts: Record<string, string | number | boolean>
 }
@@ -99,8 +76,8 @@ interface SyntaxParse {
  *
  * @param text The text to decode.
  */
-export function syntax(text: string): SyntaxParse {
-  let obj: SyntaxParse = {
+export function markup(text: string): Markup {
+  let obj: Markup = {
     name: '',
     opts: {},
   }
@@ -130,7 +107,7 @@ export function elementsWithOptions(svg: Element, options: string[]) {
   return Array.from(svg.querySelectorAll<SVGElement>('*[id]'))
     .filter((e) => e.id?.match(RE_DOUBLEBRACE))
     .filter(function (e) {
-      let syn = syntax(e.id)
+      let syn = markup(e.id)
       for (let option in syn.opts) {
         if (options.includes(option)) {
           return true
@@ -142,7 +119,7 @@ export function elementsWithOptions(svg: Element, options: string[]) {
 
 export function elementHasOptions(element: Element, options: string[]) {
   if (element.id?.match(RE_DOUBLEBRACE)) {
-    let syn = syntax(element.id)
+    let syn = markup(element.id)
     for (let option in syn.opts) {
       if (options.includes(option)) {
         return true
@@ -162,7 +139,7 @@ export function elementsByName(svg: Element) {
   Array.from(svg.querySelectorAll<SVGElement>('*[id]'))
     .filter((e) => e.id?.match(RE_DOUBLEBRACE))
     .forEach(function (e) {
-      let syn = syntax(e.id)
+      let syn = markup(e.id)
       if (syn.name) {
         elements.set(syn.name, e)
       }
@@ -253,7 +230,7 @@ export function columnFromData(col_str: string, data: DataView) {
 export function textAlignmentForElement(element: Element | null) {
   while (element && element.tagName !== 'SVG') {
     if (elementHasOptions(element, ['textAlign', 'ta'])) {
-      let syn = syntax(element.id)
+      let syn = markup(element.id)
       let key = firstObjectKey(syn.opts, ['textAlign', 'ta'])
       if (key) {
         return syn.opts[key].toString()
@@ -295,7 +272,7 @@ export function filtersForElement(element: Element | null) {
   const filters: Filter[] = []
   while (element && element.tagName !== 'SVG') {
     if (elementHasOptions(element, ['filter', 'f'])) {
-      let syn = syntax(element.id)
+      let syn = markup(element.id)
       let key = firstObjectKey(syn.opts, ['filter', 'f'])
       if (key) {
         const filter_str = syn.opts[key].toString()
@@ -310,79 +287,4 @@ export function filtersForElement(element: Element | null) {
   return filters
 }
 
-export function convertCamelToTitle(text: string) {
-  //const result = text.replace(/(?<! |^)([A-Z])/g, ' $1') // May not work on Safari due to negative lookbehind
-  let result = text.charAt(0)
-  for (let i = 1; i < text.length; i += 1) {
-    if (/[a-z]/.test(text.charAt(i - 1)) && /[A-Z]/.test(text.charAt(i))) {
-      result += ' ' + text.charAt(i)
-    } else {
-      result += text.charAt(i)
-    }
-  }
-  return result.charAt(0).toUpperCase() + result.slice(1)
-}
 
-export function inferFont(text: string) {
-  const parsed = { family: text, style: 'normal', weight: '400' }
-  const split = text.split('-')
-  if (split.length > 1) {
-    parsed.family = split[0]
-    const variantText = split[1].toLowerCase()
-    if (variantText.includes('ital')) {
-      parsed.style = 'italic'
-    }
-    if (variantText.includes('thin')) {
-      parsed.weight = '100'
-    } else if (variantText.includes('extralight')) {
-      parsed.weight = '200'
-    } else if (variantText.includes('light')) {
-      parsed.weight = '300'
-    } else if (variantText.includes('medium')) {
-      parsed.weight = '500'
-    } else if (variantText.includes('black')) {
-      parsed.weight = '900'
-    } else if (variantText.includes('semi')) {
-      parsed.weight = '600'
-    } else if (variantText.includes('extrabold')) {
-      parsed.weight = '800'
-    } else if (variantText.includes('bold')) {
-      parsed.weight = '700'
-    }
-  }
-  return parsed
-}
-
-export function requiredFonts(svg: Element) {
-  const families = new Map<string, Set<string>>()
-  Array.from(svg.querySelectorAll<SVGElement>('text, tspan')).forEach(function (e) {
-    const style = window.getComputedStyle(e)
-    let family = style.getPropertyValue('font-family')
-    family = family.replace(/"/g, '')
-    family = family.replace(/'/g, '')
-    if (!GENERIC_FONT_FAMILIES.includes(family.toLowerCase())) {
-      if (family.includes('-')) {
-        const inferred = inferFont(family)
-        family = inferred.family
-        e.style.setProperty('font-style', inferred.style)
-        e.style.setProperty('font-weight', inferred.weight)
-      }
-      family = convertCamelToTitle(family)
-      e.style.setProperty('font-family', family)
-      if (!families.has(family)) {
-        families.set(family, new Set())
-      }
-      const fs = style.getPropertyValue('font-style')
-      const fw = style.getPropertyValue('font-weight')
-      const variant = (fs.includes('ital') ? 'i' : '') + fw
-      if (variant) {
-        families.get(family)?.add(variant)
-      }
-    }
-  })
-  const fonts = []
-  for (let [font, variants] of families) {
-    fonts.push(font + ':' + [...variants].join(','))
-  }
-  return fonts
-}
