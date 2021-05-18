@@ -5,6 +5,7 @@ import typescript from 'rollup-plugin-typescript2'
 import del from 'rollup-plugin-delete'
 import copy from 'rollup-plugin-copy'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
+import json from '@rollup/plugin-json'
 
 export default [
   {
@@ -27,11 +28,12 @@ export default [
     plugins: [
       del({ runOnce: true, targets: 'dist/**/*' }),
       copy({targets: [{ src: ['src/*', '!**/*.ts'], dest: 'dist' }]}),
-      typescript(),
+      json(),
+      nodePolyfills(),
       nodeResolve(),
       commonjs(),
-      terser(),
-      nodePolyfills()
+      typescript(),
+      terser() 
     ],
   },
 ]

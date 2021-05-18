@@ -4,6 +4,7 @@ import { SourceData } from './data/data'
 import { cleanSVG, initFonts } from './utils/svg'
 import { getComponents } from './utils/components'
 import * as parse from './utils/syntax'
+import { getLoader } from './loader'
 
 interface DVGOptions {
   svg: string
@@ -22,6 +23,9 @@ export class DVG {
   private element: Element
   private initComplete: boolean = false // Flag to help delay update execution
   private components: Component[] = []
+  private svg: SVGSVGElement | undefined
+  private content: SVGElement | undefined
+  private loader: SVGElement | undefined
 
   /**
    * Attach to the indicate element DOM element and fill it with the target SVG. Also
@@ -40,6 +44,8 @@ export class DVG {
       clean: 'all',
     }
     this.opts = { ...this.opts, ...opts }
+
+    console.log(this.opts)
 
     this.init()
   }
@@ -69,13 +75,18 @@ export class DVG {
   }
 
   private initSVG(svg: SVGSVGElement) {
+    this.svg = svg
+
     cleanSVG(svg, this.opts.clean.toString().split(','))
     const fontsNeeded = initFonts(svg)
 
-    // Wrap everything in a group
-    // const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-    // group.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
-    // svg.append(group)
+    this.content = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    this.content.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
+    svg.append(this.content)
+    this.content.style.transition = 'opacity 0.5s ease'
+
+    this.loader = getLoader( this.svg )
+    this.loader.style.transition = 'opacity 0.5s ease'
 
     this.refs = parse.elementsByName(svg)
     this.components = getComponents(svg)
@@ -104,6 +115,16 @@ export class DVG {
             dv = dv.filteredView(filter)
           }
           comp.apply(dv, this)
+        }
+      }
+      // Set loader if data has no columns
+      if (this.content && this.loader) {
+        if (this.data.cols.length <= 0) {
+          this.content.style.opacity = '0.5'
+          this.loader.style.opacity = '1.0'
+        } else {
+          this.content.style.opacity = '1.0'
+          this.loader.style.opacity = '0.0'
         }
       }
     }

@@ -1,3 +1,7 @@
+// import '@formatjs/intl-numberformat/polyfill'
+// import '@formatjs/intl-numberformat/locale-data/en'
+//import {shouldPolyfill} from '@formatjs/intl-numberformat/should-polyfill'
+
 const BASIC_FORMATS: Record<string, string> = {
   dollar: 'currencyUSD',
   euro: 'currencyEUR',
@@ -13,7 +17,53 @@ const BASIC_FORMATS: Record<string, string> = {
   sheqel: 'currencyILS',
 }
 
-const FORMAT_FAIL_OUTPUT = '???'
+export const FORMAT_FAIL_OUTPUT = '---'
+
+const SCALE_ABBREVIATIONS = 'KMBT' // could be an array of strings: [' m', ' Mo', ' Md']
+
+function precisionRound(value: number, precision: number) {
+  const prec = Math.pow(10, precision)
+  return Math.round(value * prec) / prec
+}
+
+function simpleCompactFormat(value: number) {
+  let base = Math.floor(Math.log(Math.abs(value)) / Math.log(1000))
+  const suffix = SCALE_ABBREVIATIONS[Math.min(2, base - 1)]
+  base = SCALE_ABBREVIATIONS.indexOf(suffix) + 1
+  const scaled_value = value / Math.pow(1000, base)
+  let precision = 2
+  while (('' + precisionRound(scaled_value, precision)).replace('.', '').length > 3) {
+    precision -= 1
+  }
+  console.log(base, scaled_value, precision, precisionRound(scaled_value, precision))
+  if (suffix) {
+    return precisionRound(scaled_value, precision) + suffix
+  }
+  return '' + precisionRound(scaled_value, precision)
+}
+
+function supportsES2020NumberFormat() {
+  try {
+    var s = new Intl.NumberFormat('en', {
+      style: 'unit',
+      unit: 'bit',
+      unitDisplay: 'long',
+      notation: 'scientific',
+    }).format(10000)
+    // Check for a plurality bug in environment that uses the older versions of ICU:
+    // https://unicode-org.atlassian.net/browse/ICU-13836
+    if (s !== '1E4 bits') {
+      return false
+    }
+  } catch (e) {
+    return false
+  }
+  return true
+}
+
+function numberFormatUnsupported() {
+  return typeof Intl === 'undefined' || !('NumberFormat' in Intl) || !supportsES2020NumberFormat()
+}
 
 /**
  * Extracts the hours, minutes, and seconds from a duration in seconds.
@@ -65,10 +115,14 @@ export const defaultFormatter: Formatter = {
   },
   compactFormat: function (value: number | string | Date) {
     if (typeof value === 'number') {
-      return new Intl.NumberFormat(navigator.language, {
-        notation: 'compact',
-        maximumSignificantDigits: 3,
-      }).format(value)
+      if (numberFormatUnsupported()) {
+        return simpleCompactFormat(value)
+      } else {
+        return new Intl.NumberFormat(navigator.language, {
+          notation: 'compact',
+          maximumSignificantDigits: 3,
+        }).format(value)
+      }
     }
     return '' + value
   },
@@ -142,7 +196,11 @@ function getFormatter(format: SourceFormat) {
       },
       compactFormat: (value: number | string | Date) => {
         if (typeof value === 'number') {
-          return prefix + new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+          if (numberFormatUnsupported()) {
+            return prefix + simpleCompactFormat(value)
+          } else {
+            return prefix + new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+          }
         }
       },
     }
@@ -162,7 +220,13 @@ function getFormatter(format: SourceFormat) {
         return FORMAT_FAIL_OUTPUT
       },
       compactFormat: function (value: number | string | Date) {
-        return this.format(value)
+        if (typeof value === 'number') {
+          if (numberFormatUnsupported()) {
+            return simpleCompactFormat(value)
+          } else {
+            return this.format(value)
+          }
+        }
       },
     }
   } else if (format.name.startsWith('hour')) {
@@ -175,7 +239,13 @@ function getFormatter(format: SourceFormat) {
         return FORMAT_FAIL_OUTPUT
       },
       compactFormat: function (value: number | string | Date) {
-        return this.format(value)
+        if (typeof value === 'number') {
+          if (numberFormatUnsupported()) {
+            return simpleCompactFormat(value)
+          } else {
+            return this.format(value)
+          }
+        }
       },
     }
   } else if (format.name.startsWith('hhmm')) {
@@ -188,7 +258,13 @@ function getFormatter(format: SourceFormat) {
         return FORMAT_FAIL_OUTPUT
       },
       compactFormat: function (value: number | string | Date) {
-        return this.format(value)
+        if (typeof value === 'number') {
+          if (numberFormatUnsupported()) {
+            return simpleCompactFormat(value)
+          } else {
+            return this.format(value)
+          }
+        }
       },
     }
   } else if (format.name.startsWith('mmss')) {
@@ -203,7 +279,13 @@ function getFormatter(format: SourceFormat) {
         return FORMAT_FAIL_OUTPUT
       },
       compactFormat: function (value: number | string | Date) {
-        return this.format(value)
+        if (typeof value === 'number') {
+          if (numberFormatUnsupported()) {
+            return simpleCompactFormat(value)
+          } else {
+            return this.format(value)
+          }
+        }
       },
     }
   } else if (format.name.startsWith('currency')) {
@@ -246,16 +328,24 @@ function getFormatter(format: SourceFormat) {
     },
     compactFormat: function (value: number | string | Date) {
       if (typeof value === 'number') {
-        try {
-          return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
-        } catch (e) {
-          console.error(`DVG ${e.name}: ${e.message} Using defaults.`)
-          delete compact_format_opts.minimumSignificantDigits
-          delete compact_format_opts.maximumSignificantDigits
-          delete compact_format_opts.minimumFractionDigits
-          delete compact_format_opts.maximumFractionDigits
-          delete compact_format_opts.minimumIntegerDigits
-          return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+        if (numberFormatUnsupported()) {
+          console.log( compact_format_opts.style)
+          if ( compact_format_opts.style == 'percent' ) {
+            return simpleCompactFormat(value*100) + '%'
+          }
+          return simpleCompactFormat(value)
+        } else {
+          try {
+            return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+          } catch (e) {
+            console.error(`DVG ${e.name}: ${e.message} Using defaults.`)
+            delete compact_format_opts.minimumSignificantDigits
+            delete compact_format_opts.maximumSignificantDigits
+            delete compact_format_opts.minimumFractionDigits
+            delete compact_format_opts.maximumFractionDigits
+            delete compact_format_opts.minimumIntegerDigits
+            return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
+          }
         }
       }
       return '' + value

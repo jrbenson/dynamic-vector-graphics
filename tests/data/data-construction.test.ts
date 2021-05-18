@@ -1,4 +1,5 @@
 import { Data } from '../../src/data/data'
+import { FORMAT_FAIL_OUTPUT } from '../../src/data/formats'
 
 export const DATA_MINIMAL = {
   values: [
@@ -54,14 +55,14 @@ test('Structured Data Construction', () => {
   expect(d.getFormatted(0, 'ColumnStr')).toBe('Alpha')
   expect(d.getFormatted(1, 'ColumnStr')).toBe('Beta')
   expect(d.getFormatted(2, 'ColumnStr')).toBe('Gamma')
-  expect(d.getFormatted(12, 'ColumnStr')).toBe('???')
+  expect(d.getFormatted(12, 'ColumnStr')).toBe(FORMAT_FAIL_OUTPUT)
 
   expect(d.getFormatted(0, 'ColumnInt')).toBe('1')
   expect(d.getFormatted(1, 'ColumnInt')).toBe('6')
   expect(d.getFormatted(2, 'ColumnInt')).toBe('3')
-  expect(d.getFormatted(12, 'ColumnInt')).toBe('???')
+  expect(d.getFormatted(12, 'ColumnInt')).toBe(FORMAT_FAIL_OUTPUT)
 
-  expect(d.getFormatted(0, 'NonExistent')).toBe('???')
+  expect(d.getFormatted(0, 'NonExistent')).toBe(FORMAT_FAIL_OUTPUT)
 })
 
 test('CSV Data Construction', () => {

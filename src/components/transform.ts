@@ -150,24 +150,26 @@ export default class TransformComponent extends Component {
     for (let transform of TransformComponent.transforms) {
       const key = parse.firstObjectKey(this.opts, transform.keys)
       if (key) {
+        let norm = 0
         const col_str = this.opts[key].toString()
         const col = parse.columnFromData(col_str, data)
-        if (col?.stats) {
+        if (col !== undefined) {
           const val = data.get(0, col.name) as number
-          if (val !== undefined) {
-            let norm = (val - col.stats.min) / (col.stats.max - col.stats.min)
+          const stats = col?.stats
+          if (stats !== undefined && val !== undefined) {
+            norm = (val - stats.min) / (stats.max - stats.min)
             if (!isFinite(norm)) {
               norm = 0
             }
-            if (this.guide) {
-              transform_strs.push(transform.get(norm, this.opts, this.guide))
-            } else {
-              transform_strs.push(transform.get(norm, this.opts))
-            }
-            if (pos_keys.includes(key) && this.guide && !this.guide.linear) {
-              this.nonlinear_pos_easer.ease(this.nonlinear_pos_easer.curT, norm)
-            }
           }
+        }
+        if (this.guide) {
+          transform_strs.push(transform.get(norm, this.opts, this.guide))
+        } else {
+          transform_strs.push(transform.get(norm, this.opts))
+        }
+        if (pos_keys.includes(key) && this.guide && !this.guide.linear) {
+          this.nonlinear_pos_easer.ease(this.nonlinear_pos_easer.curT, norm)
         }
       }
     }
@@ -182,7 +184,7 @@ export default class TransformComponent extends Component {
     }
   }
 
-  draw( state: DVG) {
+  draw(state: DVG) {
     // console.log( this.origin, this.bbox, this.guide )
     const svgElem = this.element as SVGGraphicsElement
     svgElem.style.transform = ''

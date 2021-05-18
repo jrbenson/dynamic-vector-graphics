@@ -1,4 +1,4 @@
-import { range } from '../../src/utils/parse'
+import { range } from '../../src/utils/syntax'
 
 test('Range Parsing', () => {
   let r: { 0: number | undefined; 1: number | undefined }

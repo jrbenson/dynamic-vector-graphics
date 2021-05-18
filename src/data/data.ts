@@ -1,4 +1,4 @@
-import { parseFormat, defaultFormatter, Formatter, SourceFormat } from './formats'
+import { parseFormat, defaultFormatter, Formatter, SourceFormat, FORMAT_FAIL_OUTPUT } from './formats'
 import { Column, ColumnType } from './column'
 import { Row, Value } from './row'
 import { Filter } from './filter'
@@ -55,7 +55,7 @@ export class DataView {
     if (srcRow != undefined) {
       return this.data.getFormatted(srcRow, column, compact)
     }
-    return '???'
+    return FORMAT_FAIL_OUTPUT
   }
 
   getColumnFormat(column: string | number) {
@@ -232,22 +232,22 @@ export class Data {
     if (col) {
       const val = this.get(row, col.name)
       if (val !== undefined) {
-          if (col.format) {
-            if (compact) {
-              return col.format.compactFormat(val) as string
-            } else {
-              return col.format.format(val) as string
-            }
+        if (col.format) {
+          if (compact) {
+            return col.format.compactFormat(val) as string
           } else {
-            if (compact) {
-              return defaultFormatter.compactFormat(val) as string
-            } else {
-              return defaultFormatter.format(val) as string
-            }
+            return col.format.format(val) as string
           }
+        } else {
+          if (compact) {
+            return defaultFormatter.compactFormat(val) as string
+          } else {
+            return defaultFormatter.format(val) as string
+          }
+        }
       }
     }
-    return '???'
+    return FORMAT_FAIL_OUTPUT
   }
 
   getColumnFormat(column: string | number) {

@@ -1,4 +1,4 @@
-import { requiredFonts } from '../../src/utils/parse'
+import { requiredFonts } from '../../src/utils/font'
 
 test('Font Family Parsing', () => {
   document.body.innerHTML = `

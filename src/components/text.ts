@@ -3,6 +3,7 @@ import { DataView } from '../data/data'
 import Component from './component'
 import { DVG } from '../dvg'
 import { getBBox } from '../utils/svg'
+import { FORMAT_FAIL_OUTPUT } from '../data/formats'
 
 /**
  * The text component replaces mustache style double brace tags with a value from the data.
@@ -99,7 +100,7 @@ export default class TextComponent extends Component {
                   }
                 }
               }
-              return '???'
+              return FORMAT_FAIL_OUTPUT
             } else {
               const ckey = parse.firstObjectKey(syntax.opts, ['compact', 'c'])
               if (ckey && syntax.opts[ckey]) {
@@ -109,7 +110,7 @@ export default class TextComponent extends Component {
               }
             }
           } else {
-            return '???'
+            return FORMAT_FAIL_OUTPUT
           }
         }.bind({ data: data })
       )

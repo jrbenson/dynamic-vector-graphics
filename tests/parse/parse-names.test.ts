@@ -1,4 +1,4 @@
-import { convertCamelToTitle } from '../../src/utils/parse'
+import { convertCamelToTitle } from '../../src/utils/string'
 
 test('Camel Case Conversion', () => {
   expect(convertCamelToTitle('basicCamelCase')).toBe('Basic Camel Case')
