@@ -1,5 +1,3 @@
-# Dynamic Vector Graphics
-
 This project provides a system that uses annotations on provided data and SVG file to create a dynamic vector graphic.
 
 ## Annotating an SVG File
