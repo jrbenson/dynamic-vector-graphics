@@ -1,3 +1,5 @@
+<!-- {% raw %} -->
+
 This project provides a system that uses annotations on provided data and SVG file to create a dynamic vector graphic.
 
 ## Annotating an SVG File
@@ -187,3 +189,5 @@ The position y transform translates the element in only the vertical direction b
 
 `{{…,guide/g:NAME,…}}`<br/>
 The guide option is required for the position transform to function. The guide is specified by providing the `NAME` which is assigned to an element via its id. For example, for `<rect id="My Rect {{Guide01}}"/>` the name of the element that should be used in the guide option is `Guide01`. Different elements are treated differently as guides. The default is to use the width and height of the bounding box of the element as the amount of the translation. A `<line>` element uses the offset from its start to it's end, meaning that it can be oriented in any direction while a `<rect>` when used as a guide will always result in a translate occurring to the right and down. More freeform elements like a `<path>` and `<polyline>` result in the translation happening along the path they represent.
+
+<!-- {% endraw %} -->
