@@ -15,7 +15,7 @@ Different SVG editors have different export behavior, but be sure through the ex
 
 ## General Annotation Syntax
 
-The general syntax for all the annotations is that they are contained within double curly braces `{{…}}`, contain a list of parameters delimited by pipe characters `{{…|[PARAM]|[PARAM]|[PARAM]|…]}}`, and some parameters accept a simplified JSON-style syntax of comma delimited key value pairs separated by a colon where the value can be optional `{{[PARAM]|[…,KEY:[VAL],KEY:[VAL],…]}}`.
+The general syntax for all the annotations is that they are contained within double curly braces`{{…}}`, contain a list of parameters delimited by pipe characters `{{…|[PARAM]|[PARAM]|[PARAM]|…]}}`, and some parameters accept a simplified JSON-style syntax of comma delimited key value pairs separated by a colon where the value can be optional `{{[PARAM]|[…,KEY:[VAL],KEY:[VAL],…]}}`.
 
 In this system, there are only two forms of this syntax in use in the annotations. The first is a single value parameter form `{{PARAM}}` and the other is a form that takes a single value as the first parameter and the second as a list of key-value pairs of options `{{PARAM|KEY:VAL,KEY,KEY:VAL}}`.
 

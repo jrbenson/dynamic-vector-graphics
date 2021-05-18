@@ -1,3 +1,3 @@
 theme: jekyll-theme-slate
 title: Dynamic Vector Graphics
-description: This project provides a system that uses annotations on provided data and SVG file to create a dynamic vector graphic.
+description: Map Data to SVG Using Annotations
