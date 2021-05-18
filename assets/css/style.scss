@@ -1,9 +1,36 @@
 ---
 ---
 
-@import "{{ site.theme }}";
+@import '{{ site.theme }}';
 
 #forkme_banner {
- bottom: -20px;
- top: unset;
+  bottom: -1rem;
+  top: unset;
+  background: #58a6ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 2px;
+  color: #222;
+}
+
+#forkme_banner:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  body {
+    color: #ddd;
+  }
+  #main_content_wrap {
+    background: #222;
+  }
+  #footer_wrap {
+    background: #333;
+  }
 }
