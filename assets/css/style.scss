@@ -28,6 +28,26 @@ code {
   margin: 0 1px;
 }
 
+th,
+td {
+  padding: 0.25rem 0.75rem;
+}
+
+table,
+td,
+th {
+  border: none;
+}
+
+th {
+  background: #e5e5e5;
+}
+
+table td + td,
+table th + th {
+  border-left: 1px solid #ccc;
+}
+
 @media (prefers-color-scheme: dark) {
   h1,
   h2,
@@ -52,10 +72,20 @@ code {
     color: #fff;
   }
   code {
-    background: #ddd;
+    background: #000;
+    color: #ddd;
   }
   img,
   code {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  }
+  th {
+    background: #373737;
+    color: #fff;
+  }
+
+  table td + td,
+  table th + th {
+    border-left: 1px solid #111;
   }
 }
