@@ -20,7 +20,7 @@
 
 img,
 code {
-  box-shadow: 0 0 5px rgb(0 0 0 / 10%);
+  box-shadow: 0 0 5px rgb(0, 0, 0, 0.1);
 }
 
 code {
@@ -56,6 +56,6 @@ code {
   }
   img,
   code {
-    box-shadow: 0 0 5px rgb(255 255 255 / 40%);
+    box-shadow: 0 0 5px rgb(255, 255, 255, 0.4);
   }
 }
