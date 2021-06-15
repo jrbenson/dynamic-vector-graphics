@@ -1,6 +1,6 @@
 {
   "name": "dynamic-vector-graphics",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.1",
   "description": "Make svg files react to dynamic data using annotations",
   "author": "Riley Benson",
   "license": "Apache-2.0",

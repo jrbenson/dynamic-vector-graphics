@@ -2,7 +2,7 @@
 
 This project provides a system that uses annotations on provided data and SVG file to create a dynamic vector graphic.
 
-## Annotating an SVG File
+## Creating an Annotated SVG
 
 To make your SVG file dynamic it must be correctly annotated. Any vector editing software that allows the ids of the elements to be set by the user may be used to add the annotations.
 
@@ -51,9 +51,9 @@ In cases where a parameter or value is a numeric range or a coordinate there are
 
 The use of `..` or `to` are equivalent and will accept negative values. The use of `;` will result in the numbers being taken by their absolute value. The reason for this difference is to help with the way that many vector editors will encode the ids of the layers. Because a space character is not valid for an id in many parsers the editors will replace them with `_` or `-` characters when exported. This creates an issue since if in the editor an element is named `My Rect {{ origin :-5 .. 7 }}` what the system will receive is `My-Rect-{{-origin-:-5-..-7-}}`. The information about the fact that the first value is negative and the second is positive cannot be recovered. The special treatment of `;` is included so that for a case like `My Rect {{ origin : .5 ; 1 }}` all `-` characters are treated as if they were whitespace, allowing the syntax to remain whitespace insensitive at the expense of the ability to represent negative values.
 
-## VA Data Annotation Syntax
+## Data Annotation Syntax
 
-As much as possible the system tries to keep all annotation context contained within the SVG file. However, for numerics, being able to get the true minimum and maximum value from a column is not possible based on the data received from VA since the data received may be filtered. Additionally, it is not always the case that the current minimum and maximum value in the data is the range in which it should be displayed. Therefore some annotations have to be provided in the name of the data item itself.
+As much as possible the system tries to keep all annotation context contained within the SVG file. However, for numerics, it is not always the case that the current minimum and maximum value in the data is the range in which it should be displayed. Therefore some annotations have to be provided in the data itself.
 
 `NAME {{MIN..MAX}}` <br/>
 In order to tell the dynamic object what the correct minimum and maximum for numeric columns should be the name of the data item itself must be annotated in Visual Analytics. This is done by including the range expression within a double brace annotation anywhere in the name. The annotation will be removed and so will not be part of the displayed name.
