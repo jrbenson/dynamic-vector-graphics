@@ -110,13 +110,6 @@ export default class TransformComponent extends Component {
     svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
   }
 
-  resetBbox() {
-    var bX: number = this.bbox.x
-    var bY: number = this.bbox.y
-    var bW: number = this.bbox.width
-    var bH: number = this.bbox.height
-  }
-
   getOrigin() {
     let relOrigin = { x: 0, y: 0 }
     const key = parse.firstObjectKey(this.opts, ['origin', 'o'])
@@ -196,8 +189,8 @@ export default class TransformComponent extends Component {
     const svgElem = this.element as SVGGraphicsElement
     svgElem.style.transform = ''
     this.bbox = svg.getBBox(svgElem)
+    this.origin = this.getOrigin()
     svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
-
     // const gkey = parse.firstObjectKey(this.opts, Guide.keys)
     // if (gkey) {
     //   console.log( 'YES')

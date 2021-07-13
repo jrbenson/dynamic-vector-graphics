@@ -26,7 +26,6 @@ export function getMask( element: Element | null ) {
 
 export function getAbsoluteOrigin(element: SVGGraphicsElement, relativeOrigin: { x: number; y: number }) {
   const bbox = getBBox( element )
-  console.log(bbox)
   return { x: bbox.x + bbox.width * relativeOrigin.x, y: bbox.y + bbox.height * relativeOrigin.y }
 }
 
@@ -74,7 +73,6 @@ export function getBaseTransforms(element: SVGGraphicsElement) {
       )
     }
   }
-  console.log(base_transforms)
   return base_transforms
 }
 
