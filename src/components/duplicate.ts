@@ -13,7 +13,7 @@ import { Guide } from './guide'
  */
 export default class DuplicateComponent extends Component {
 
-  static keys: string[] = [ 'duplicate', 'd' ]
+  static keys: string[] = [ 'duplicate', 'duplicateX', 'duplicateY', 'd', 'dx', 'dy' ]
   static getComponents(svg: Element): Array<Component> {
     return parse.elementsWithOptions(svg, DuplicateComponent.keys).map((e) => new DuplicateComponent(e))
   }

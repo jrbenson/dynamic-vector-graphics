@@ -2,9 +2,13 @@ import Component from './components/component'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
 import { cleanSVG, initFonts } from './utils/svg'
-import { getComponents } from './utils/components'
 import * as parse from './utils/syntax'
 import { getLoader } from './loader'
+
+import TextComponent from './components/text'
+import TransformComponent from './components/transform'
+import StyleComponent from './components/style'
+import DuplicateComponent from './components/duplicate'
 
 interface DVGOptions {
   svg: string
@@ -89,7 +93,19 @@ export class DVG {
     this.loader.style.transition = 'opacity 0.5s ease'
 
     this.refs = parse.elementsByName(svg)
-    this.components = getComponents(svg)
+
+    let components: Array<Component> = []
+    
+    // ???
+
+    components.push(...DuplicateComponent.getComponents(svg))
+
+    // ???
+
+    components.push(...TextComponent.getComponents(svg))
+    components.push(...TransformComponent.getComponents(svg))
+    components.push(...StyleComponent.getComponents(svg))
+    this.components = components
 
     if (fontsNeeded) {
       window.setTimeout(this.apply.bind(this), 1000)
