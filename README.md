@@ -15,6 +15,22 @@ Different SVG editors have different export behavior, but be sure through the ex
 - Elements that aren't visible are still exported.
 - Text is not converted into fixed outlines (if you want the text to be dynamic).
 
+### Adobe Illustrator Guide
+
+Illustrator has a few ways to create SVG output. In order to preserve IDs and create the correct output you should use the File > Save a copy... action and set the format to "SVG (svg)". You will then be shown the "SVG Options" dialog and should use these settings:
+
+- SVG Profiles: SVG 1.1
+- Fonts
+  - Type: SVG
+  - Subsetting: None
+- Options
+  - Image Location: Embed
+- Advanced Options
+  - CSS Properties: Presentation Attributes
+  - Output fewer tspan elements: True
+  - Use textPath element for Text on Path: True
+  - Responsive: True
+
 ## General Annotation Syntax
 
 The general syntax for all the annotations is that they are contained within double curly braces`{{…}}`, contain a list of parameters delimited by pipe characters `{{…|[PARAM]|[PARAM]|[PARAM]|…]}}`, and some parameters accept a simplified JSON-style syntax of comma delimited key value pairs separated by a colon where the value can be optional `{{[PARAM]|[…,KEY:[VAL],KEY:[VAL],…]}}`.
