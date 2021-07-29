@@ -15,9 +15,8 @@ import { Guide } from './guide'
  */
 export default class DuplicateComponent extends Component {
 
-<<<<<<< HEAD
   // Instance variables
-  static keys: string[] = [ 'duplicate', 'd' ]
+  static keys: string[] = [ 'duplicate', 'duplicateX', 'duplicateY', 'd', 'dx', 'dy' ]
   guide: Guide | undefined = undefined
 
   /**
@@ -27,10 +26,6 @@ export default class DuplicateComponent extends Component {
    * @returns - Array of duplicate components for each SVGElement in DVG
    */
   static getComponent(svg: Element): Array<Component> {
-=======
-  static keys: string[] = [ 'duplicate', 'duplicateX', 'duplicateY', 'd', 'dx', 'dy' ]
-  static getComponents(svg: Element): Array<Component> {
->>>>>>> 7735fddae2764c783a12698cdc49aa0ec886d072
     return parse.elementsWithOptions(svg, DuplicateComponent.keys).map((e) => new DuplicateComponent(e))
   }
 
