@@ -2,9 +2,13 @@ import Component from './components/component'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
 import { cleanSVG, initFonts } from './utils/svg'
-import { getComponents } from './utils/components'
 import * as parse from './utils/syntax'
 import { getLoader } from './loader'
+
+import TextComponent from './components/text'
+import TransformComponent from './components/transform'
+import StyleComponent from './components/style'
+import DuplicateComponent from './components/duplicate'
 
 interface DVGOptions {
   svg: string
@@ -15,7 +19,7 @@ interface DVGOptions {
  * The main class that controls the initialization and lifecycle of making the SVG
  * dynamic and responding to message events from the VA Data-driven Content framework.
  */
-export class DVG { 
+export class DVG {
   opts: DVGOptions
   data: Data = new Data('') // DataFrame for data response
   refs: Map<string, Element> = new Map()
@@ -58,7 +62,7 @@ export class DVG {
     if (this.element.tagName.toLowerCase() === 'svg') {
       this.initSVG(this.element as SVGSVGElement)
     } else {
-      ;(this.element as HTMLElement).style.opacity = '0'
+      ; (this.element as HTMLElement).style.opacity = '0'
       fetch(this.opts.svg.toString(), { method: 'GET' })
         .then((response) => response.text())
         .then((text) => {
@@ -86,11 +90,17 @@ export class DVG {
     svg.append(this.content) // <svg>content</svg>
     this.content.style.transition = 'opacity 0.5s ease'
 
-    this.loader = getLoader( this.svg )
+    this.loader = getLoader(this.svg)
     this.loader.style.transition = 'opacity 0.5s ease'
 
     this.refs = parse.elementsByName(svg) // stores object references for each HTML element of given SVG
-    this.components = getComponents(svg) // maps a component to each element of a given SVG based on the element's options
+
+    let components: Array<Component> = []
+    components.push(...DuplicateComponent.getComponent(svg))
+    components.push(...TextComponent.getComponent(svg))
+    components.push(...TransformComponent.getComponent(svg))
+    components.push(...StyleComponent.getComponent(svg))
+    this.components = components // maps a component to each element of a given SVG based on the element's options
 
     if (fontsNeeded) {
       window.setTimeout(this.apply.bind(this), 1000)
@@ -144,7 +154,7 @@ export class DVG {
     for (let comp of this.components) {
       comp.draw(this)
     }
-    
+
     this.apply()
     // this.initComplete = false
     // const htmlElement = this.element as HTMLElement

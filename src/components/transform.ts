@@ -189,10 +189,14 @@ export default class TransformComponent extends Component {
     const svgElem = this.element as SVGGraphicsElement
     svgElem.style.transform = ''
     this.bbox = svg.getBBox(svgElem)
+<<<<<<< HEAD
     if (!this.origin) {
       this.getOrigin()
     }
     //this.origin = this.getOrigin()
+=======
+    this.origin = this.getOrigin()
+>>>>>>> 7735fddae2764c783a12698cdc49aa0ec886d072
     svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
 
     // const gkey = parse.firstObjectKey(this.opts, Guide.keys)
