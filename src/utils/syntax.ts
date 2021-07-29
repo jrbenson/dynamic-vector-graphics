@@ -98,12 +98,14 @@ export function markup(text: string): Markup {
 }
 
 /**
- * Returns a list of SVGElements that have the requested options.
+ * Check each SVGElement of a given (SVG) Element for given options and returns
+ * a list of all SVGElements that have the requested options.
  *
  * @param svg The parent element to search through the children of.
  * @param options List of option strings to match against.
+ * @returns List of SVGElements that have the requested options.
  */
-export function elementsWithOptions(svg: Element, options: string[]) {
+export function elementsWithOptions(svg: Element, options: string[]): Array<Element> {
   return Array.from(svg.querySelectorAll<SVGElement>('*[id]'))
     .filter((e) => e.id?.match(RE_DOUBLEBRACE))
     .filter(function (e) {
@@ -130,7 +132,7 @@ export function elementHasOptions(element: Element, options: string[]) {
 }
 
 /**
- * Returns a map of the name (in annotation syntx) of an element to a refernce to that element.
+ * Returns a map of the name (in annotation syntax) of an element to a refernce to that element.
  *
  * @param svg The parent element to search through the children of.
  */

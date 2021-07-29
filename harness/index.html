@@ -187,6 +187,7 @@ ABC,0.49,284323935</textarea
 
       function applyOptions() {
         const visibleInput = document.getElementById('visible')
+        const dupInput = document.getElementById('duplicate')
         const dvg = document.getElementById('dvg')
 
         if (visibleInput.checked) {
@@ -194,6 +195,7 @@ ABC,0.49,284323935</textarea
         } else {
           dvg.style.display = 'none'
         }
+
         if (result != undefined) {
           result.draw()
         }

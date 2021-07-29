@@ -77,7 +77,7 @@ export default class TransformComponent extends Component {
     },
   ]
 
-  static getComponents(svg: Element): Array<Component> {
+  static getComponent(svg: Element): Array<Component> {
     const options = ([] as string[]).concat(...TransformComponent.transforms.map((t) => t.keys))
     return parse.elementsWithOptions(svg, options).map((e) => new TransformComponent(e))
   }
@@ -108,13 +108,6 @@ export default class TransformComponent extends Component {
     svgElem.style.transitionDuration = '1s'
     svgElem.style.transitionTimingFunction = 'cubic-bezier(0.25, .1, 0.25, 1)'
     svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
-  }
-
-  resetBbox() {
-    var bX: number = this.bbox.x
-    var bY: number = this.bbox.y
-    var bW: number = this.bbox.width
-    var bH: number = this.bbox.height
   }
 
   getOrigin() {
@@ -196,6 +189,10 @@ export default class TransformComponent extends Component {
     const svgElem = this.element as SVGGraphicsElement
     svgElem.style.transform = ''
     this.bbox = svg.getBBox(svgElem)
+    if (!this.origin) {
+      this.getOrigin()
+    }
+    //this.origin = this.getOrigin()
     svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
 
     // const gkey = parse.firstObjectKey(this.opts, Guide.keys)

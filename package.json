@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "papaparse": "^5.3.0",
+    "watch": "^0.13.0",
     "webfontloader": "^1.6.28"
   },
   "files": [

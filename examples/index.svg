@@ -1,38 +1,38 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="index">
-<g id="Core {{r:#0,rr:0.5,o:0.5;0.5}}">
-<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="51" y="51" width="410" height="410">
-<circle id="Mask" cx="256" cy="256" r="205" fill="#C4C4C4"/>
-</mask>
-<g mask="url(#mask0)">
-<path id="Guide {{rightline}}" d="M418 164V348" stroke="black" stroke-width="0.01"/>
-<path id="Guide {{leftline}}" d="M95 348V164" stroke="black" stroke-width="0.01"/>
-<g id="Dial">
-<rect id="Left Box {{sy:#0,o:0.5;1}}" x="95" y="379" width="43" height="247" transform="rotate(-180 95 379)" fill="#CCCCCC"/>
-<rect id="Right Box {{sy:#0,o:0.5;0}}" x="461" y="379" width="43" height="247" transform="rotate(-180 461 379)" fill="#CCCCCC"/>
-<path id="Rectangle 5" d="M418 397L418 115M95 397L95 115" stroke="#7E7E7E" stroke-width="8"/>
-</g>
-<rect id="Left Box {{py:#0,guide:leftline}}" x="86" y="339" width="18" height="18" fill="#7E7E7E"/>
-<rect id="Right Box {{py:#0,guide:rightline}}" x="409" y="155" width="18" height="18" fill="#7E7E7E"/>
-<text id="{{ta:middle}}" transform="translate(66 284) rotate(-90)" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="0.246094" y="12.2852">{{#0|r:0}}</tspan></text>
-<text id="{{ta:middle}}_2" transform="translate(446 228) rotate(90)" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="0.246094" y="12.2852">{{#0|r:1}}</tspan></text>
-</g>
-</g>
-<text id="{{ta:middle}}_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="18" font-style="italic" letter-spacing="0em"><tspan x="198.034" y="345.652">{{#0|n}} : {{#0|c}}</tspan></text>
-<text id="{{ta:middle}}_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="18" font-weight="900" letter-spacing="0em"><tspan x="191.971" y="173.652">{{@0|n}} : {{@0}}</tspan></text>
-<g id="DVG" clip-path="url(#clip0)">
-<g id="Acronym">
-<path id="D" d="M183 256C183 277.72 165.583 295 144.5 295C140.504 295 136.639 294.379 133 293.225V317.936C136.728 318.635 140.571 319 144.5 319C179.018 319 207 290.794 207 256C207 221.206 179.018 193 144.5 193C140.571 193 136.728 193.365 133 194.064V218.775C136.639 217.621 140.504 217 144.5 217C165.583 217 183 234.28 183 256Z" fill="#7E7E7E"/>
-<path id="G" d="M355 293.225C339.44 288.29 328 273.603 328 256C328 234.28 345.417 217 366.5 217C370.864 217 375.072 217.741 379 219.108V194.26C374.961 193.434 370.781 193 366.5 193C331.982 193 304 221.206 304 256C304 290.794 331.982 319 366.5 319C370.781 319 374.961 318.566 379 317.74V256H355V293.225Z" fill="#7E7E7E"/>
-<path id="V" d="M274.95 193H300.368L256.468 318.87L211 193H236.518L256.071 247.13L274.95 193Z" fill="#7E7E7E"/>
-</g>
-</g>
-<circle id="Outer Ring" cx="256" cy="256" r="252" stroke="#7E7E7E" stroke-width="8"/>
-<circle id="Inner Ring" cx="256" cy="256" r="204" stroke="#7E7E7E" stroke-width="8"/>
-</g>
-<defs>
-<clipPath id="clip0">
-<rect width="246" height="126" fill="white" transform="translate(133 193)"/>
-</clipPath>
-</defs>
+    <g id="index">
+        <g id="Core {{r:#0,rr:0.5,o:0.5;0.5}}">
+            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="51" y="51" width="410" height="410">
+                <circle id="Mask" cx="256" cy="256" r="205" fill="#C4C4C4"/>
+            </mask>
+            <g mask="url(#mask0)">
+                <path id="Guide {{rightline}}" d="M418 164V348" stroke="black" stroke-width="0.01"/>
+                <path id="Guide {{leftline}}" d="M95 348V164" stroke="black" stroke-width="0.01"/>
+                <g id="Dial">
+                    <rect id="Left Box {{sy:#0,o:0.5;1}}" x="95" y="379" width="43" height="247" transform="rotate(-180 95 379)" fill="#CCCCCC"/>
+                    <rect id="Right Box {{sy:#0,o:0.5;0}}" x="461" y="379" width="43" height="247" transform="rotate(-180 461 379)" fill="#CCCCCC"/>
+                    <path id="Rectangle 5" d="M418 397L418 115M95 397L95 115" stroke="#7E7E7E" stroke-width="8"/>
+                </g>
+                <rect id="Left Box {{py:#0,guide:leftline}}" x="86" y="339" width="18" height="18" fill="#7E7E7E"/>
+                <rect id="Right Box {{py:#0,guide:rightline}}" x="409" y="155" width="18" height="18" fill="#7E7E7E"/>
+                <text id="{{ta:middle}}" transform="translate(66 284) rotate(-90)" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="0.246094" y="12.2852">{{#0|r:0}}</tspan></text>
+                <text id="{{ta:middle}}_2" transform="translate(446 228) rotate(90)" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14" font-weight="bold" letter-spacing="0em"><tspan x="0.246094" y="12.2852">{{#0|r:1}}</tspan></text>
+            </g>
+        </g>
+        <text id="{{ta:middle}}_3" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto Condensed" font-size="18" font-style="italic" letter-spacing="0em"><tspan x="198.034" y="345.652">{{#0|n}} : {{#0|c}}</tspan></text>
+        <text id="{{ta:middle}}_4" fill="#7E7E7E" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="18" font-weight="900" letter-spacing="0em"><tspan x="191.971" y="173.652">{{@0|n}} : {{@0}}</tspan></text>
+        <g id="DVG" clip-path="url(#clip0)">
+            <g id="Acronym">
+                <path id="D" d="M183 256C183 277.72 165.583 295 144.5 295C140.504 295 136.639 294.379 133 293.225V317.936C136.728 318.635 140.571 319 144.5 319C179.018 319 207 290.794 207 256C207 221.206 179.018 193 144.5 193C140.571 193 136.728 193.365 133 194.064V218.775C136.639 217.621 140.504 217 144.5 217C165.583 217 183 234.28 183 256Z" fill="#7E7E7E"/>
+                <path id="G" d="M355 293.225C339.44 288.29 328 273.603 328 256C328 234.28 345.417 217 366.5 217C370.864 217 375.072 217.741 379 219.108V194.26C374.961 193.434 370.781 193 366.5 193C331.982 193 304 221.206 304 256C304 290.794 331.982 319 366.5 319C370.781 319 374.961 318.566 379 317.74V256H355V293.225Z" fill="#7E7E7E"/>
+                <path id="V" d="M274.95 193H300.368L256.468 318.87L211 193H236.518L256.071 247.13L274.95 193Z" fill="#7E7E7E"/>
+            </g>
+        </g>
+        <circle id="Outer Ring" cx="256" cy="256" r="252" stroke="#7E7E7E" stroke-width="8"/>
+        <circle id="Inner Ring" cx="256" cy="256" r="204" stroke="#7E7E7E" stroke-width="8"/>
+    </g>
+    <defs>
+        <clipPath id="clip0">
+            <rect width="246" height="126" fill="white" transform="translate(133 193)"/>
+        </clipPath>
+    </defs>
 </svg>

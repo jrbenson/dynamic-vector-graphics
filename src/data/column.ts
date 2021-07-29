@@ -5,6 +5,7 @@ export enum ColumnType {
   Number,
   Date
 }
+
 interface Stats {
   min: number;
   max: number;

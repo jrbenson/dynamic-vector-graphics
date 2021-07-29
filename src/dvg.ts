@@ -15,7 +15,7 @@ interface DVGOptions {
  * The main class that controls the initialization and lifecycle of making the SVG
  * dynamic and responding to message events from the VA Data-driven Content framework.
  */
-export class DVG {
+export class DVG { 
   opts: DVGOptions
   data: Data = new Data('') // DataFrame for data response
   refs: Map<string, Element> = new Map()
@@ -23,8 +23,9 @@ export class DVG {
   private element: Element
   private initComplete: boolean = false // Flag to help delay update execution
   private components: Component[] = []
-  private svg: SVGSVGElement | undefined
-  private content: SVGElement | undefined
+  private componentsStatus: Boolean = false
+  private svg: SVGSVGElement | undefined // Main/outer SVG of the DVG
+  private content: SVGElement | undefined // Group container for 
   private loader: SVGElement | undefined
 
   /**
@@ -80,16 +81,16 @@ export class DVG {
     cleanSVG(svg, this.opts.clean.toString().split(','))
     const fontsNeeded = initFonts(svg)
 
-    this.content = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-    this.content.append(...[...svg.children].filter((e) => e.tagName !== 'style'))
-    svg.append(this.content)
+    this.content = document.createElementNS('http://www.w3.org/2000/svg', 'g') // content = <g></g>
+    this.content.append(...[...svg.children].filter((e) => e.tagName !== 'style')) // content = <g>***Any child of given <svg></svg>***</g>
+    svg.append(this.content) // <svg>content</svg>
     this.content.style.transition = 'opacity 0.5s ease'
 
     this.loader = getLoader( this.svg )
     this.loader.style.transition = 'opacity 0.5s ease'
 
-    this.refs = parse.elementsByName(svg)
-    this.components = getComponents(svg)
+    this.refs = parse.elementsByName(svg) // stores object references for each HTML element of given SVG
+    this.components = getComponents(svg) // maps a component to each element of a given SVG based on the element's options
 
     if (fontsNeeded) {
       window.setTimeout(this.apply.bind(this), 1000)
@@ -106,17 +107,23 @@ export class DVG {
       window.setTimeout(this.apply.bind(this), 100)
     } else {
       const full = this.data.fullView()
+
       for (let comp of this.components) {
         if (comp.filters.length <= 0) {
           comp.apply(full, this)
         } else {
           let dv = this.data.fullView()
+
           for (let filter of comp.filters) {
             dv = dv.filteredView(filter)
           }
+
           comp.apply(dv, this)
         }
       }
+
+      this.componentsStatus = true
+
       // Set loader if data has no columns
       if (this.content && this.loader) {
         if (this.data.cols.length <= 0) {
@@ -137,6 +144,7 @@ export class DVG {
     for (let comp of this.components) {
       comp.draw(this)
     }
+    
     this.apply()
     // this.initComplete = false
     // const htmlElement = this.element as HTMLElement
@@ -152,5 +160,9 @@ export class DVG {
   update(data: SourceData): void {
     this.data = new Data(data)
     this.apply()
+  }
+
+  getComponentsStatus() {
+    return this.componentsStatus
   }
 }
