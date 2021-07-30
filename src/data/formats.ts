@@ -35,7 +35,6 @@ function simpleCompactFormat(value: number) {
   while (('' + precisionRound(scaled_value, precision)).replace('.', '').length > 3) {
     precision -= 1
   }
-  console.log(base, scaled_value, precision, precisionRound(scaled_value, precision))
   if (suffix) {
     return precisionRound(scaled_value, precision) + suffix
   }
@@ -329,7 +328,6 @@ function getFormatter(format: SourceFormat) {
     compactFormat: function (value: number | string | Date) {
       if (typeof value === 'number') {
         if (numberFormatUnsupported()) {
-          console.log( compact_format_opts.style)
           if ( compact_format_opts.style == 'percent' ) {
             return simpleCompactFormat(value*100) + '%'
           }
