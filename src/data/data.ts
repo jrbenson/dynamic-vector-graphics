@@ -78,6 +78,18 @@ export class DataView {
     return this.data.getColumn(column)?.stats?.avg
   }
 
+  unique(column: string | number) {
+    const col = this.getColumn(column)
+    if (col) {
+      const vals = new Set()
+      for (let i = 0; i < this.index.length; i += 1) {
+        vals.add(this.get(i, col.name))
+      }
+      return [...vals]
+    }
+    return []
+  }
+
   filteredView(filter: Filter | string): DataView {
     let f = undefined
     if (typeof filter === 'string') {
@@ -289,6 +301,18 @@ export class Data {
 
   avg(column: string | number) {
     return this.getColumn(column)?.stats?.avg
+  }
+
+  unique(column: string | number) {
+    const col = this.getColumn(column)
+    if (col) {
+      const vals = new Set()
+      for (let row of this._rows) {
+        vals.add(row.get(col.name))
+      }
+      return [...vals]
+    }
+    return []
   }
 
   calcColumnStats(columns: Array<string> = []) {

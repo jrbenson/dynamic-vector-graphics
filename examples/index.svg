@@ -1,5 +1,8 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="index">
+<path id="Guide {{rightline}}" d="M418 164V348" stroke="black" stroke-width="0.01"/>
+<path id="Guide {{bottomline}}" d="M174 417L354 417" stroke="black" stroke-width="0.01"/>
+<path id="Guide {{leftline}}" d="M95 348V164" stroke="black" stroke-width="0.01"/>
 <g id="Core {{r:#0,rr:0.5,o:0.5;0.5}}">
 <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="51" y="51" width="410" height="410">
 <circle id="Mask" cx="256" cy="256" r="205" fill="#C4C4C4"/>

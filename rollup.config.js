@@ -27,13 +27,13 @@ export default [
     ],
     plugins: [
       del({ runOnce: true, targets: 'dist/**/*' }),
-      copy({targets: [{ src: ['src/*', '!**/*.ts'], dest: 'dist' }]}),
+      copy({ targets: [{ src: ['src/*', '!**/*.ts'], dest: 'dist' }] }),
       json(),
       nodePolyfills(),
-      nodeResolve(),
+      nodeResolve({ browser: true }),
       commonjs(),
       typescript(),
-      terser() 
+      terser(),
     ],
   },
 ]

@@ -27,10 +27,12 @@ export class DVG {
   private element: Element
   private initComplete: boolean = false // Flag to help delay update execution
   private components: Component[] = []
-  private componentsStatus: Boolean = false
+  private componentTags: string[][] = []
   private svg: SVGSVGElement | undefined // Main/outer SVG of the DVG
-  private content: SVGElement | undefined // Group container for 
+  private content: SVGElement | undefined // Group container for
   private loader: SVGElement | undefined
+
+  private uuidCounter = 0
 
   /**
    * Attach to the indicate element DOM element and fill it with the target SVG. Also
@@ -50,8 +52,6 @@ export class DVG {
     }
     this.opts = { ...this.opts, ...opts }
 
-    console.log(this.opts)
-
     this.init()
   }
 
@@ -62,7 +62,7 @@ export class DVG {
     if (this.element.tagName.toLowerCase() === 'svg') {
       this.initSVG(this.element as SVGSVGElement)
     } else {
-      ; (this.element as HTMLElement).style.opacity = '0'
+      ;(this.element as HTMLElement).style.opacity = '0'
       fetch(this.opts.svg.toString(), { method: 'GET' })
         .then((response) => response.text())
         .then((text) => {
@@ -95,12 +95,10 @@ export class DVG {
 
     this.refs = parse.elementsByName(svg) // stores object references for each HTML element of given SVG
 
-    let components: Array<Component> = []
-    components.push(...DuplicateComponent.getComponent(svg))
-    components.push(...TextComponent.getComponent(svg))
-    components.push(...TransformComponent.getComponent(svg))
-    components.push(...StyleComponent.getComponent(svg))
-    this.components = components // maps a component to each element of a given SVG based on the element's options
+    this.addComponents(DuplicateComponent.getComponent(svg), 'duplicate')
+    this.addComponents(TextComponent.getComponent(svg), 'text')
+    this.addComponents(TransformComponent.getComponent(svg), 'transform')
+    this.addComponents(StyleComponent.getComponent(svg), 'style')
 
     if (fontsNeeded) {
       window.setTimeout(this.apply.bind(this), 1000)
@@ -114,11 +112,13 @@ export class DVG {
    */
   private apply(): void {
     if (!this.initComplete) {
+      // Idle while waiting for SGV to finish loading
       window.setTimeout(this.apply.bind(this), 100)
     } else {
       const full = this.data.fullView()
 
-      for (let comp of this.components) {
+      // First apply the duplicate components so they can expand
+      for (let comp of this.getComponents('duplicate')) {
         if (comp.filters.length <= 0) {
           comp.apply(full, this)
         } else {
@@ -132,9 +132,22 @@ export class DVG {
         }
       }
 
-      this.componentsStatus = true
+      // Then apply the other components
+      for (let comp of this.getComponents(['transform','style','text'])) {
+        if (comp.filters.length <= 0) {
+          comp.apply(full, this)
+        } else {
+          let dv = this.data.fullView()
 
-      // Set loader if data has no columns
+          for (let filter of comp.filters) {
+            dv = dv.filteredView(filter)
+          }
+
+          comp.apply(dv, this)
+        }
+      }
+
+      // Set loading spinner if data has no columns
       if (this.content && this.loader) {
         if (this.data.cols.length <= 0) {
           this.content.style.opacity = '0.5'
@@ -172,7 +185,79 @@ export class DVG {
     this.apply()
   }
 
-  getComponentsStatus() {
-    return this.componentsStatus
+  addComponents(components: Component[], tags: string | string[] | string[][] = []) {
+    this.components.push(...components)
+    if (typeof tags === 'string') {
+      // Single string case
+      this.componentTags.push(...Array(components.length).fill([tags]))
+    } else {
+      if (tags.length > 0) {
+        if (typeof tags[0] === 'string') {
+          // List of strings case
+          this.componentTags.push(...Array(components.length).fill(tags))
+        } else {
+          // Fully defined tag set
+          if (tags.length === components.length) {
+            this.componentTags.push(...tags as string[][])
+          } else {
+            // Incorrectly defined tag set
+            this.componentTags.push([...Array(components.length)])
+          }
+        }
+      } else {
+        // No tags defined
+        this.componentTags.push([...Array(components.length)])
+      }
+    }
+  }
+
+  getComponents(tags: string | string[] = []) {
+    if (typeof tags === 'string') {
+      tags = [tags]
+    }
+    if (tags.length <= 0) {
+      return this.components
+    } else {
+      return this.components.filter((component, index) => {
+        return this.componentTags[index].filter((e) => tags.includes(e)).length > 0
+      })
+    }
+  }
+
+  removeComponents(tags: string | string[] = []) {
+    if (typeof tags === 'string') {
+      tags = [tags]
+    }
+    if (tags.length <= 0) {
+      this.components = []
+      this.componentTags = []
+    } else {
+      this.components = this.components.filter((component, index) => {
+        return !(this.componentTags[index].filter((e) => tags.includes(e)).length > 0)
+      })
+      this.componentTags = this.componentTags.filter((curTags) => {
+        return !(curTags.filter((e) => tags.includes(e)).length > 0)
+      })
+    }
+  }
+
+  addComponentTags(component: Component, tags: string | string[]) {
+    if (typeof tags === 'string') {
+      tags = [tags]
+    }
+    const i = this.components.indexOf(component)
+    if (i >= 0) {
+      this.componentTags[i].push(...tags)
+    }
+  }
+
+  removeComponentTags(component: Component, tags: string | string[]) {
+    if (typeof tags === 'string') {
+      tags = [tags]
+    }
+    const i = this.components.indexOf(component)
+    if (i >= 0) {
+      this.componentTags[i] = this.componentTags[i].filter((tag) => !tags.includes(tag))
+    }
   }
 }
