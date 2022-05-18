@@ -52,7 +52,7 @@ export default class TextComponent extends Component {
     }
   }
 
-  static getComponents(svg: Element): Array<Component> {
+  static getComponent(svg: Element): Array<Component> {
     let elems: Array<Element> = []
     svg.querySelectorAll('text').forEach(function (text) {
       if (text.children.length) {

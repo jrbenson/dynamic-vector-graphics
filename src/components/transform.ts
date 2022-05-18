@@ -77,7 +77,7 @@ export default class TransformComponent extends Component {
     },
   ]
 
-  static getComponents(svg: Element): Array<Component> {
+  static getComponent(svg: Element): Array<Component> {
     const options = ([] as string[]).concat(...TransformComponent.transforms.map((t) => t.keys))
     return parse.elementsWithOptions(svg, options).map((e) => new TransformComponent(e))
   }

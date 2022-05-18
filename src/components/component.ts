@@ -24,17 +24,28 @@ export default class Component {
     this.filters = parse.filtersForElement( this.element )
   }
 
-  /**
+  /** CHANGE: Renamed to clarify that each component is retrieved by this
+   * method individually even though it returns an array
+   * 
    * Override with static method for selecting viable elements for this dynamic from SVG.
    * @param svg The root SVG element to start the search from.
    * @return Array of components that match the desired pattern.
    */
-  static getComponents(svg: Element): Array<Component> {
+  static getComponent(svg: Element): Array<Component> {
     return []
   }
 
+  /**
+   * Override with element
+   * @param data 
+   * @param state 
+   */
   apply(data: DataView, state: DVG ) {}
 
+  /**
+   * 
+   * @param state 
+   */
   draw(state: DVG ) {}
 }
 

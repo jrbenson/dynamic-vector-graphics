@@ -11,11 +11,11 @@
     },
     {
       "type": "npm",
-      "script": "build:watch",
+      "script": "dev",
       "problemMatcher": ["$tsc"],
       "group": "build",
-      "label": "watch",
-      "detail": "build package in watch mode"
+      "label": "dev",
+      "detail": "build in watch mode and run server"
     },
     {
       "type": "npm",

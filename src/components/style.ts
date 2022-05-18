@@ -32,7 +32,7 @@ export default class StyleComponent extends Component {
     },
   ]
 
-  static getComponents(svg: Element): Array<Component> {
+  static getComponent(svg: Element): Array<Component> {
     const options = ([] as string[]).concat(...StyleComponent.styles.map((s) => s.keys))
     return parse.elementsWithOptions(svg, options).map((e) => new StyleComponent(e))
   }

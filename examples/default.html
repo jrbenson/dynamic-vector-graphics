@@ -18,8 +18,10 @@
     <script>
       const mydvg = new dvg.DVG()
       mydvg.update({
-        values: [['Foo', 42]],
-        columns: ['Char', 'Num {{0..100|f:dollar}}'],
+        values: [['Alpha', 0.45, 256],
+        ['Alpha', 0.27, 1024],
+        ['Alpha', 0.87, 8192]],
+        columns: ['Char', 'Num A {{0..1|f:percent}}', 'Num B {{0..10000|f:dollar}}'],
       })
     </script>
   </body>

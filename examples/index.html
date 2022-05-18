@@ -74,6 +74,12 @@
       .small-inputs input[type='date'] {
         width: 5.7rem;
       }
+      .smallest-inputs input {
+        width: 3.5rem;
+      }
+      .smallest-inputs input[type='date'] {
+        width: 3.7rem;
+      }
       .input-row {
         margin-left: -5rem;
         margin-top: 0;
@@ -132,17 +138,27 @@
 
     <h2>Inline SVG</h2>
     <div class="columns">
-      <div class="column-left">
+      <div class="column-left smallest-inputs">
         <p>This example shows how an inline SVG tag can be used to embed dynamic graphics.</p>
         <pre><code><br />&lt;svg id="mydvg"&gt;...&lt;/svg&gt;<br/>&lt;script&gt;<br />  const mydvg = new dvg.DVG(document.getElementById('mysvg'))<br />  mydvg.update({<br />    values: [['Foo', 42]],<br />    columns: ['Char', 'Num {{0..100|f:dollar}}'],<br />  })<br />&lt;/script&gt;</code></pre>
-        <p>Change the names and values of the variables used by the graphic below:</p>
+        <p>Change the names and values of the variables used by the graphic:</p>
         <div class="input-row">
-          <input id="dvgInline_colA_name" type="text" value="Character" />
-          <input id="dvgInline_colA_value" type="text" value="Value" />
+          <input id="dvgInline_colA_name" type="text" value="Char" />
+          <input id="dvgInline_colA_value1" type="text" value="Alpha" />
+          <input id="dvgInline_colA_value2" type="text" value="Beta" />
+          <input id="dvgInline_colA_value3" type="text" value="Gamma" />
         </div>
         <div class="input-row">
-          <input id="dvgInline_colB_name" type="text" value="Number {{0..100|f:dollar12.2}}" />
-          <input id="dvgInline_colB_value" type="number" value="40" />
+          <input id="dvgInline_colB_name" type="text" value="Num A {{0..1|f:percent}}" />
+          <input id="dvgInline_colB_value1" type="number" value="0.45" step="0.05" />
+          <input id="dvgInline_colB_value2" type="number" value="0.27" step="0.05" />
+          <input id="dvgInline_colB_value3" type="number" value="0.87" step="0.05" />
+        </div>
+        <div class="input-row">
+          <input id="dvgInline_colC_name" type="text" value="Num B {{0..10000|f:dollar12.2}}" />
+          <input id="dvgInline_colC_value1" type="number" value="256" step="128" />
+          <input id="dvgInline_colC_value2" type="number" value="1024" step="128" />
+          <input id="dvgInline_colC_value3" type="number" value="8192" step="128" />
         </div>
       </div>
       <div class="column-right">
@@ -155,57 +171,114 @@
           xmlns="http://www.w3.org/2000/svg"
         >
           <g id="index">
-            <g id="Core {{r:#0,o:0.5;0.5}}">
+            <g id="Core {{r:#0,rr:0.5,o:0.5;0.5}}">
               <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="51" y="51" width="410" height="410">
-                <circle id="Ellipse 5" cx="256" cy="256" r="205" fill="#C4C4C4" />
+                <circle id="Mask" cx="256" cy="256" r="205" fill="#C4C4C4" />
               </mask>
               <g mask="url(#mask0)">
-                <g id="Group 1">
+                <g id="Dial">
                   <rect
-                    id="Rectangle 6"
-                    x="99"
-                    y="397"
-                    width="53"
-                    height="282"
-                    transform="rotate(-180 99 397)"
-                    fill="black"
-                    fill-opacity="0.25"
+                    id="Left Box {{sy:#0,o:0.5;1}}"
+                    x="95"
+                    y="379"
+                    width="43"
+                    height="247"
+                    transform="rotate(-180 95 379)"
+                    fill="#CCCCCC"
                   />
                   <rect
-                    id="Rectangle 7"
-                    x="466"
-                    y="397"
-                    width="53"
-                    height="282"
-                    transform="rotate(-180 466 397)"
-                    fill="black"
-                    fill-opacity="0.25"
+                    id="Right Box {{sy:#0,o:0.5;0}}"
+                    x="461"
+                    y="379"
+                    width="43"
+                    height="247"
+                    transform="rotate(-180 461 379)"
+                    fill="#CCCCCC"
                   />
-                  <path id="Rectangle 5" d="M418 397L418 115M95 397L95 115" stroke="#7E7E7E" stroke-width="8" />
+                  <path id="Rectangle 5" d="M418 389L418 107M95 389L95 107" stroke="#7E7E7E" stroke-width="8" />
+                  <path id="Rectangle 6" d="M115 417L397 417M115 94.0001L397 94" stroke="#7E7E7E" stroke-width="8" />
                 </g>
+                <rect id="Left Box {{py:#0,guide:leftline}}" x="86" y="339" width="18" height="18" fill="#7E7E7E" />
+                <rect id="Right Box {{py:#0,guide:rightline}}" x="409" y="155" width="18" height="18" fill="#7E7E7E" />
+                <text
+                  id="{{ta:middle}}"
+                  transform="translate(66 284) rotate(-90)"
+                  fill="#7E7E7E"
+                  xml:space="preserve"
+                  style="white-space: pre"
+                  font-family="Roboto"
+                  font-size="14"
+                  font-weight="bold"
+                  letter-spacing="0em"
+                >
+                  <tspan x="0.246094" y="12.2852">{{#0|r:0}}</tspan>
+                </text>
+                <text
+                  id="{{ta:middle}}_2"
+                  transform="translate(446 228) rotate(90)"
+                  fill="#7E7E7E"
+                  xml:space="preserve"
+                  style="white-space: pre"
+                  font-family="Roboto"
+                  font-size="14"
+                  font-weight="bold"
+                  letter-spacing="0em"
+                >
+                  <tspan x="0.246094" y="12.2852">{{#0|r:1}}</tspan>
+                </text>
+                <g id="{{duplicateX:@0,guide:bottomline}}">
+                  <rect id="{{sx:#0,o:0.5;0.5}}" x="159" y="405" width="32" height="24" fill="#7E7E7E" />
+                </g>
+                <circle id="Inner Ring" cx="256" cy="256" r="204" stroke="#7E7E7E" stroke-width="8" />
               </g>
             </g>
             <text
-              id="{{a:middle}}"
+              id="{{ta:middle}}_3"
               fill="#7E7E7E"
               xml:space="preserve"
               style="white-space: pre"
-              font-family="Arial"
-              font-size="18"
+              font-family="Roboto Condensed"
+              font-size="14"
+              font-style="italic"
               letter-spacing="0em"
             >
-              <tspan x="191.214" y="345.74">{{#0|n}} : {{#0|c}}</tspan>
+              <tspan x="214.645" y="344.285">{{@0}} : {{#1|c}}</tspan>
             </text>
             <text
-              id="{{a:middle}}_2"
+              id="{{filter:1,ta:middle}}"
               fill="#7E7E7E"
               xml:space="preserve"
               style="white-space: pre"
-              font-family="Arial"
-              font-size="18"
+              font-family="Roboto Condensed"
+              font-size="14"
+              font-style="italic"
               letter-spacing="0em"
             >
-              <tspan x="189.29" y="173.74">{{@0|n}} : {{@0}}</tspan>
+              <tspan x="214.645" y="364.285">{{@0}} : {{#1|c}}</tspan>
+            </text>
+            <text
+              id="{{f:2,ta:middle}}"
+              fill="#7E7E7E"
+              xml:space="preserve"
+              style="white-space: pre"
+              font-family="Roboto Condensed"
+              font-size="14"
+              font-style="italic"
+              letter-spacing="0em"
+            >
+              <tspan x="214.645" y="384.285">{{@0}} : {{#1|c}}</tspan>
+            </text>
+            <text
+              id="{{ta:middle}}_4"
+              fill="#7E7E7E"
+              xml:space="preserve"
+              style="white-space: pre"
+              font-family="Roboto"
+              font-size="14"
+              font-weight="900"
+              letter-spacing="0em"
+            >
+              <tspan x="160.693" y="176.285">{{@0|n}}/{{#0|n}} : {{@0}}/{{#0}}</tspan>
             </text>
             <g id="DVG" clip-path="url(#clip0)">
               <g id="Acronym">
@@ -226,8 +299,29 @@
                 />
               </g>
             </g>
+            <path
+              id="{{a:#0,f:0}}"
+              d="M144 306C172.167 306 195 283.39 195 255.5C195 227.61 172.167 205 144 205"
+              stroke="white"
+              stroke-opacity="0.5"
+              stroke-width="4"
+            />
+            <path
+              id="{{a:#0,f:1}}"
+              d="M227 202L256.5 283L284 202"
+              stroke="white"
+              stroke-opacity="0.5"
+              stroke-width="4"
+            />
+            <path
+              id="{{a:#0,f:2}}"
+              d="M366 205C337.833 205 315 227.61 315 255.5C315 283.39 338.833 307 367 307L367 267.5"
+              stroke="white"
+              stroke-opacity="0.5"
+              stroke-width="4"
+            />
             <circle id="Outer Ring" cx="256" cy="256" r="252" stroke="#7E7E7E" stroke-width="8" />
-            <circle id="Inner Ring" cx="256" cy="256" r="204" stroke="#7E7E7E" stroke-width="8" />
+            <circle id="Inner Ring_2" cx="256" cy="256" r="204" stroke="#7E7E7E" stroke-width="8" />
           </g>
           <defs>
             <clipPath id="clip0">
@@ -240,17 +334,27 @@
 
     <h2>External SVG</h2>
     <div class="columns">
-      <div class="column-left">
+      <div class="column-left smallest-inputs">
         <p>This example shows how an external svg can be used to embed dynamic graphics.</p>
         <pre><code><br />&lt;div id="mydvg"&gt;&lt;/svg&gt;<br/>&lt;script&gt;<br />  const mydvg = new dvg.DVG(<br />    document.getElementById('mydvg'),<br />    { svg: 'path/to/file.svg' }<br />  )<br />  mydvg.update({<br />    values: [['Foo', 42]],<br />    columns: ['Char', 'Num {{0..100|f:dollar}}'],<br />  })<br />&lt;/script&gt;</code></pre>
         <p>Change the names and values of the variables used by the graphic below:</p>
         <div class="input-row">
-          <input id="dvgExternal_colA_name" type="text" value="Character" />
-          <input id="dvgExternal_colA_value" type="text" value="Value" />
+          <input id="dvgExternal_colA_name" type="text" value="Char" />
+          <input id="dvgExternal_colA_value1" type="text" value="Alpha" />
+          <input id="dvgExternal_colA_value2" type="text" value="Beta" />
+          <input id="dvgExternal_colA_value3" type="text" value="Gamma" />
         </div>
         <div class="input-row">
-          <input id="dvgExternal_colB_name" type="text" value="Number {{0..100|f:dollar12.2}}" />
-          <input id="dvgExternal_colB_value" type="number" value="40" />
+          <input id="dvgExternal_colB_name" type="text" value="Num A {{0..1|f:percent}}" />
+          <input id="dvgExternal_colB_value1" type="number" value="0.45" step="0.05" />
+          <input id="dvgExternal_colB_value2" type="number" value="0.27" step="0.05" />
+          <input id="dvgExternal_colB_value3" type="number" value="0.87" step="0.05" />
+        </div>
+        <div class="input-row">
+          <input id="dvgExternal_colC_name" type="text" value="Num B {{0..10000|f:dollar12.2}}" />
+          <input id="dvgExternal_colC_value1" type="number" value="256" step="128" />
+          <input id="dvgExternal_colC_value2" type="number" value="1024" step="128" />
+          <input id="dvgExternal_colC_value3" type="number" value="8192" step="128" />
         </div>
       </div>
       <div class="column-right">
@@ -261,12 +365,14 @@
     <h2>Using CSV</h2>
     <div class="columns">
       <div class="column-left">
-        <p>This example shows how a csv string can represent the data. Change CSV used by the graphic below:</p>
+        <p>This example shows how a csv string can represent the data. Change CSV used by the graphic:</p>
         <div class="input-row">
-          <textarea id="dataTest2_csv" rows="4">
-"Character","Number{{0..100|f:dollar}}"
-"Value",42
-          </textarea>
+          <textarea id="dataTest2_csv" rows="6">
+"Char","Num A{{0..1|f:percent}}","Num B{{0..10000|f:dollar}}"
+"Alpha",0.45,256
+"Beta",0.27,1024
+"Gamma",0.87,8192</textarea
+          >
         </div>
       </div>
       <div class="column-right">
@@ -276,22 +382,36 @@
 
     <h2>Using Modeled Data</h2>
     <div class="columns">
-      <div class="column-left">
+      <div class="column-left smallest-inputs">
         <p>This example shows how a structured model represent the data.</p>
         <pre><code><br />&lt;div id="mydvg"&gt;&lt;/svg&gt;<br/>&lt;script&gt;<br />  const mydvg = new dvg.DVG(<br />    document.getElementById('mydvg'),<br />    { svg: 'path/to/file.svg' }<br />  )<br />  mydvg.update({<br />    values: [['Foo', 42]],<br />    columns: ['Char', 'Num {{0..100}}'],<br />  })<br />&lt;/script&gt;</code></pre>
         <p>Change the names and values of the variables used by the graphic below:</p>
         <div class="input-row">
-          <input id="dvgModeled_colA_name" type="text" value="Character" />
-          <input id="dvgModeled_colA_value" type="text" value="Value" />
+          <input id="dvgModeled_colA_name" type="text" value="Char" />
+          <input id="dvgModeled_colA_value1" type="text" value="Alpha" />
+          <input id="dvgModeled_colA_value2" type="text" value="Beta" />
+          <input id="dvgModeled_colA_value3" type="text" value="Gamma" />
         </div>
         <div class="input-row">
-          <input id="dvgModeled_colB_name" type="text" value="Number {{0..100}}" />
-          <input id="dvgModeled_colB_value" type="number" value="40" />
+          <input id="dvgModeled_colB_name" type="text" value="Num A {{0..1}}" />
+          <input id="dvgModeled_colB_value1" type="number" value="0.45" step="0.5" />
+          <input id="dvgModeled_colB_value2" type="number" value="0.27" step="0.5" />
+          <input id="dvgModeled_colB_value3" type="number" value="0.87" step="0.5" />
         </div>
-        <p>Change the format for numberic column below:</p>
         <div class="input-row">
-          <input id="dvgModeled_colB_format" type="text" value="dollar" />
+          <input id="dvgModeled_colC_name" type="text" value="Num B {{0..10000}}" />
+          <input id="dvgModeled_colC_value1" type="number" value="256" step="128" />
+          <input id="dvgModeled_colC_value2" type="number" value="1024" step="128" />
+          <input id="dvgModeled_colC_value3" type="number" value="8192" step="128" />
+        </div>
+        <p>Change the formats for numberic columns below:</p>
+        <div class="input-row">
+          <input id="dvgModeled_colB_format" type="text" value="percent" />
           <input id="dvgModeled_colB_precision" type="number" value="2" />
+        </div>
+        <div class="input-row">
+          <input id="dvgModeled_colC_format" type="text" value="dollar" />
+          <input id="dvgModeled_colC_precision" type="number" value="2" />
         </div>
       </div>
       <div class="column-right">
@@ -370,6 +490,9 @@
 
       function val(id) {
         const input = document.getElementById(id)
+        if (!input) {
+          console.log(id)
+        }
         if (input.type === 'number') {
           return Number(input.value)
         }
@@ -378,13 +501,21 @@
 
       function applyInputs() {
         dvgInline.update({
-          values: [[val('dvgInline_colA_value'), val('dvgInline_colB_value')]],
-          columns: [val('dvgInline_colA_name'), val('dvgInline_colB_name')],
+          values: [
+            [val('dvgInline_colA_value1'), val('dvgInline_colB_value1'), val('dvgInline_colC_value1')],
+            [val('dvgInline_colA_value2'), val('dvgInline_colB_value2'), val('dvgInline_colC_value2')],
+            [val('dvgInline_colA_value3'), val('dvgInline_colB_value3'), val('dvgInline_colC_value3')],
+          ],
+          columns: [val('dvgInline_colA_name'), val('dvgInline_colB_name'), val('dvgInline_colC_name')],
         })
 
         dvgExternal.update({
-          values: [[val('dvgExternal_colA_value'), val('dvgExternal_colB_value')]],
-          columns: [val('dvgExternal_colA_name'), val('dvgExternal_colB_name')],
+          values: [
+            [val('dvgExternal_colA_value1'), val('dvgExternal_colB_value1'), val('dvgExternal_colC_value1')],
+            [val('dvgExternal_colA_value2'), val('dvgExternal_colB_value2'), val('dvgExternal_colC_value2')],
+            [val('dvgExternal_colA_value3'), val('dvgExternal_colB_value3'), val('dvgExternal_colC_value3')],
+          ],
+          columns: [val('dvgExternal_colA_name'), val('dvgExternal_colB_name'), val('dvgExternal_colC_name')],
         })
 
         dvgTestFigma.update({
@@ -436,13 +567,21 @@
         dvgCSV.update(val('dataTest2_csv'))
 
         dvgModeled.update({
-          values: [[val('dvgModeled_colA_value'), val('dvgModeled_colB_value')]],
-          columns: [val('dvgModeled_colA_name'), val('dvgModeled_colB_name')],
+          values: [
+            [val('dvgModeled_colA_value1'), val('dvgModeled_colB_value1'), val('dvgModeled_colC_value1')],
+            [val('dvgModeled_colA_value2'), val('dvgModeled_colB_value2'), val('dvgModeled_colC_value2')],
+            [val('dvgModeled_colA_value3'), val('dvgModeled_colB_value3'), val('dvgModeled_colC_value3')],
+          ],
+          columns: [val('dvgModeled_colA_name'), val('dvgModeled_colB_name'), val('dvgModeled_colC_name')],
           formats: [
             {},
             {
               name: val('dvgModeled_colB_format'),
               precision: val('dvgModeled_colB_precision'),
+            },
+            {
+              name: val('dvgModeled_colC_format'),
+              precision: val('dvgModeled_colC_precision'),
             },
           ],
         })
