@@ -101,11 +101,11 @@
           background: #333;
         }
         input,
-      textarea,
-      .pane {
-        background: #333;
-        color: #ddd;
-      }
+        textarea,
+        .pane {
+          background: #333;
+          color: #ddd;
+        }
       }
     </style>
   </head>
@@ -118,6 +118,9 @@
     </div>
     <div id="content_wrap">
       <div id="content">
+        <div id="result">
+          <div id="dvg"></div>
+        </div>
         <label for="csv">CSV</label>
         <textarea id="csv" rows="4">
 "Group","Percent {{0..1|f:percent}}","Sales {{0..330000000|f:dollar}}"
@@ -126,25 +129,17 @@ Beta,0.27,284323935
 Gamma,0.83,328564372</textarea
         >
         <label for="url">URL</label>
-        <input
-          id="url"
-          type="url"
-          value="../examples/index.svg"
-        />
+        <input id="url" type="url" value="../examples/index.svg" />
         <label for="options">Options</label>
         <div id="options" class="pane">
           <p>
             <input id="visible" name="visible" type="checkbox" checked />
-            <label for="visible">Display</label>
+            <label for="visible">Visible</label>
           </p>
           <p>
             <label for="delay">Delay:</label>
             <input id="delay" name="delay" type="number" value="0" />
           </p>
-        </div>
-        <label for="result">Result</label>
-        <div id="result" class="pane">
-          <div id="dvg"></div>
         </div>
       </div>
     </div>
@@ -159,13 +154,11 @@ Gamma,0.83,328564372</textarea
       document.getElementById('csv').addEventListener('input', applyCSV)
       document.getElementById('visible').addEventListener('input', applyOptions)
 
-      // console.log( Intl.NumberFormat(navigator.language, {
-      //   notation: 'compact'
-      // }).format(249876253) )
-
       var result = undefined
 
       var applyTimeout = undefined
+
+      parseURL()
 
       applyURL()
 
@@ -185,11 +178,12 @@ Gamma,0.83,328564372</textarea
             result.update(csv)
           }
         }, document.getElementById('delay').value)
+
+        setURL()
       }
 
       function applyOptions() {
         const visibleInput = document.getElementById('visible')
-        const dupInput = document.getElementById('duplicate')
         const dvg = document.getElementById('dvg')
 
         if (visibleInput.checked) {
@@ -200,6 +194,42 @@ Gamma,0.83,328564372</textarea
 
         if (result != undefined) {
           result.draw()
+        }
+
+        setURL()
+      }
+
+      function setURL() {
+        const visible = document.getElementById('visible').checked
+        const delay = document.getElementById('delay').value
+        const csv = document.getElementById('csv').value
+        const url = document.getElementById('url').value
+        const data = `?url=${url}&csv=${csv}&delay=${delay}&visible=${visible}`
+        window.history.replaceState({}, '', encodeURI(data))
+      }
+
+      function parseURL() {
+        var params = {}
+        const query = window.location.search.slice(window.location.search.indexOf('?') + 1)
+        query.split('&').forEach((pair, key) => {
+          const eqIndex = pair.indexOf('=')
+          if (eqIndex < 0) {
+            params[pair] = ''
+          } else {
+            params[decodeURIComponent(pair.substr(0, eqIndex))] = decodeURIComponent(pair.substr(eqIndex + 1))
+          }
+        })
+        if (params.hasOwnProperty('url')) {
+          document.getElementById('url').value = params['url']
+        }
+        if (params.hasOwnProperty('csv')) {
+          document.getElementById('csv').value = params['csv']
+        }
+        if (params.hasOwnProperty('delay')) {
+          document.getElementById('delay').value = params['delay']
+        }
+        if (params.hasOwnProperty('visible')) {
+          document.getElementById('visible').value = params['visible']
         }
       }
     </script>

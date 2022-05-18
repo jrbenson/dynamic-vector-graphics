@@ -102,7 +102,6 @@ export default class DuplicateComponent extends Component {
     dvg.addComponents(TransformComponent.getComponent(this.element), ['transform', this.uuid])
     dvg.addComponents(StyleComponent.getComponent(this.element), ['style', this.uuid])
 
-    
     //   const svgElem = this.copy(this.element as SVGGraphicsElement)
     //   console.log(true)
 
@@ -118,7 +117,6 @@ export default class DuplicateComponent extends Component {
     //       style.set(svgElem, norm, svgElem)
     //     }
     //   }
-  
   }
 
   /**
