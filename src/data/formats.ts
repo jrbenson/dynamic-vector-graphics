@@ -100,11 +100,6 @@ export interface SourceFormat {
   width?: number
 }
 
-// Hack to get around ES2020 standard not having notation.
-interface FormatterOptions extends Intl.NumberFormatOptions {
-  notation?: string
-}
-
 export const defaultFormatter: Formatter = {
   format: (value: number | string | Date) => {
     if (typeof value === 'number') {
@@ -167,12 +162,12 @@ function getFormatter(format: SourceFormat) {
   format.name.replace('nlmni', 'prefix')
   format.name.replace('nlmnl', 'currency')
 
-  let format_opts: FormatterOptions = {
+  let format_opts: Intl.NumberFormatOptions = {
     maximumFractionDigits: format.precision,
     minimumFractionDigits: format.precision,
   }
 
-  let compact_format_opts: FormatterOptions = {
+  let compact_format_opts: Intl.NumberFormatOptions = {
     maximumFractionDigits: format.precision,
     minimumFractionDigits: format.precision,
     notation: 'compact',
@@ -312,7 +307,7 @@ function getFormatter(format: SourceFormat) {
       if (typeof value === 'number') {
         try {
           return new Intl.NumberFormat(navigator.language, format_opts).format(value)
-        } catch (e) {
+        } catch (e: any) {
           console.error(`DVG ${e.name}: ${e.message} Using defaults.`)
           delete format_opts.minimumSignificantDigits
           delete format_opts.maximumSignificantDigits
@@ -328,14 +323,14 @@ function getFormatter(format: SourceFormat) {
     compactFormat: function (value: number | string | Date) {
       if (typeof value === 'number') {
         if (numberFormatUnsupported()) {
-          if ( compact_format_opts.style == 'percent' ) {
-            return simpleCompactFormat(value*100) + '%'
+          if (compact_format_opts.style == 'percent') {
+            return simpleCompactFormat(value * 100) + '%'
           }
           return simpleCompactFormat(value)
         } else {
           try {
             return new Intl.NumberFormat(navigator.language, compact_format_opts).format(value)
-          } catch (e) {
+          } catch (e: any) {
             console.error(`DVG ${e.name}: ${e.message} Using defaults.`)
             delete compact_format_opts.minimumSignificantDigits
             delete compact_format_opts.maximumSignificantDigits

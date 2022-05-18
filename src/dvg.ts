@@ -133,7 +133,7 @@ export class DVG {
       }
 
       // Then apply the other components
-      for (let comp of this.getComponents(['transform','style','text'])) {
+      for (let comp of this.getComponents(['transform', 'style', 'text'])) {
         if (comp.filters.length <= 0) {
           comp.apply(full, this)
         } else {
@@ -198,7 +198,7 @@ export class DVG {
         } else {
           // Fully defined tag set
           if (tags.length === components.length) {
-            this.componentTags.push(...tags as string[][])
+            this.componentTags.push(...(tags as string[][]))
           } else {
             // Incorrectly defined tag set
             this.componentTags.push([...Array(components.length)])
