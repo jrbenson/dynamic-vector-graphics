@@ -106,12 +106,20 @@
       p {
         margin: 0.25rem;
       }
+      p.footnote {
+        margin-top: -0.25rem;
+        text-align: right;
+        font-size: x-small;
+      }
 
       .jexcel_container {
         display: block;
       }
       .jexcel {
         width: 100%;
+      }
+      .jexcel td {
+        height: 1.7rem;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -172,6 +180,7 @@
         <div id="input">
           <label for="spreadsheet">Data</label>
           <div id="spreadsheet" class="jexcel_container"></div>
+          <p class="footnote">Right click to edit column names</p>
           <label for="url">URL</label>
           <input id="url" type="url" value="../examples/index.svg" />
           <label for="urlalt">URL Alternate</label>
