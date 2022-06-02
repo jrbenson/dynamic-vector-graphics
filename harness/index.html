@@ -3,12 +3,21 @@
   <head>
     <title>Dynamic Vector Graphics Harness</title>
     <script src="../dist/dvg.min.js"></script>
+
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+
     <style>
       html {
         font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
         font-size: 16px;
         color: #555;
         background: #f2f2f2;
+      }
+      a {
+        color: #555;
       }
       html,
       body {
@@ -22,7 +31,6 @@
         border-bottom: 1px solid #111;
       }
       #content_wrap {
-        width: 100%;
         background: #f2f2f2;
       }
       #footer_wrap {
@@ -31,15 +39,30 @@
         border-top: 1px solid #111;
       }
       header,
-      footer,
-      #content {
+      footer {
         max-width: 42rem;
         margin: auto;
       }
+      #input,
+      #result {
+        padding: 2rem;
+      }
+      #input {
+        max-width: 35rem;
+      }
       header,
-      footer,
-      #content {
+      footer {
         padding: 2rem 2rem 2rem 1rem;
+        text-align: center;
+      }
+      #content {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      #result {
+        margin: 2rem 0;
       }
       footer a {
         color: #fff;
@@ -63,7 +86,7 @@
       textarea,
       .pane {
         font-size: 1rem;
-        width: 100%;
+        width: 96%;
         margin-bottom: 0.5rem;
         border: solid 1px #888;
         padding: 0.5rem;
@@ -77,13 +100,22 @@
       }
       svg {
         width: 100%;
-        height: 100%;
+        height: auto;
+        max-width: 42rem;
       }
       p {
         margin: 0.25rem;
       }
 
+      .jexcel_container {
+        display: block;
+      }
+      .jexcel {
+        width: 100%;
+      }
+
       @media (prefers-color-scheme: dark) {
+        a,
         h1,
         h2,
         h3,
@@ -106,6 +138,25 @@
           background: #333;
           color: #ddd;
         }
+        .jexcel {
+          background: #222;
+          border-color: #888;
+        }
+        .jexcel .highlight {
+          border-color: #fff;
+        }
+        .jexcel > tbody > tr > td {
+          border-color: #888;
+        }
+        .jexcel > thead > tr > td,
+        .jexcel > tbody > tr > td:first-child {
+          background: #333;
+          border-color: #888;
+        }
+        .jexcel > thead > tr > td.selected,
+        .jexcel > tbody > tr.selected > td:first-child {
+          background: #444;
+        }
       }
     </style>
   </head>
@@ -118,28 +169,36 @@
     </div>
     <div id="content_wrap">
       <div id="content">
-        <div id="result">
-          <div id="dvg"></div>
+        <div id="input">
+          <label for="spreadsheet">Data</label>
+          <div id="spreadsheet" class="jexcel_container"></div>
+          <label for="url">URL</label>
+          <input id="url" type="url" value="../examples/index.svg" />
+          <label for="urlalt">URL Alternate</label>
+          <input id="urlalt" type="url" value="" />
+          <label for="options">Options</label>
+          <div id="options" class="pane">
+            <p>
+              <input id="visible" name="visible" type="checkbox" checked />
+              <label for="visible">Visible</label>
+            </p>
+            <p>
+              <label for="delay">Delay:</label>
+              <input id="delay" name="delay" type="number" value="0" />
+            </p>
+            <p>
+              <label for="copies">Copies:</label>
+              <input id="copies" name="copies" type="number" value="1" />
+            </p>
+            <p>
+              <label for="scale">Scale:</label>
+              <input id="scale" name="scale" type="number" value="100" min="0" max="100" />
+            </p>
+          </div>
+          <a href="./">Reset</a>
         </div>
-        <label for="csv">CSV</label>
-        <textarea id="csv" rows="4">
-"Group","Percent {{0..1|f:percent}}","Sales {{0..330000000|f:dollar}}"
-Alpha,0.45,185764532
-Beta,0.27,284323935
-Gamma,0.83,328564372</textarea
-        >
-        <label for="url">URL</label>
-        <input id="url" type="url" value="../examples/index.svg" />
-        <label for="options">Options</label>
-        <div id="options" class="pane">
-          <p>
-            <input id="visible" name="visible" type="checkbox" checked />
-            <label for="visible">Visible</label>
-          </p>
-          <p>
-            <label for="delay">Delay:</label>
-            <input id="delay" name="delay" type="number" value="0" />
-          </p>
+        <div id="result">
+          <div id="dvgs"></div>
         </div>
       </div>
     </div>
@@ -150,65 +209,131 @@ Gamma,0.83,328564372</textarea
     </div>
 
     <script>
-      document.getElementById('url').addEventListener('input', applyURL)
-      document.getElementById('csv').addEventListener('input', applyCSV)
-      document.getElementById('visible').addEventListener('input', applyOptions)
+      document.getElementById('url').addEventListener('input', updateGraphics)
+      document.getElementById('urlalt').addEventListener('input', updateGraphics)
+      document.getElementById('visible').addEventListener('input', updateOptions)
+      document.getElementById('delay').addEventListener('input', updateOptions)
+      document.getElementById('copies').addEventListener('input', updateGraphics)
+      document.getElementById('scale').addEventListener('input', updateOptions)
 
-      var result = undefined
-
+      var csv =
+        'Group,Percent {{0..1|f:percent}},Sales {{0..330000000|f:dollar}}\nAlpha,0.45,185764532\nBeta,0.27,284323935\nGamma,0.83,328564372'
+      var spreadsheet = undefined
+      var results = []
       var applyTimeout = undefined
 
       parseURL()
 
-      applyURL()
+      initializeSpreadsheet()
 
-      function applyURL() {
-        const url = document.getElementById('url').value
-        result = new dvg.DVG(document.getElementById('dvg'), { svg: url })
-        applyCSV()
+      updateGraphics()
+
+      /**
+       * Heaviest reset as it rebuilds the set of dvg instances being created.
+       */
+      function updateGraphics() {
+        const opts = getOpts()
+        const dvgs_elem = document.getElementById('dvgs')
+        results = []
+        dvgs_elem.innerHTML = ''
+        for (let i = 0; i < opts.copies; i += 1) {
+          const dvg_div = document.createElement('div')
+          dvgs_elem.appendChild(dvg_div)
+          results.push(new dvg.DVG(dvg_div, { svg: opts.url }))
+        }
+        if (opts.urlalt) {
+          const dvg_div = document.createElement('div')
+          dvgs_elem.appendChild(dvg_div)
+          results.push(new dvg.DVG(dvg_div, { svg: opts.urlalt }))
+        }
+        updateData()
+        updateOptions()
       }
 
-      function applyCSV() {
+      /**
+       * Moderate reset as it updates the data for the dvg instances.
+       */
+      function updateData() {
+        const opts = getOpts()
         if (applyTimeout) {
           window.clearTimeout(applyTimeout)
         }
+        const csv = getCSV()
         applyTimeout = window.setTimeout(() => {
-          if (result !== undefined) {
-            const csv = document.getElementById('csv').value
+          for (let result of results) {
             result.update(csv)
           }
-        }, document.getElementById('delay').value)
+        }, opts.delay)
 
         setURL()
       }
 
-      function applyOptions() {
-        const visibleInput = document.getElementById('visible')
-        const dvg = document.getElementById('dvg')
-        if (visibleInput.checked) {
-          dvg.style.display = 'block'
+      /**
+       * Minor reset as it updates only extraneous settings.
+       */
+      function updateOptions() {
+        const opts = getOpts()
+        const dvgs_elem = document.getElementById('dvgs')
+        if (opts.visible) {
+          dvgs_elem.style.display = 'block'
         } else {
-          dvg.style.display = 'none'
+          dvgs_elem.style.display = 'none'
         }
 
-        if (result != undefined) {
+        dvgs_elem.querySelectorAll('svg').forEach((svg) => {
+          svg.style.width = `${opts.scale}%`
+        })
+
+        for (let result of results) {
           result.draw()
         }
 
         setURL()
       }
 
-      function setURL() {
-        const visible = document.getElementById('visible').checked
-        const delay = document.getElementById('delay').value
-        const csv = document.getElementById('csv').value
+      /**
+       * Extracts current values from the form and returns them as an object.
+       */
+      function getOpts() {
         const url = document.getElementById('url').value
-        const data = `?url=${url}&csv=${csv}&delay=${delay}&visible=${visible}`
+        const urlalt = document.getElementById('urlalt').value
+        const visibleInput = document.getElementById('visible').checked
+        const delay = document.getElementById('delay').value
+        const copies = document.getElementById('copies').value
+        const scale = document.getElementById('scale').value
+        return { url: url, urlalt: urlalt, visible: visible, delay: delay, copies: copies, scale: scale }
+      }
+
+      function getCSV() {
+        if (spreadsheet) {
+          const data = spreadsheet.getData()
+          if (data.length > 0) {
+            const headers = spreadsheet.getHeaders()
+            let newcsv = headers
+            for (let row of data) {
+              newcsv += '\n' + row
+            }
+            csv = newcsv
+          }
+        }
+        return csv
+      }
+
+      /**
+       * Updates the URL with the current values from the form.
+       */
+      function setURL() {
+        const opts = getOpts()
+        const csv = getCSV()
+        const data = `?url=${opts.url}&urlalt=${opts.urlalt}&csv=${csv}&delay=${opts.delay}&visible=${opts.visible}&copies=${opts.copies}&scale=${opts.scale}`
         window.history.replaceState({}, '', encodeURI(data))
       }
 
+      /**
+       * Extracts values from the URL and updates the form.
+       */
       function parseURL() {
-        var params = {}
+        var params = new Map()
         const query = window.location.search.slice(window.location.search.indexOf('?') + 1)
         query.split('&').forEach((pair, key) => {
           const eqIndex = pair.indexOf('=')
@@ -218,18 +343,66 @@ Gamma,0.83,328564372</textarea
             params[decodeURIComponent(pair.substr(0, eqIndex))] = decodeURIComponent(pair.substr(eqIndex + 1))
           }
         })
-        if (params.hasOwnProperty('url')) {
-          document.getElementById('url').value = params['url']
+        for (const key in params) {
+          if (key == 'csv') {
+            if (params[key]) {
+              csv = params[key]
+            }
+          } else {
+            const input = document.getElementById(key)
+            if (input) {
+              input.value = params[key]
+            }
+          }
         }
-        if (params.hasOwnProperty('csv')) {
-          document.getElementById('csv').value = params['csv']
+      }
+
+      function getDataAndHeaders() {
+        const rows = csv.split(/\r?\n/)
+        const header_row = rows.shift()
+        const data = []
+        for (let row of rows) {
+          data.push(row.split(','))
         }
-        if (params.hasOwnProperty('delay')) {
-          document.getElementById('delay').value = params['delay']
+        const headers = []
+        for (let header of header_row.split(',')) {
+          headers.push(header)
         }
-        if (params.hasOwnProperty('visible')) {
-          document.getElementById('visible').value = params['visible']
+        return { data: data, headers: headers }
+      }
+
+      function applyCsvToSpreadsheet() {
+        if (spreadsheet) {
+          const { data, headers } = getDataAndHeaders()
+          for (const [i, header] of headers.split(',').entries()) {
+            spreadsheet.setHeader(i, header)
+          }
+          spreadsheet.setData(data)
         }
+      }
+
+      function initializeSpreadsheet() {
+        const table = getDataAndHeaders()
+        let columns = []
+        for (let header of table.headers) {
+          columns.push({
+            title: header,
+          })
+        }
+        spreadsheet = jspreadsheet(document.getElementById('spreadsheet'), {
+          onchange: updateData,
+          onsort: updateData,
+          onblur: updateData,
+          oninsertrow: updateData,
+          oninsertcolumn: updateData,
+          ondeleterow: updateData,
+          ondeletecolumn: updateData,
+          onmoverow: updateData,
+          onmovecolumn: updateData,
+          data: table.data,
+          columns: columns,
+        })
+        spreadsheet.hideIndex()
       }
     </script>
   </body>
