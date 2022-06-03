@@ -36,6 +36,7 @@
     "@types/uuid": "^8.3.4",
     "@types/webfontloader": "^1.6.34",
     "jest": "^28.1.0",
+    "jest-environment-jsdom": "^28.1.0",
     "live-server": "^1.1.0",
     "node-fetch": "^3.2.4",
     "npm-run-all": "^4.1.5",
