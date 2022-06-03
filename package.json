@@ -3,11 +3,14 @@
   "version": "1.0.0-alpha.3",
   "description": "Make svg files react to dynamic data using annotations",
   "author": "Riley Benson",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "main": "dist/index",
   "module": "dist/index.es.js",
   "browser": "dist/dynsvg.min.js",
   "types": "dist/index",
+  "directories": {
+    "doc": "doc"
+  },
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "rollup -c",
