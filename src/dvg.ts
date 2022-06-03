@@ -13,6 +13,7 @@ import DuplicateComponent from './components/duplicate'
 interface DVGOptions {
   svg: string
   clean: string
+  sanitized: string
 }
 
 /**
@@ -49,6 +50,7 @@ export class DVG {
     this.opts = {
       svg: 'index.svg',
       clean: 'all',
+      sanitized: 'all',
     }
     this.opts = { ...this.opts, ...opts }
 

@@ -124,3 +124,20 @@ export function initFonts(svg: Element) {
   }
   return false
 }
+
+export function sanitizeSVG(svg: Element) {
+  var propName
+  var counter
+  let suffix = 'uniqueid_no'
+  // SVG element
+  var elem = svg
+  //Retrieve all id's from SVG
+  var allIdElements = elem.querySelectorAll('[id')
+  var len = allIdElements.length
+
+  for (let i = 0; i < len; i++) {
+    propName = allIdElements[i].localName
+
+  }
+  //Code here
+}
