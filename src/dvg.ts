@@ -1,7 +1,7 @@
 import Component from './components/component'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
-import { cleanSVG, initFonts } from './utils/svg'
+import { cleanSVG, initFonts, sanitizeSVG } from './utils/svg'
 import * as parse from './utils/syntax'
 import { getLoader } from './loader'
 
@@ -13,7 +13,7 @@ import DuplicateComponent from './components/duplicate'
 interface DVGOptions {
   svg: string
   clean: string
-  sanitized: string
+  // sanitized: string
 }
 
 /**
@@ -50,7 +50,7 @@ export class DVG {
     this.opts = {
       svg: 'index.svg',
       clean: 'all',
-      sanitized: 'all',
+      //sanitized: ,
     }
     this.opts = { ...this.opts, ...opts }
 
@@ -83,6 +83,8 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     this.svg = svg
+
+    // sanitizeSVG(svg)
 
     cleanSVG(svg, this.opts.clean.toString().split(','))
     const fontsNeeded = initFonts(svg)
