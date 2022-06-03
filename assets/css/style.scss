@@ -76,6 +76,10 @@ table th + th {
     background: #000;
     color: #ddd;
   }
+  .highlight code {
+    background: unset;
+    color: unset;
+  }
   img,
   code {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
