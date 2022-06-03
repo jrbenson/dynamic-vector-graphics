@@ -22,7 +22,12 @@
     "type": "git",
     "url": "git+https://github.com/jrbenson/dynamic-vector-graphics.git"
   },
-  "keywords": [],
+  "keywords": [
+    "svg",
+    "visualization",
+    "infographics",
+    "data"
+  ],
   "bugs": {
     "url": "https://github.com/jrbenson/dynamic-vector-graphics/issues"
   },
