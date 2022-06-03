@@ -40,8 +40,6 @@ const COL_ID_TYPE_PREFIXES: Record<string, ColumnType> = {
   $: ColumnType.Date,
 }
 
-
-
 /**
  * Encodes simplpified object literal into formal JSON syntax with quotes.
  *
@@ -63,8 +61,6 @@ function jsonEncodeLiteral(text: string) {
     '}'
   )
 }
-
-
 
 interface Markup {
   name: string
@@ -142,7 +138,7 @@ export function elementsByName(svg: Element) {
     .filter((e) => e.id?.match(RE_DOUBLEBRACE))
     .forEach(function (e) {
       let syn = markup(e.id)
-      console.log( syn )
+      console.log(syn)
       if (syn.name) {
         elements.set(syn.name, e)
       }
@@ -289,5 +285,3 @@ export function filtersForElement(element: Element | null) {
   }
   return filters
 }
-
-

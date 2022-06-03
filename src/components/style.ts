@@ -58,8 +58,8 @@ export default class StyleComponent extends Component {
 
   setBaseStyles() {
     const svgElem = this.element as SVGGraphicsElement
-    if ( svgElem.hasAttribute('opacity') ) {
-      this.baseAlpha = Number( svgElem.getAttribute('opacity') )
+    if (svgElem.hasAttribute('opacity')) {
+      this.baseAlpha = Number(svgElem.getAttribute('opacity'))
     }
   }
 

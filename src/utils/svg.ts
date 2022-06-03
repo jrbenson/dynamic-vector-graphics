@@ -1,22 +1,22 @@
-import { requiredFonts } from "./font"
+import { requiredFonts } from './font'
 import { decodeUnicode } from './string'
 import WebFont from 'webfontloader'
 
-export function getBBox( element: SVGGraphicsElement ) {
-  const mask = getMask( element )
-  if ( mask != undefined ) {
-    const copy = element.cloneNode( true )
-    mask.before( copy )
+export function getBBox(element: SVGGraphicsElement) {
+  const mask = getMask(element)
+  if (mask != undefined) {
+    const copy = element.cloneNode(true)
+    mask.before(copy)
     const bbox = (copy as SVGGraphicsElement).getBBox()
-    mask?.parentNode?.removeChild( copy )
+    mask?.parentNode?.removeChild(copy)
     return bbox
   }
   return element.getBBox()
 }
 
-export function getMask( element: Element | null ) {
+export function getMask(element: Element | null) {
   while (element && element.tagName !== 'SVG') {
-    if ( element.tagName == 'mask' ) {
+    if (element.tagName == 'mask') {
       return element
     }
     element = element.parentElement
@@ -25,7 +25,7 @@ export function getMask( element: Element | null ) {
 }
 
 export function getAbsoluteOrigin(element: SVGGraphicsElement, relativeOrigin: { x: number; y: number }) {
-  const bbox = getBBox( element )
+  const bbox = getBBox(element)
   return { x: bbox.x + bbox.width * relativeOrigin.x, y: bbox.y + bbox.height * relativeOrigin.y }
 }
 
@@ -118,7 +118,7 @@ export function initFonts(svg: Element) {
     WebFont.load({
       google: {
         families: fonts,
-      }
+      },
     })
     return true
   }

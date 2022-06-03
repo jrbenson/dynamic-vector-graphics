@@ -5,7 +5,7 @@ export class Guide {
   element: SVGGraphicsElement
   tag: string = ''
   linear: boolean = true
-  
+
   /**
    * Creates a new Guide component and instantiates its instance variables using a given element of an SVG
    * @param element
@@ -26,8 +26,8 @@ export class Guide {
   }
 
   /**
-   * @param t 
-   * @returns 
+   * @param t
+   * @returns
    */
   get(t: number) {
     if (this.element) {
