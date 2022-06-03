@@ -28,6 +28,11 @@ code {
   margin: 0 1px;
 }
 
+.highlight code {
+  background: unset;
+  color: unset;
+}
+
 th,
 td {
   padding: 0.25rem 0.75rem;
