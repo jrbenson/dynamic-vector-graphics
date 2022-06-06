@@ -2,6 +2,10 @@ import { requiredFonts } from "./font"
 import { decodeUnicode } from './string'
 import WebFont from 'webfontloader'
 
+const iri_tags = ['clipPath', 'color-profile', 'cursor', 'filter',
+                  'linearGradient', 'marker', 'mask', 'pattern',
+                  'radialGradient']
+
 export function getBBox( element: SVGGraphicsElement ) {
   const mask = getMask( element )
   if ( mask != undefined ) {
@@ -126,18 +130,42 @@ export function initFonts(svg: Element) {
 }
 
 export function sanitizeSVG(svg: Element) {
-  var propName
-  var counter
-  let suffix = 'uniqueid_no'
+  var propName;
+  //For replacement purposes
+  var IriUrl = /url\("?#([a-zA-Z][w:.-]*)"?\)/g;
+  const iri_tag_map = new Map<string, number>();
+  let iri_prop:string[] = [];
+  // Will make both of these global vars
+  var counter;
+  let suffix = 'uniqueid_no';
   // SVG element
-  var elem = svg
-  //Retrieve all id's from SVG
-  var allIdElements = elem.querySelectorAll('[id')
-  var len = allIdElements.length
-
-  for (let i = 0; i < len; i++) {
-    propName = allIdElements[i].localName
-
+  var elem = svg;
+  // Retrieve all id's from SVG
+  var allIdElements = elem.querySelectorAll('[id');
+  var len = allIdElements.length;
+  let iriProp = new Set;
+  // Iterate through id's, creates mapping of elems with iri properties (includes mask and others)
+  if (1) {
+    for (let i = 0; i < len; i++) {
+      propName = allIdElements[i].localName;
+      if (propName in iri_tags) {
+        iri_tag_map.set(propName, 1);
+      }
+    }
+    // Seems redundant, but is separated in inject. May combine later
+    for (propName in iri_tag_map) {
+      if (iri_tag_map.get(propName) == 1) {
+        if (propName in iri_prop == false) {
+          iri_prop.push(propName);
+        }
+      }
+    }
   }
+  if (1) {
+    iri_prop.push('style');
+  }
+  //Replacing the actual id's begis here
+  
+  
   //Code here
 }
