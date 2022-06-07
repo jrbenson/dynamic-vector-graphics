@@ -1,10 +1,7 @@
 import * as parse from '../utils/syntax'
 import { DataView } from '../data/data'
 import { DVG } from '../dvg'
-import { Filter } from "../data/filter"
-
-
-
+import { Filter } from '../data/filter'
 
 /**
  * Base class for components, which are called during update to apply data to the SVG.
@@ -21,12 +18,12 @@ export default class Component {
   constructor(element: Element) {
     this.element = element
     this.opts = parse.markup(element.id).opts
-    this.filters = parse.filtersForElement( this.element )
+    this.filters = parse.filtersForElement(this.element)
   }
 
   /** CHANGE: Renamed to clarify that each component is retrieved by this
    * method individually even though it returns an array
-   * 
+   *
    * Override with static method for selecting viable elements for this dynamic from SVG.
    * @param svg The root SVG element to start the search from.
    * @return Array of components that match the desired pattern.
@@ -37,19 +34,14 @@ export default class Component {
 
   /**
    * Override with element
-   * @param data 
-   * @param state 
+   * @param data
+   * @param state
    */
-  apply(data: DataView, state: DVG ) {}
+  apply(data: DataView, state: DVG) {}
 
   /**
-   * 
-   * @param state 
+   *
+   * @param state
    */
-  draw(state: DVG ) {}
+  draw(state: DVG) {}
 }
-
-
-
-
-

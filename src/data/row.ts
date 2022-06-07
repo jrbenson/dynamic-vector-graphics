@@ -1,5 +1,5 @@
 import { condition, columnIdentifier } from '../utils/syntax'
-import { Condition } from "./filter"
+import { Condition } from './filter'
 
 export type Value = string | number | Date | undefined
 

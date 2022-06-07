@@ -13,7 +13,7 @@ export default class Easer {
 
   get curT() {
     return this._curT
-  } 
+  }
 
   ease(tBeg: number = 0.0, tEnd: number = 1.0) {
     if (this._frameRequestId) {
