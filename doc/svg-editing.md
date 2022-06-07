@@ -5,7 +5,7 @@
 To make your SVG file dynamic it must be correctly annotated. Any vector editing software that allows the ids of the elements to be set by the user may be used to add the annotations.
 
 **_Adding Annotation to SVG Element Id_**<br/>
-![](doc/edit-annotate.gif)
+![](edit-annotate.gif)
 
 Different SVG editors have different export behavior, but be sure through the export options that these three things are true:
 
