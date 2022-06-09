@@ -181,17 +181,6 @@ The guide option is required for the position transform to function. The guide i
 
 The style annotations are used to change attributes such as alpha and color of elements dynamically based on data values.
 
-#### **Scale**
-
-The scale annotations are used to change the size of elements dynamically based on numeric data values.
-
-`{{…,alpha/a:COLUMN,…}}`<br/>
-The alpha transform adjusts the alpha of the element so that it is at 100% (fully opaque) when `COLUMN` is at its maximum value and 0% (fully transparent) when `COLUMN` is at its minimum value.
-
-### Style
-
-The style annotations are used to change attributes such as alpha and color of elements dynamically based on data values.
-
 #### **Alpha**
 
 The alpha annotation is used to change the transparency of elements dynamically based on numeric data values.
@@ -204,6 +193,6 @@ The alpha transform adjusts the alpha of the element so that it is at 100% (full
 The filter annotation is used to subset the data that is used for a subsection of the dynamic graphic.
 
 `{{…,f/filter:COLUMN[CONDITION]VALUE,…}}`<br/>
-Filtering
+Filtering subsets the incoming data using the provided condition. For example `{{f:#0>5}}` will apply only rows in the data where the first measure is greater than 5 to any that element or its children. Alternatively the filter can be a simple index number and in that case a specific row is returned, such as `{{f:2}}` to return the third row in the data.
 
 <!-- {% endraw %} -->
