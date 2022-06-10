@@ -18,6 +18,10 @@ var IRI_TAG_PROPERTIES_MAP = {
     radialGradient: ['fill', 'stroke']
   };
 
+var counter = 0;
+let suffix = 'uniqueid_no';
+
+
 export function getBBox(element: SVGGraphicsElement) {
   const mask = getMask(element)
   if (mask != undefined) {
@@ -142,6 +146,7 @@ export function initFonts(svg: Element) {
 }
 
 export function sanitizeSVG(svg: Element) {
+  //IRI property map creation
   let iriMap = new Map<string, string[]>();
   iriMap.set("clipPath", ["clip-path"]);
   iriMap.set("color-profile", ["color-profile"]);
@@ -154,14 +159,13 @@ export function sanitizeSVG(svg: Element) {
   iriMap.set("radialGradient", ["fill", "stroke"]);
 
   var propName;
-  //For replacement purposes
-  var IriUrl = /url\("?#([a-zA-Z][w:.-]*)"?\)/g;
+  // For replacement purposes
+  var iriUrl = /url\("?#([a-zA-Z][w:.-]*)"?\)/g;
   const iri_tag_map = new Map<string, number>();
-  let iri_prop = [];
+  var iriProperties = [];
+  var idElem;
   // Will make both of these global vars
-  var counter;
   var currentProp;
-  let suffix = 'uniqueid_no';
   // SVG element
   var elem = svg;
   // Retrieve all id's from SVG
@@ -176,29 +180,55 @@ export function sanitizeSVG(svg: Element) {
         iri_tag_map.set(propName, 1);
       }
     }
+    // Properties list creation
     for (propName in iri_tag_map) {
+      let len = iriMap.get(propName)?.length!;
       currentProp = iriMap.get(propName);
-      if (iriProp.indexOf(currentProp) < 0) {
-        iri_prop.push(currentProp);
+      for (let k = 0; k < len; k++) {
+        if (iriProp.indexOf(currentProp![k]) < 0) {
+          iriProperties.push(currentProp![k]);
+        }
+      }
+    }
+    if (iriProperties.length >= 0) {
+      iriProperties.push('style');
+    }
+    //Replacing the actual id's begis here
+  
+    //allIDElements == descElements
+    //elem == element
+  
+    var propertyName;
+    var value;
+    var newValue;
+    var element = svg;
+  
+    for (let i = 0; allIdElements[i] != null; i++) {
+      if (element.localName == 'style') {
+        value = allIdElements[i].textContent;
+        newValue = value && value.replace(iriUrl, suffix + value + counter);
+        counter++;
+      }
+      else if (element.hasAttributes()){
+        for (let j = 0; j < iriProperties.length; j++) {
+          propertyName = iriProperties[j]!;
+          value = element['getAttribute'](propertyName);
+          newValue = value && value.replace(iriUrl, suffix + value + counter);
+          counter++;
+        }
+        replaceAttr('xlink:href', element);
+        replaceAttr('href', element);
       }
     }
   }
-  if (iri_prop.length >= 0) {
-    iri_prop.push('style');
-  }
-  //Replacing the actual id's begis here
-
-  //allIDElements == descElements
-  //elem == element
-
-  var propertyName;
-  var value;
-  var newValue;
-
-  for (let i = -1; allIdElements[i] != null; i++) {
-    value = allIdElements[i].textContent;
-  }
-  
-  
-  //Code here
 }
+
+export function replaceAttr(attr: string, svg: Element) {
+  var iri = svg.getAttribute(attr);
+  if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
+    iri?.trim();
+    svg.setAttribute(attr, iri! + counter)
+    counter++;
+  }
+}
+
