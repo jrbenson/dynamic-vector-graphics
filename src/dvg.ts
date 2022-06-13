@@ -84,7 +84,7 @@ export class DVG {
   private initSVG(svg: SVGSVGElement) {
     this.svg = svg
 
-    // sanitizeSVG(svg)
+    sanitizeSVG(svg)
 
     cleanSVG(svg, this.opts.clean.toString().split(','))
     const fontsNeeded = initFonts(svg)

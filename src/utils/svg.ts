@@ -158,19 +158,18 @@ export function sanitizeSVG(svg: Element) {
   iriMap.set("pattern", ["fill", "stroke"]);
   iriMap.set("radialGradient", ["fill", "stroke"]);
 
-  var propName;
+  let propName = "";
   // For replacement purposes
-  var iriUrl = /url\("?#([a-zA-Z][w:.-]*)"?\)/g;
+  let iriUrl = /url\("?#([a-zA-Z][w:.-]*)"?\)/g;
   const iri_tag_map = new Map<string, number>();
-  var iriProperties = [];
-  var idElem;
+  let iriProperties = [];
   // Will make both of these global vars
   var currentProp;
   // SVG element
-  var elem = svg;
+  let elem = svg;
   // Retrieve all id's from SVG
-  var allIdElements = elem.querySelectorAll('[id');
-  var len = allIdElements.length;
+  let allIdElements = elem.querySelectorAll('[id');
+  let len = allIdElements.length;
   let iriProp = new Array;
   // Iterate through id's, creates mapping of elems with iri properties (includes mask and others)
   if (allIdElements.length >= 0) {
@@ -198,21 +197,21 @@ export function sanitizeSVG(svg: Element) {
     //allIDElements == descElements
     //elem == element
   
-    var propertyName;
-    var value;
-    var newValue;
-    var element = svg;
+    let propertyName = "";
+    let value = "";
+    let newValue = "";
+    let element = svg;
   
     for (let i = 0; allIdElements[i] != null; i++) {
       if (element.localName == 'style') {
-        value = allIdElements[i].textContent;
+        value = allIdElements[i].textContent!;
         newValue = value && value.replace(iriUrl, suffix + value + counter);
         counter++;
       }
       else if (element.hasAttributes()){
         for (let j = 0; j < iriProperties.length; j++) {
           propertyName = iriProperties[j]!;
-          value = element['getAttribute'](propertyName);
+          value = element['getAttribute'](propertyName)!;
           newValue = value && value.replace(iriUrl, suffix + value + counter);
           counter++;
         }
