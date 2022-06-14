@@ -19,7 +19,7 @@ var IRI_TAG_PROPERTIES_MAP = {
   };
 
 var counter = 0;
-let suffix = 'uniqueid_no';
+let suffix = 'san';
 
 
 export function getBBox(element: SVGGraphicsElement) {
@@ -158,34 +158,41 @@ export function sanitizeSVG(svg: Element) {
   iriMap.set("pattern", ["fill", "stroke"]);
   iriMap.set("radialGradient", ["fill", "stroke"]);
 
+  console.log("mapping created");
+
   let propName = "";
   // For replacement purposes
-  let iriUrl = /url\("?#([a-zA-Z][w:.-]*)"?\)/g;
-  const iri_tag_map = new Map<string, number>();
+  let iriUrl = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
+  let iri_tag_map = new Map<string, number>();
   let iriProperties = [];
-  // Will make both of these global vars
   var currentProp;
+  var idElem;
   // SVG element
   let elem = svg;
   // Retrieve all id's from SVG
-  let allIdElements = elem.querySelectorAll('[id');
+  let allIdElements = svg.querySelectorAll('[id]');
   let len = allIdElements.length;
   let iriProp = new Array;
   // Iterate through id's, creates mapping of elems with iri properties (includes mask and others)
   if (allIdElements.length >= 0) {
     for (let i = 0; i < len; i++) {
       propName = allIdElements[i].localName;
-      if (propName in iri_tags) {
+      //console.log(propName);
+      if (propName in IRI_TAG_PROPERTIES_MAP) {
         iri_tag_map.set(propName, 1);
+        //console.log(propName + " " + iri_tag_map.get(propName));
       }
     }
     // Properties list creation
-    for (propName in iri_tag_map) {
-      let len = iriMap.get(propName)?.length!;
-      currentProp = iriMap.get(propName);
-      for (let k = 0; k < len; k++) {
+    for (let props of iri_tag_map.keys()) {
+      //console.log("next loop " + props);
+      let lengthProp = iriMap.get(props)?.length!;
+      //console.log(props + " " + len);
+      currentProp = iriMap.get(props);
+      for (let k = 0; k < lengthProp; k++) {
         if (iriProp.indexOf(currentProp![k]) < 0) {
           iriProperties.push(currentProp![k]);
+          console.log("push " + currentProp![k]);
         }
       }
     }
@@ -201,32 +208,44 @@ export function sanitizeSVG(svg: Element) {
     let value = "";
     let newValue = "";
     let element = svg;
+    let descElem = svg.querySelectorAll('*');
   
-    for (let i = 0; allIdElements[i] != null; i++) {
-      if (element.localName == 'style') {
+    for (let i = 0; descElem[i] != null; i++) {
+      if (descElem[i].localName == 'style') {
         value = allIdElements[i].textContent!;
         newValue = value && value.replace(iriUrl, suffix + value + counter);
         counter++;
       }
-      else if (element.hasAttributes()){
+      else if (descElem[i].hasAttributes()){
+        console.log(descElem[i].localName);
         for (let j = 0; j < iriProperties.length; j++) {
           propertyName = iriProperties[j]!;
-          value = element['getAttribute'](propertyName)!;
-          newValue = value && value.replace(iriUrl, suffix + value + counter);
+          value = descElem[i].getAttribute(propertyName)!;
+          //console.log(counter + " " + value);
+          newValue = value && value.replace(iriUrl, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
+          console.log(propertyName + " " + value + "   " + newValue);
           counter++;
+          if (newValue !== value) {
+            descElem[i].setAttribute(propertyName, newValue);
+          }
         }
-        replaceAttr('xlink:href', element);
-        replaceAttr('href', element);
+        // replaceAttr('xlink:href', descElem[i]);
+        // replaceAttr('href', descElem[i]);
       }
     }
+    // for (let f = 0; f < allIdElements.length; f++) {
+    //   idElem = allIdElements[f];
+    //   console.log(idElem.id);
+    //   idElem.id += suffix + counter;
+    // }
   }
 }
 
-export function replaceAttr(attr: string, svg: Element) {
-  var iri = svg.getAttribute(attr);
+export function replaceAttr(attr: string, desc: Element) {
+  var iri = desc.getAttribute(attr);
   if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
-    iri?.trim();
-    svg.setAttribute(attr, iri! + counter)
+    iri = iri?.trim()!;
+    desc.setAttribute(attr, iri! + suffix + counter)
     counter++;
   }
 }
