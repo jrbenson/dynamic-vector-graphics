@@ -1,0 +1,12 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="test-masks-1">
+<g id="container">
+<mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+<path id="mask" fill-rule="evenodd" clip-rule="evenodd" d="M0 0H96V89.5796C104.671 82.3497 115.828 78 128 78C140.172 78 151.329 82.3497 160 89.5796V0H256V256H160V166.42C151.329 173.65 140.172 178 128 178C115.828 178 104.671 173.65 96 166.42V256H0V0Z" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0)">
+<circle id="ellipse {{scale:#0,origin:0.5;0.5}}" cx="128" cy="128" r="100" fill="#D9D9D9"/>
+</g>
+</g>
+</g>
+</svg>
