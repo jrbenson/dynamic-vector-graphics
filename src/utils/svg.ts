@@ -18,7 +18,7 @@ var IRI_TAG_PROPERTIES_MAP = {
     radialGradient: ['fill', 'stroke']
   };
 
-var counter = 0;
+var counter = 1;
 let suffix = 'san';
 
 
@@ -164,6 +164,7 @@ export function sanitizeSVG(svg: Element) {
   // For replacement purposes
   let iriUrl = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
   let iri_tag_map = new Map<string, number>();
+  let id_map = [];
   let iriProperties = [];
   var currentProp;
   var idElem;
@@ -177,6 +178,7 @@ export function sanitizeSVG(svg: Element) {
   if (allIdElements.length >= 0) {
     for (let i = 0; i < len; i++) {
       propName = allIdElements[i].localName;
+      id_map.push(allIdElements[i].id);
       //console.log(propName);
       if (propName in IRI_TAG_PROPERTIES_MAP) {
         iri_tag_map.set(propName, 1);
@@ -201,13 +203,9 @@ export function sanitizeSVG(svg: Element) {
     }
     //Replacing the actual id's begis here
   
-    //allIDElements == descElements
-    //elem == element
-  
     let propertyName = "";
     let value = "";
     let newValue = "";
-    let element = svg;
     let descElem = svg.querySelectorAll('*');
   
     for (let i = 0; descElem[i] != null; i++) {
@@ -217,35 +215,40 @@ export function sanitizeSVG(svg: Element) {
         counter++;
       }
       else if (descElem[i].hasAttributes()){
-        console.log(descElem[i].localName);
+        // console.log(descElem[i].localName);
         for (let j = 0; j < iriProperties.length; j++) {
           propertyName = iriProperties[j]!;
           value = descElem[i].getAttribute(propertyName)!;
           //console.log(counter + " " + value);
-          newValue = value && value.replace(iriUrl, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
-          console.log(propertyName + " " + value + "   " + newValue);
-          counter++;
+          newValue = value && value.replace(iriUrl, (match, id) => {return 'url(#' + id + '_' + suffix + counter + ')'});
+          // console.log(descElem[i].localName + " " + propertyName + " prop for loop - v / nV: " + value + " / " + newValue);
           if (newValue !== value) {
             descElem[i].setAttribute(propertyName, newValue);
           }
         }
-        // replaceAttr('xlink:href', descElem[i]);
-        // replaceAttr('href', descElem[i]);
+        // replaceAttr('xlink:href', descElem[i], counter);
+        // replaceAttr('href', descElem[i], counter);
       }
+      if (descElem[i].id in id_map) {
+        console.log(true);
+        descElem[i].id += '_' + suffix + counter;
+      }
+      counter++;
+      // console.log("if loop " + descElem[i].localName + " id:" + descElem[i].id);
     }
     // for (let f = 0; f < allIdElements.length; f++) {
     //   idElem = allIdElements[f];
-    //   console.log(idElem.id);
-    //   idElem.id += suffix + counter;
+    //   idElem.id += '_' + suffix + id_map.get(allIdElements[f].id);
+    //   console.log("ids " + newValue + " id: " + idElem.id);
     // }
   }
 }
 
-export function replaceAttr(attr: string, desc: Element) {
+export function replaceAttr(attr: string, desc: Element, count: number) {
   var iri = desc.getAttribute(attr);
   if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
     iri = iri?.trim()!;
-    desc.setAttribute(attr, iri! + suffix + counter)
+    desc.setAttribute(attr, iri! + suffix + count)
     counter++;
   }
 }
