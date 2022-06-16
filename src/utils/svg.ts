@@ -145,7 +145,7 @@ export function initFonts(svg: Element) {
   return false
 }
 
-export function sanitizeSVG(svg: Element) {
+export function mangleSVG(svg: Element) {
   //IRI property map creation
   let iriMap = new Map<string, string[]>();
   iriMap.set("clipPath", ["clip-path"]);
@@ -158,9 +158,8 @@ export function sanitizeSVG(svg: Element) {
   iriMap.set("pattern", ["fill", "stroke"]);
   iriMap.set("radialGradient", ["fill", "stroke"]);
 
-  console.log("mapping created");
-
   let propName = "";
+
   // For replacement purposes
   let iriUrl = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
   let iri_tag_map = new Map<string, number>();
@@ -168,28 +167,25 @@ export function sanitizeSVG(svg: Element) {
   let iriProperties = [];
   var currentProp;
   var idElem;
-  // SVG element
-  let elem = svg;
+
   // Retrieve all id's from SVG
   let allIdElements = svg.querySelectorAll('[id]');
   let len = allIdElements.length;
   let iriProp = new Array;
+
   // Iterate through id's, creates mapping of elems with iri properties (includes mask and others)
   if (allIdElements.length >= 0) {
     for (let i = 0; i < len; i++) {
       propName = allIdElements[i].localName;
       id_map.push(allIdElements[i].id);
-      //console.log(propName);
       if (propName in IRI_TAG_PROPERTIES_MAP) {
         iri_tag_map.set(propName, 1);
-        //console.log(propName + " " + iri_tag_map.get(propName));
       }
     }
+
     // Properties list creation
     for (let props of iri_tag_map.keys()) {
-      //console.log("next loop " + props);
       let lengthProp = iriMap.get(props)?.length!;
-      //console.log(props + " " + len);
       currentProp = iriMap.get(props);
       for (let k = 0; k < lengthProp; k++) {
         if (iriProp.indexOf(currentProp![k]) < 0) {
@@ -198,11 +194,12 @@ export function sanitizeSVG(svg: Element) {
         }
       }
     }
+
     if (iriProperties.length >= 0) {
       iriProperties.push('style');
     }
+
     //Replacing the actual id's begis here
-  
     let propertyName = "";
     let value = "";
     let newValue = "";
@@ -212,36 +209,30 @@ export function sanitizeSVG(svg: Element) {
       if (descElem[i].localName == 'style') {
         value = allIdElements[i].textContent!;
         newValue = value && value.replace(iriUrl, suffix + value + counter);
-        counter++;
       }
+      
       else if (descElem[i].hasAttributes()){
-        // console.log(descElem[i].localName);
+        console.log("local name: " + descElem[i].localName);
         for (let j = 0; j < iriProperties.length; j++) {
           propertyName = iriProperties[j]!;
           value = descElem[i].getAttribute(propertyName)!;
-          //console.log(counter + " " + value);
-          newValue = value && value.replace(iriUrl, (match, id) => {return 'url(#' + id + '_' + suffix + counter + ')'});
-          // console.log(descElem[i].localName + " " + propertyName + " prop for loop - v / nV: " + value + " / " + newValue);
+          newValue = value && value.replace(iriUrl, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
           if (newValue !== value) {
             descElem[i].setAttribute(propertyName, newValue);
           }
         }
-        // replaceAttr('xlink:href', descElem[i], counter);
-        // replaceAttr('href', descElem[i], counter);
+        replaceAttr('xlink:href', descElem[i], counter);
+        replaceAttr('href', descElem[i], counter);
       }
-      if (descElem[i].id in id_map) {
-        console.log(true);
-        descElem[i].id += '_' + suffix + counter;
-      }
-      counter++;
-      // console.log("if loop " + descElem[i].localName + " id:" + descElem[i].id);
     }
-    // for (let f = 0; f < allIdElements.length; f++) {
-    //   idElem = allIdElements[f];
-    //   idElem.id += '_' + suffix + id_map.get(allIdElements[f].id);
-    //   console.log("ids " + newValue + " id: " + idElem.id);
-    // }
+
+    for (let f = 0; f < allIdElements.length; f++) {
+      idElem = allIdElements[f];
+      idElem.id += suffix + counter;
+      console.log(idElem.localName + " id: " + idElem.id);
+    }
   }
+  counter++;
 }
 
 export function replaceAttr(attr: string, desc: Element, count: number) {
@@ -249,7 +240,6 @@ export function replaceAttr(attr: string, desc: Element, count: number) {
   if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
     iri = iri?.trim()!;
     desc.setAttribute(attr, iri! + suffix + count)
-    counter++;
   }
 }
 

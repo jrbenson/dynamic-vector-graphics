@@ -1,7 +1,7 @@
 import Component from './components/component'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
-import { cleanSVG, initFonts, sanitizeSVG } from './utils/svg'
+import { cleanSVG, initFonts, mangleSVG } from './utils/svg'
 import * as parse from './utils/syntax'
 import { getLoader } from './loader'
 
@@ -83,8 +83,8 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     this.svg = svg
-
-    sanitizeSVG(svg)
+    console.log("before santiization")
+    mangleSVG(svg)
 
     cleanSVG(svg, this.opts.clean.toString().split(','))
     const fontsNeeded = initFonts(svg)
