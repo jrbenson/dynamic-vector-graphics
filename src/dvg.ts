@@ -83,7 +83,7 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     this.svg = svg
-    console.log("before santiization")
+    
     mangleSVG(svg)
 
     cleanSVG(svg, this.opts.clean.toString().split(','))

@@ -18,6 +18,17 @@ var IRI_TAG_PROPERTIES_MAP = {
     radialGradient: ['fill', 'stroke']
   };
 
+  let iriMap = new Map<string, string[]>([
+  ["clipPath", ["clip-path"]],
+  ["color-profile", ["color-profile"]],
+  ["cursor", ["cursor"]],
+  ["filter", ["filter"]],
+  ["linearGradient", ["fill", "stroke"]],
+  ["marker", ["marker", "marker-end", "marker-mid", "marker-start"]],
+  ["mask", ["mask"]],
+  ["pattern", ["fill", "stroke"]],
+  ["radialGradient", ["fill", "stroke"]]]);
+
 var counter = 1;
 let suffix = 'san';
 
@@ -145,23 +156,34 @@ export function initFonts(svg: Element) {
   return false
 }
 
+/**
+ * Retrieves the attribute of an SVG and appends a suffix to ensure uniqueness.
+ * 
+ * @param attr String representing the name of the attribute to modify
+ * @param desc SVG to perform the modification on
+ * @param count Number representing the current value of the counter
+ */
+ export function replaceAttr(attr: string, desc: Element, count: number) {
+  console.log("inside replace attr");
+  var iri = desc.getAttribute(attr);
+  if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
+    iri = iri?.trim()!;
+    desc.setAttribute(attr, iri! + suffix + count)
+    console.log(iri!);
+    console.log("true");
+  }
+}
+
+/**
+ * "Mangles" the SVG by appending a SVG-specific suffix to each element's ID to ensure
+ * each SVG component has an ID unique from other SVGs.
+ * 
+ * @param svg SVG element to "mangle"
+ */
 export function mangleSVG(svg: Element) {
-  //IRI property map creation
-  let iriMap = new Map<string, string[]>();
-  iriMap.set("clipPath", ["clip-path"]);
-  iriMap.set("color-profile", ["color-profile"]);
-  iriMap.set("cursor", ["cursor"]);
-  iriMap.set("filter", ["filter"]);
-  iriMap.set("linearGradient", ["fill", "stroke"]);
-  iriMap.set("marker", ["marker", "marker-end", "marker-mid", "marker-start"]);
-  iriMap.set("mask", ["mask"]);
-  iriMap.set("pattern", ["fill", "stroke"]);
-  iriMap.set("radialGradient", ["fill", "stroke"]);
-
-  let propName = "";
-
-  // For replacement purposes
-  let iriUrl = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
+  // Variable declarations
+  let tagLabel = "";
+  let idRegex = /url\("?#([a-zA-Z][\w:.-]*)"?\)/g;
   let iri_tag_map = new Map<string, number>();
   let id_map = [];
   let iriProperties = [];
@@ -176,10 +198,10 @@ export function mangleSVG(svg: Element) {
   // Iterate through id's, creates mapping of elems with iri properties (includes mask and others)
   if (allIdElements.length >= 0) {
     for (let i = 0; i < len; i++) {
-      propName = allIdElements[i].localName;
+      tagLabel = allIdElements[i].localName;
       id_map.push(allIdElements[i].id);
-      if (propName in IRI_TAG_PROPERTIES_MAP) {
-        iri_tag_map.set(propName, 1);
+      if (tagLabel in IRI_TAG_PROPERTIES_MAP) {
+        iri_tag_map.set(tagLabel, 1);
       }
     }
 
@@ -190,11 +212,9 @@ export function mangleSVG(svg: Element) {
       for (let k = 0; k < lengthProp; k++) {
         if (iriProp.indexOf(currentProp![k]) < 0) {
           iriProperties.push(currentProp![k]);
-          console.log("push " + currentProp![k]);
         }
       }
     }
-
     if (iriProperties.length >= 0) {
       iriProperties.push('style');
     }
@@ -208,15 +228,13 @@ export function mangleSVG(svg: Element) {
     for (let i = 0; descElem[i] != null; i++) {
       if (descElem[i].localName == 'style') {
         value = allIdElements[i].textContent!;
-        newValue = value && value.replace(iriUrl, suffix + value + counter);
+        newValue = value && value.replace(idRegex, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
       }
-      
       else if (descElem[i].hasAttributes()){
-        console.log("local name: " + descElem[i].localName);
         for (let j = 0; j < iriProperties.length; j++) {
           propertyName = iriProperties[j]!;
           value = descElem[i].getAttribute(propertyName)!;
-          newValue = value && value.replace(iriUrl, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
+          newValue = value && value.replace(idRegex, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
           if (newValue !== value) {
             descElem[i].setAttribute(propertyName, newValue);
           }
@@ -225,21 +243,11 @@ export function mangleSVG(svg: Element) {
         replaceAttr('href', descElem[i], counter);
       }
     }
-
     for (let f = 0; f < allIdElements.length; f++) {
       idElem = allIdElements[f];
       idElem.id += suffix + counter;
-      console.log(idElem.localName + " id: " + idElem.id);
     }
   }
   counter++;
-}
-
-export function replaceAttr(attr: string, desc: Element, count: number) {
-  var iri = desc.getAttribute(attr);
-  if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
-    iri = iri?.trim()!;
-    desc.setAttribute(attr, iri! + suffix + count)
-  }
 }
 
