@@ -2,10 +2,6 @@ import { requiredFonts } from './font'
 import { decodeUnicode } from './string'
 import WebFont from 'webfontloader'
 
-const iri_tags = ['clipPath', 'color-profile', 'cursor', 'filter',
-                  'linearGradient', 'marker', 'mask', 'pattern',
-                  'radialGradient']
-
 var IRI_TAG_PROPERTIES_MAP = {
     clipPath: ['clip-path'],
     'color-profile': null,
