@@ -25,8 +25,7 @@ var IRI_TAG_PROPERTIES_MAP = {
   ["pattern", ["fill", "stroke"]],
   ["radialGradient", ["fill", "stroke"]]]);
 
-var counter = 1;
-let suffix = 'san';
+let suffix = 'id_no:';
 
 
 export function getBBox(element: SVGGraphicsElement) {
@@ -160,13 +159,10 @@ export function initFonts(svg: Element) {
  * @param count Number representing the current value of the counter
  */
  export function replaceAttr(attr: string, desc: Element, count: number) {
-  console.log("inside replace attr");
   var iri = desc.getAttribute(attr);
   if (/^\s*#/.test(iri!)) { // Check if iri is non-null and internal reference
     iri = iri?.trim()!;
     desc.setAttribute(attr, iri! + suffix + count)
-    console.log(iri!);
-    console.log("true");
   }
 }
 
@@ -185,6 +181,7 @@ export function mangleSVG(svg: Element) {
   let iriProperties = [];
   var currentProp;
   var idElem;
+  let ranVal = Math.random();
 
   // Retrieve all id's from SVG
   let allIdElements = svg.querySelectorAll('[id]');
@@ -224,26 +221,25 @@ export function mangleSVG(svg: Element) {
     for (let i = 0; descElem[i] != null; i++) {
       if (descElem[i].localName == 'style') {
         value = allIdElements[i].textContent!;
-        newValue = value && value.replace(idRegex, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
+        newValue = value && value.replace(idRegex, (match, id) => {return 'url(#' + id + suffix + ranVal + ')'});
       }
       else if (descElem[i].hasAttributes()){
         for (let j = 0; j < iriProperties.length; j++) {
           propertyName = iriProperties[j]!;
           value = descElem[i].getAttribute(propertyName)!;
-          newValue = value && value.replace(idRegex, (match, id) => {return 'url(#' + id + suffix + counter + ')'});
+          newValue = value && value.replace(idRegex, (match, id) => {return 'url(#' + id + suffix + ranVal + ')'});
           if (newValue !== value) {
             descElem[i].setAttribute(propertyName, newValue);
           }
         }
-        replaceAttr('xlink:href', descElem[i], counter);
-        replaceAttr('href', descElem[i], counter);
+        replaceAttr('xlink:href', descElem[i], ranVal);
+        replaceAttr('href', descElem[i], ranVal);
       }
     }
     for (let f = 0; f < allIdElements.length; f++) {
       idElem = allIdElements[f];
-      idElem.id += suffix + counter;
+      idElem.id += suffix + ranVal;
     }
   }
-  counter++;
 }
 

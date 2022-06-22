@@ -83,8 +83,8 @@ export class DVG {
 
   private initSVG(svg: SVGSVGElement) {
     this.svg = svg
-    
-    mangleSVG(svg)
+
+    mangleSVG(svg) // ensures SVG elements have unique ids
 
     cleanSVG(svg, this.opts.clean.toString().split(','))
     const fontsNeeded = initFonts(svg)
