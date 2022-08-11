@@ -179,7 +179,7 @@ export function mangleSVG(svg: Element) {
   let iri_tag_map = new Map<string, number>();
   let id_map = [];
   let iriProperties = [];
-  var currentProp;
+  let currentProp;
   var idElem;
   let ranVal = Math.random();
 
