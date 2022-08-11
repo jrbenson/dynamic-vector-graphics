@@ -98,8 +98,12 @@ export class DataView {
       f = filter
     }
     if (f !== undefined) {
-      if (f.index !== undefined && f.index < this.index.length) {
-        return new DataView(this.data, [this.index[f.index]])
+      if (f.index !== undefined) {
+        if (f.index < this.index.length) {
+          return new DataView(this.data, [this.index[f.index]])
+        } else {
+          return new DataView(new Data(''), [])
+        }
       } else if (f.condition !== undefined) {
         const c = f.condition
         const col = parse.columnFromData(c.column, this)

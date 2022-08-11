@@ -491,7 +491,7 @@
       function val(id) {
         const input = document.getElementById(id)
         if (!input) {
-          console.log(id)
+          console.log('No element exists with id:', id)
         }
         if (input.type === 'number') {
           return Number(input.value)
