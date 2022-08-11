@@ -212,7 +212,7 @@ export function mangleSVG(svg: Element) {
       iriProperties.push('style');
     }
 
-    //Replacing the actual id's begis here
+    // Replacing the actual ids begins here
     let propertyName = "";
     let value = "";
     let newValue = "";
