@@ -138,7 +138,7 @@ export function elementsByName(svg: Element) {
     .filter((e) => e.id?.match(RE_DOUBLEBRACE))
     .forEach(function (e) {
       let syn = markup(e.id)
-      console.log(syn)
+      //console.log(syn)
       if (syn.name) {
         elements.set(syn.name, e)
       }
