@@ -71,9 +71,8 @@ export default class StyleComponent extends Component {
         const col_str = this.opts[key].toString()
         const col = parse.columnFromData(col_str, data)
         if (col?.stats) {
-          const val = data.get(0, col.name) as number
-          if (val !== undefined) {
-            const norm = (val - col.stats.min) / (col.stats.max - col.stats.min)
+          const norm = data.getNormalized(0, col.name) as number
+          if (norm !== undefined) {
             style.set(svgElem, norm, this)
           }
         }

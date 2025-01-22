@@ -1,6 +1,7 @@
 import { requiredFonts } from './font'
 import { decodeUnicode } from './string'
 import WebFont from 'webfontloader'
+import { SYNTAX_ATTRIBUTE, RE_SYNTAXCONTAINER } from './syntax'
 
 var IRI_TAG_PROPERTIES_MAP = {
   clipPath: ['clip-path'],
@@ -142,6 +143,16 @@ export function cleanSVG(svg: Element, methods: string[] = ['all']) {
       }
     })
   }
+
+  svg.querySelectorAll('*[id]').forEach(function (elem) {
+    let markup = ''
+    if (elem.id.match(RE_SYNTAXCONTAINER)) {
+      markup = elem.id.match(RE_SYNTAXCONTAINER)![0]
+    }
+    if (markup) {
+      elem.setAttribute(SYNTAX_ATTRIBUTE, markup)
+    }
+  })
 }
 
 export function initFonts(svg: Element) {

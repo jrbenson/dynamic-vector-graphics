@@ -2,6 +2,7 @@ import * as parse from '../utils/syntax'
 import { DataView } from '../data/data'
 import { DVG } from '../dvg'
 import { Filter } from '../data/filter'
+import { Unifier } from './unifier'
 
 /**
  * Base class for components, which are called during update to apply data to the SVG.
@@ -10,6 +11,7 @@ export default class Component {
   element: Element
   opts: Record<string, string | number | boolean>
   filters: Filter[] = []
+  unifiers: Unifier[] = []
 
   /**
    * Override with dynamic specific parsing and precomputation.
@@ -17,7 +19,7 @@ export default class Component {
    */
   constructor(element: Element) {
     this.element = element
-    this.opts = parse.markup(element.id).opts
+    this.opts = parse.getMarkup(element).opts
     this.filters = parse.filtersForElement(this.element)
   }
 
@@ -44,4 +46,8 @@ export default class Component {
    * @param state
    */
   draw(state: DVG) {}
+
+  getUnifierByColumn(column: string) {
+    return this.unifiers.find((u) => u.cols.includes(column))
+  }
 }

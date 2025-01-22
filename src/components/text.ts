@@ -61,7 +61,7 @@ export default class TextComponent extends Component {
         elems.push(text)
       }
     })
-    elems = elems.filter((e) => e.textContent && e.textContent.match(parse.RE_DOUBLEBRACE))
+    elems = elems.filter((e) => e.textContent && e.textContent.match(parse.RE_SYNTAXCONTAINER))
     return elems.map((e) => new TextComponent(e))
   }
 
@@ -70,9 +70,9 @@ export default class TextComponent extends Component {
     this.setOffset()
     if (this.template) {
       this.element.textContent = this.template.replace(
-        parse.RE_DOUBLEBRACE,
+        parse.RE_SYNTAXCONTAINER,
         function (match: string) {
-          const syntax = parse.markup(match)
+          const syntax = parse.getMarkupFromString(match)
           const col = parse.columnFromData(syntax.name, data)
           if (col) {
             const nkey = parse.firstObjectKey(syntax.opts, ['name', 'n'])

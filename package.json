@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "dist/index",
   "module": "dist/index.es.js",
-  "browser": "dist/dynsvg.min.js",
+  "browser": "dist/dvg.min.js",
   "types": "dist/index",
   "directories": {
     "doc": "doc"

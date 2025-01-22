@@ -12,7 +12,7 @@ interface Transform {
 }
 
 /**
- * The transform component replaces mustache style double brace tags with a value from the data.
+ * The transform component applies transform attributes to an element based on data values.
  */
 export default class TransformComponent extends Component {
   static transforms: Array<Transform> = [
@@ -154,12 +154,12 @@ export default class TransformComponent extends Component {
         const col_str = this.opts[key].toString()
         const col = parse.columnFromData(col_str, data)
         if (col !== undefined) {
-          const val = data.get(0, col.name) as number
-          const stats = col?.stats
-          if (stats !== undefined && val !== undefined) {
-            norm = (val - stats.min) / (stats.max - stats.min)
-            if (!isFinite(norm)) {
-              norm = 0
+          norm = data.getNormalized(0, col.name)
+          const unifier = this.getUnifierByColumn(col_str)
+          if (unifier) {
+            norm = unifier.adjustNorm(norm)
+            if (unifier.total === 4) {
+              console.log(norm, unifier)
             }
           }
         }
@@ -173,7 +173,6 @@ export default class TransformComponent extends Component {
         }
       }
     }
-
     svgElem.style.transform = transform_strs.join(' ')
   }
 

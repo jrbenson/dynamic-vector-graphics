@@ -9,6 +9,7 @@ import TextComponent from './components/text'
 import TransformComponent from './components/transform'
 import StyleComponent from './components/style'
 import DuplicateComponent from './components/duplicate'
+import { Unifier } from './components/unifier'
 
 interface DVGOptions {
   svg: string
@@ -34,6 +35,9 @@ export class DVG {
   private loader: SVGElement | undefined
 
   private uuidCounter = 0
+
+  static PRE_PROCESS_COMPONENT_IDS = ['duplicate']
+  static CORE_COMPONENT_IDS = ['duplicate', 'transform', 'style', 'text']
 
   /**
    * Attach to the indicate element DOM element and fill it with the target SVG. Also
@@ -136,6 +140,8 @@ export class DVG {
         }
       }
 
+      this.assignUnifiers()
+
       // Then apply the other components
       for (let comp of this.getComponents(['transform', 'style', 'text'])) {
         if (comp.filters.length <= 0) {
@@ -178,6 +184,25 @@ export class DVG {
     // htmlElement.style.transition = ''
     // htmlElement.style.opacity = '0'
     // this.init()
+  }
+
+  private assignUnifiers() {
+    if (this.svg) {
+      for (let comp of this.components) {
+        comp.unifiers = []
+      }
+      const unifierElems = parse.elementsWithOptions(this.svg, Unifier.keys)
+      for (let comp of this.components) {
+        for (let unifierElem of unifierElems) {
+          const children = Array.from(unifierElem.children)
+          for (let i = 0; i < children.length; i++) {
+            if (children[i].contains(comp.element)) {
+              comp.unifiers.push(new Unifier(unifierElem as SVGElement, children.length - i, children.length))
+            }
+          }
+        }
+      }
+    }
   }
 
   /**

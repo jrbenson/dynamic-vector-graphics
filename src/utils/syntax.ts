@@ -2,8 +2,12 @@ import { DataView } from '../data/data'
 import { Column, ColumnType } from '../data/column'
 import { Condition, Filter } from '../data/filter'
 import { trimChars } from './string'
+import { Unifier } from '../components/unifier'
+import DuplicateComponent from '../components/duplicate'
 
-export const RE_DOUBLEBRACE = /{{([^}]+)}}/g
+export const RE_SYNTAXCONTAINER = /{{([^}]+)}}/g
+
+export const SYNTAX_ATTRIBUTE = 'data-dvg'
 
 export const RE_NOVALUEKEY = /(?:^|,)(\w+)(?:$|,)/g
 export const RE_NONJSONCHAR = /([^:,]+)/g
@@ -72,12 +76,12 @@ interface Markup {
  *
  * @param text The text to decode.
  */
-export function markup(text: string): Markup {
+export function getMarkupFromString(text: string): Markup {
   let obj: Markup = {
     name: '',
     opts: {},
   }
-  const matches = text.match(RE_DOUBLEBRACE)
+  const matches = text.match(RE_SYNTAXCONTAINER)
   if (matches) {
     text = matches[0].slice(2, -2)
     if (text.includes('|')) {
@@ -93,6 +97,18 @@ export function markup(text: string): Markup {
   return obj
 }
 
+export function getMarkup(element: Element): Markup {
+  let str = element.id
+  if (element.hasAttribute(SYNTAX_ATTRIBUTE)) {
+    str = element.getAttribute(SYNTAX_ATTRIBUTE) || ''
+  }
+  return getMarkupFromString(str)
+}
+
+export function hasMarkup(element: Element) {
+  return element.hasAttribute(SYNTAX_ATTRIBUTE) && element.getAttribute(SYNTAX_ATTRIBUTE)?.match(RE_SYNTAXCONTAINER)
+}
+
 /**
  * Check each SVGElement of a given (SVG) Element for given options and returns
  * a list of all SVGElements that have the requested options.
@@ -102,10 +118,10 @@ export function markup(text: string): Markup {
  * @returns List of SVGElements that have the requested options.
  */
 export function elementsWithOptions(svg: Element, options: string[]): Array<Element> {
-  return Array.from(svg.querySelectorAll<SVGElement>('*[id]'))
-    .filter((e) => e.id?.match(RE_DOUBLEBRACE))
+  return Array.from(svg.querySelectorAll<SVGElement>(`*[${SYNTAX_ATTRIBUTE}]`))
+    .filter((e) => hasMarkup(e))
     .filter(function (e) {
-      let syn = markup(e.id)
+      let syn = getMarkup(e)
       for (let option in syn.opts) {
         if (options.includes(option)) {
           return true
@@ -116,8 +132,8 @@ export function elementsWithOptions(svg: Element, options: string[]): Array<Elem
 }
 
 export function elementHasOptions(element: Element, options: string[]) {
-  if (element.id?.match(RE_DOUBLEBRACE)) {
-    let syn = markup(element.id)
+  if (hasMarkup(element)) {
+    let syn = getMarkup(element)
     for (let option in syn.opts) {
       if (options.includes(option)) {
         return true
@@ -128,17 +144,16 @@ export function elementHasOptions(element: Element, options: string[]) {
 }
 
 /**
- * Returns a map of the name (in annotation syntax) of an element to a refernce to that element.
+ * Returns a map of the name (in annotation syntax) of an element to a reference to that element.
  *
  * @param svg The parent element to search through the children of.
  */
 export function elementsByName(svg: Element) {
   const elements: Map<string, Element> = new Map()
-  Array.from(svg.querySelectorAll<SVGElement>('*[id]'))
-    .filter((e) => e.id?.match(RE_DOUBLEBRACE))
+  Array.from(svg.querySelectorAll<SVGElement>(`*[${SYNTAX_ATTRIBUTE}]`))
+    .filter((e) => e.getAttribute(SYNTAX_ATTRIBUTE)?.match(RE_SYNTAXCONTAINER))
     .forEach(function (e) {
-      let syn = markup(e.id)
-      //console.log(syn)
+      let syn = getMarkupFromString(e.getAttribute(SYNTAX_ATTRIBUTE) || '')
       if (syn.name) {
         elements.set(syn.name, e)
       }
@@ -229,7 +244,7 @@ export function columnFromData(col_str: string, data: DataView) {
 export function textAlignmentForElement(element: Element | null) {
   while (element && element.tagName !== 'SVG') {
     if (elementHasOptions(element, ['textAlign', 'ta'])) {
-      let syn = markup(element.id)
+      let syn = getMarkup(element)
       let key = firstObjectKey(syn.opts, ['textAlign', 'ta'])
       if (key) {
         return syn.opts[key].toString()
@@ -271,7 +286,7 @@ export function filtersForElement(element: Element | null) {
   const filters: Filter[] = []
   while (element && element.tagName !== 'SVG') {
     if (elementHasOptions(element, ['filter', 'f'])) {
-      let syn = markup(element.id)
+      let syn = getMarkup(element)
       let key = firstObjectKey(syn.opts, ['filter', 'f'])
       if (key) {
         const filter_str = syn.opts[key].toString()
@@ -284,4 +299,14 @@ export function filtersForElement(element: Element | null) {
     element = element.parentElement
   }
   return filters
+}
+
+export function getAllParentSVGNodes(element: Element) {
+  const parents: Element[] = []
+  let elem: Element | null = element
+  while (elem && elem.tagName !== 'SVG') {
+    parents.push(elem)
+    elem = elem.parentElement
+  }
+  return parents
 }

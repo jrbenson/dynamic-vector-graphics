@@ -10,38 +10,58 @@
     <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
 
     <style>
+      :root {
+        --main-bg-color: #222222;
+        --container-bg-color: #333333;
+        --main-fg-color: #cccccc;
+        --main-border-color: #888888;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --main-bg-color: #f2f2f2;
+          --container-bg-color: #e2e2e2;
+          --main-fg-color: #222222;
+          --main-border-color: #777777;
+        }
+      }
+
       html {
         font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
-        font-size: 16px;
-        color: #555;
-        background: #f2f2f2;
+        font-size: 14px;
+        color: var(--main-fg-color);
+        background: var(--main-bg-color);
       }
       a {
-        color: #555;
+        color: var(--main-fg-color);
       }
       html,
       body {
         padding: 0;
         margin: 0;
-        background: #212121;
+        background: var(--main-bg-color);
       }
       #header_wrap {
         width: 100%;
-        background: linear-gradient(to top, #373737, #212121);
-        border-bottom: 1px solid #111;
+        background: linear-gradient(to top, var(--container-bg-color), var(--main-bg-color));
+        border-bottom: 1px solid var(--main-border-color);
       }
       #content_wrap {
-        background: #f2f2f2;
+        background: var(--main-bg-color);
       }
       #footer_wrap {
         width: 100%;
-        background: #212121;
-        border-top: 1px solid #111;
+        background: var(--main-bg-color);
+        border-top: 1px solid var(--main-border-color);
       }
       header,
       footer {
         max-width: 42rem;
         margin: auto;
+      }
+      header a {
+        float: right;
+        padding-top: 1.3rem;
+        font-size: smaller;
       }
       #input,
       #result {
@@ -52,8 +72,8 @@
       }
       header,
       footer {
-        padding: 2rem 2rem 2rem 1rem;
-        text-align: center;
+        padding: 1rem 2rem;
+        text-align: left;
       }
       #content {
         display: flex;
@@ -61,42 +81,51 @@
         justify-content: center;
         min-height: 100vh;
       }
-      #result {
-        margin: 2rem 0;
-      }
       footer a {
-        color: #fff;
+        color: var(--main-fg-color);
       }
       header h1 {
         margin-top: 1rem;
-        color: #fff;
-        font-size: 42px;
+        color: var(--main-fg-color);
+        font-size: 18px;
         font-weight: 700;
         text-shadow: #111 0px 0px 10px;
       }
       header h2 {
-        color: #fff;
-        font-size: 24px;
+        color: var(--main-fg-color);
+        font-size: 12px;
         font-weight: 300;
         background: none;
         text-shadow: #111 0px 0px 10px;
+        margin-top: -0.5rem;
       }
 
       input,
-      textarea,
-      .pane {
+      textarea {
         font-size: 1rem;
         width: 96%;
         margin-bottom: 0.5rem;
-        border: solid 1px #888;
-        padding: 0.5rem;
-        background: #fff;
+        border: none;
+        color: var(--main-fg-color);
+        border-bottom: 1px solid;
+        padding: 0.125rem 0.25rem;
+        background: var(--container-bg-color);
       }
+
+      .pane {
+        border-left: 1px solid;
+        border-color: var(--main-border-color);
+        padding-left: 0.25rem;
+        margin-left: 0.25rem;
+      }
+
+      label {
+        color: var(--main-border-color);
+        font-size: smaller;
+      }
+
       .pane input {
         width: unset;
-      }
-      label {
-        color: #888;
       }
       svg {
         width: 100%;
@@ -110,6 +139,7 @@
         margin-top: -0.25rem;
         text-align: right;
         font-size: x-small;
+        color: var(--main-border-color);
       }
 
       .jexcel_container {
@@ -117,60 +147,50 @@
       }
       .jexcel {
         width: 100%;
-      }
-      .jexcel td {
-        height: 1.7rem;
+        background-color: var(--main-bg-color);
+        border: none;
+        border-color: var(--main-border-color);
       }
 
-      @media (prefers-color-scheme: dark) {
-        a,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        label,
-        body {
-          color: #ddd;
-        }
-        #content_wrap {
-          background: #222;
-        }
-        #footer_wrap {
-          background: #333;
-        }
-        input,
-        textarea,
-        .pane {
-          background: #333;
-          color: #ddd;
-        }
-        .jexcel {
-          background: #222;
-          border-color: #888;
-        }
-        .jexcel .highlight {
-          border-color: #fff;
-        }
-        .jexcel > tbody > tr > td {
-          border-color: #888;
-        }
-        .jexcel > thead > tr > td,
-        .jexcel > tbody > tr > td:first-child {
-          background: #333;
-          border-color: #888;
-        }
-        .jexcel > thead > tr > td.selected,
-        .jexcel > tbody > tr.selected > td:first-child {
-          background: #444;
-        }
+      .jexcel .highlight-selected {
+        outline-color: var(--main-fg-color);
+        outline: 2px solid;
+      }
+
+      .jexcel > tbody > tr > td {
+        height: 1.7rem;
+        border: none;
+        border-bottom: 0.25px solid;
+        border-top: 0.25px solid;
+        background: none;
+        /* border-color: var(--main-border-color); */
+      }
+      .jexcel > thead > tr > td {
+        /* background-color: var(--container-bg-color); */
+        font-weight: bold;
+        background: none;
+        border: none;
+        border-bottom: 0.25px solid;
+        border-color: var(--main-border-color);
+      }
+
+      .jexcel > thead > tr > td.selected {
+        background: none;
+        /* background-color: var(--main-bg-color); */
+      }
+
+      .jexcel .highlight-top,
+      .jexcel .highlight-bottom,
+      .jexcel .highlight-left,
+      .jexcel .highlight-right {
+        border-color: var(--main-fg-color);
       }
     </style>
   </head>
   <body>
     <div id="header_wrap">
       <header>
+        <a href="./">Reset</a>
         <h1>Dynamic Vector Graphics</h1>
         <h2>Testing Harness</h2>
       </header>
@@ -180,7 +200,7 @@
         <div id="input">
           <label for="spreadsheet">Data</label>
           <div id="spreadsheet" class="jexcel_container"></div>
-          <p class="footnote">Right click to edit column names</p>
+          <p class="footnote">Right click for more table editing</p>
           <label for="url">URL</label>
           <input id="url" type="url" value="../examples/index.svg" />
           <label for="urlalt">URL Alternate</label>
@@ -203,8 +223,11 @@
               <label for="scale">Scale:</label>
               <input id="scale" name="scale" type="number" value="100" min="0" max="100" />
             </p>
+            <p>
+              <label for="background">Background:</label>
+              <input id="background" name="background" type="number" value="50" min="0" max="100" />
+            </p>
           </div>
-          <a href="./">Reset</a>
         </div>
         <div id="result">
           <div id="dvgs"></div>
@@ -224,6 +247,7 @@
       document.getElementById('delay').addEventListener('input', updateOptions)
       document.getElementById('copies').addEventListener('input', updateGraphics)
       document.getElementById('scale').addEventListener('input', updateOptions)
+      document.getElementById('background').addEventListener('input', updateOptions)
 
       var csv =
         'Group,Percent {{0..1|f:percent}},Sales {{0..330000000|f:dollar}}\nAlpha,0.45,185764532\nBeta,0.27,284323935\nGamma,0.83,328564372'
@@ -293,6 +317,10 @@
           svg.style.width = `${opts.scale}%`
         })
 
+        const result_elem = document.getElementById('result')
+        const bg_hex = numberToGrayscaleHex(opts.background)
+        result_elem.style.backgroundColor = bg_hex
+
         for (let result of results) {
           result.draw()
         }
@@ -310,7 +338,16 @@
         const delay = document.getElementById('delay').value
         const copies = document.getElementById('copies').value
         const scale = document.getElementById('scale').value
-        return { url: url, urlalt: urlalt, visible: visible, delay: delay, copies: copies, scale: scale }
+        const background = document.getElementById('background').value
+        return {
+          url: url,
+          urlalt: urlalt,
+          visible: visible,
+          delay: delay,
+          copies: copies,
+          scale: scale,
+          background: background,
+        }
       }
 
       function getCSV() {
@@ -390,6 +427,26 @@
         }
       }
 
+      /**
+       * Converts a number between 0 and 100 to a grayscale hex color.
+       * @param {number} value - A number between 0 and 100.
+       * @returns {string} - The grayscale hex color.
+       */
+      function numberToGrayscaleHex(value) {
+        if (value < 0 || value > 100) {
+          throw new RangeError('Value must be between 0 and 100')
+        }
+
+        // Normalize the value to a range between 0 and 255
+        const normalizedValue = Math.round((value / 100) * 255)
+
+        // Convert the normalized value to a two-digit hex string
+        const hex = normalizedValue.toString(16).padStart(2, '0')
+
+        // Construct the grayscale color
+        return `#${hex}${hex}${hex}`
+      }
+
       function initializeSpreadsheet() {
         const table = getDataAndHeaders()
         let columns = []
@@ -410,6 +467,7 @@
           onmovecolumn: updateData,
           data: table.data,
           columns: columns,
+          defaultColAlign: 'left',
         })
         spreadsheet.hideIndex()
       }

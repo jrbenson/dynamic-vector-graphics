@@ -50,6 +50,14 @@ export class DataView {
     }
   }
 
+  getNormalized(row: number, column: string | number): number {
+    const srcRow = this.indexRemap(row)
+    if (srcRow != undefined) {
+      return this.data.getNormalized(srcRow, column)
+    }
+    return 0
+  }
+
   getFormatted(row: number, column: string | number, compact = false): string {
     const srcRow = this.indexRemap(row)
     if (srcRow != undefined) {
@@ -200,6 +208,23 @@ export class Data {
         r.set(col.name, value)
       }
     }
+  }
+
+  getNormalized(row: number, column: string | number): number {
+    const col = this.getColumn(column)
+    if (col) {
+      const val = this.get(row, col.name)
+      if (val !== undefined) {
+        if (col.stats) {
+          let norm = ((val as number) - col.stats.min) / (col.stats.max - col.stats.min)
+          if (!isFinite(norm)) {
+            norm = 0
+          }
+          return norm
+        }
+      }
+    }
+    return 0
   }
 
   getColumn(column: string | number, type?: ColumnType) {
@@ -444,12 +469,12 @@ export class Data {
 
   private extractColumnMetadata() {
     for (let col_name of this.cols) {
-      const match = col_name.match(parse.RE_DOUBLEBRACE)
+      const match = col_name.match(parse.RE_SYNTAXCONTAINER)
       if (match) {
         const col = this.getColumn(col_name)
         if (col) {
-          const s = parse.markup(col_name)
-          const col_base_name = col_name.replace(parse.RE_DOUBLEBRACE, '').trim()
+          const s = parse.getMarkupFromString(col_name)
+          const col_base_name = col_name.replace(parse.RE_SYNTAXCONTAINER, '').trim()
           this.renameColumn(col.name, col_base_name)
           const r = parse.range(s.name)
           if (r[0] !== undefined && r[1] !== undefined) {
