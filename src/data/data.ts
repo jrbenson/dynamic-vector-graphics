@@ -113,12 +113,12 @@ export class DataView {
           return new DataView(new Data(''), [])
         }
       } else if (f.condition !== undefined) {
-        const c = f.condition
-        const col = parse.columnFromData(c.column, this)
+        const condition = f.condition
+        const col = parse.columnFromData(condition.column, this)
         if (col !== undefined) {
           const newIndex = []
           for (let i = 0; i < this.index.length; i += 1) {
-            if (this.getRow(i)?.evaluate(col.name, c.value, c.comparison)) {
+            if (this.getRow(i)?.evaluate(col.name, condition.value, condition.comparison)) {
               newIndex.push(this.index[i])
             }
           }

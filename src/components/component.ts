@@ -50,4 +50,24 @@ export default class Component {
   getUnifierByColumn(column: string) {
     return this.unifiers.find((u) => u.cols.includes(column))
   }
+
+  getKeyAndAdjustedValue(keys: string[], data: DataView): [string | undefined, number | undefined] {
+    const key = parse.firstObjectKey(this.opts, keys)
+    if (key) {
+      const col_str = this.opts[key].toString()
+      const col = parse.columnFromData(col_str, data)
+      if (col?.stats) {
+        let norm = data.getNormalized(0, col.name) as number
+        const unifier = this.getUnifierByColumn(col_str)
+        if (unifier) {
+          norm = unifier.adjustNorm(norm)
+          if (unifier.total === 4) {
+            console.log(norm, unifier)
+          }
+        }
+        return [key, norm]
+      }
+    }
+    return [key, undefined]
+  }
 }

@@ -148,28 +148,15 @@ export default class TransformComponent extends Component {
       .filter((k) => k.startsWith('p'))
 
     for (let transform of TransformComponent.transforms) {
-      const key = parse.firstObjectKey(this.opts, transform.keys)
-      if (key) {
-        let norm = 0
-        const col_str = this.opts[key].toString()
-        const col = parse.columnFromData(col_str, data)
-        if (col !== undefined) {
-          norm = data.getNormalized(0, col.name)
-          const unifier = this.getUnifierByColumn(col_str)
-          if (unifier) {
-            norm = unifier.adjustNorm(norm)
-            if (unifier.total === 4) {
-              console.log(norm, unifier)
-            }
-          }
-        }
+      const [key, value] = this.getKeyAndAdjustedValue(transform.keys, data)
+      if (key && value !== undefined) {
         if (this.guide) {
-          transform_strs.push(transform.get(norm, this.opts, this.guide))
+          transform_strs.push(transform.get(value, this.opts, this.guide))
         } else {
-          transform_strs.push(transform.get(norm, this.opts))
+          transform_strs.push(transform.get(value, this.opts))
         }
         if (pos_keys.includes(key) && this.guide && !this.guide.linear) {
-          this.nonlinear_pos_easer.ease(this.nonlinear_pos_easer.curT, norm)
+          this.nonlinear_pos_easer.ease(this.nonlinear_pos_easer.curT, value)
         }
       }
     }

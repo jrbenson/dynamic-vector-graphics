@@ -1,5 +1,5 @@
 import { condition, columnIdentifier } from '../utils/syntax'
-import { Condition } from './filter'
+import { Condition, compare } from './filter'
 
 export type Value = string | number | Date | undefined
 
@@ -86,26 +86,6 @@ export class Row {
 
   evaluate(column: string | number, value: Value, comparison?: string): boolean {
     const rowValue = this.get(column)
-    if (rowValue !== undefined && value !== undefined) {
-      if (comparison === undefined) {
-        return rowValue == value
-      } else {
-        switch (comparison) {
-          case '<=':
-            return rowValue <= value
-          case '>=':
-            return rowValue >= value
-          case '<':
-            return rowValue < value
-          case '>':
-            return rowValue > value
-          case '=':
-          case '==':
-          default:
-            return rowValue == value
-        }
-      }
-    }
-    return false
+    return compare(rowValue, value, comparison)
   }
 }

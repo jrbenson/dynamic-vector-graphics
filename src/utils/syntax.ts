@@ -5,6 +5,49 @@ import { trimChars } from './string'
 import { Unifier } from '../components/unifier'
 import DuplicateComponent from '../components/duplicate'
 
+export const KEYS = {
+  duplicate: {
+    x: ['duplicateX', 'dx'],
+    y: ['duplicateY', 'dy'],
+    wrap: ['duplicateWrap', 'dw'],
+    slots: ['duplicateSlots', 'ds'],
+  },
+  unify: ['unify', 'u'],
+  swap: ['swap', 's'],
+  filter: ['filter', 'f'],
+  origin: ['origin', 'o'],
+  textAlign: ['textAlign', 'ta'],
+  guide: ['guide', 'g'],
+  style: {
+    fill: ['fill', 'f'],
+    stroke: ['line', 'l'],
+    strokeWidth: ['lineWidth', 'lw'],
+    fontWeight: ['textWeight', 'tw'],
+    fontSize: ['textSize', 'ts'],
+    opacity: ['alpha', 'a'],
+    fillOpacity: ['fillAlpha', 'fa'],
+    strokeOpacity: ['lineAlpha', 'la'],
+    strokeDash: ['lineDash', 'ld'],
+  },
+  transform: {
+    translate: {
+      x: ['positionX', 'px'],
+      y: ['positionY', 'py'],
+      both: ['position', 'p'],
+    },
+    scale: {
+      x: ['scaleX', 'sx'],
+      y: ['scaleY', 'sy'],
+      both: ['scale', 's'],
+    },
+    rotate: ['rotate', 'r'],
+    opts: {
+      rotateRatio: ['rotateRatio', 'rr'],
+      justify: ['justify', 'j'],
+    },
+  },
+}
+
 export const RE_SYNTAXCONTAINER = /{{([^}]+)}}/g
 
 export const SYNTAX_ATTRIBUTE = 'data-dvg'
@@ -243,9 +286,9 @@ export function columnFromData(col_str: string, data: DataView) {
 
 export function textAlignmentForElement(element: Element | null) {
   while (element && element.tagName !== 'SVG') {
-    if (elementHasOptions(element, ['textAlign', 'ta'])) {
+    if (elementHasOptions(element, KEYS.textAlign)) {
       let syn = getMarkup(element)
-      let key = firstObjectKey(syn.opts, ['textAlign', 'ta'])
+      let key = firstObjectKey(syn.opts, KEYS.textAlign)
       if (key) {
         return syn.opts[key].toString()
       }
@@ -285,9 +328,9 @@ export function filter(text: string, clean: boolean = true): Filter | undefined 
 export function filtersForElement(element: Element | null) {
   const filters: Filter[] = []
   while (element && element.tagName !== 'SVG') {
-    if (elementHasOptions(element, ['filter', 'f'])) {
+    if (elementHasOptions(element, KEYS.filter)) {
       let syn = getMarkup(element)
-      let key = firstObjectKey(syn.opts, ['filter', 'f'])
+      let key = firstObjectKey(syn.opts, KEYS.filter)
       if (key) {
         const filter_str = syn.opts[key].toString()
         const f = filter(filter_str)

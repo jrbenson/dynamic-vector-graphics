@@ -267,3 +267,11 @@ export function mangleSVG(svg: Element) {
     }
   }
 }
+
+export function getURLId(element: Element, attribute: string) {
+  let id = element.getAttribute(attribute)
+  if (id && id.startsWith('url(#')) {
+    return id.slice(5, -1)
+  }
+  return undefined
+}
