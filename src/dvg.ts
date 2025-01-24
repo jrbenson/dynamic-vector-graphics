@@ -10,6 +10,7 @@ import TransformComponent from './components/transform'
 import StyleComponent from './components/style'
 import DuplicateComponent from './components/duplicate'
 import { Unifier } from './components/unifier'
+import VisibilityComponent from './components/visibilty'
 
 interface DVGOptions {
   svg: string
@@ -104,6 +105,7 @@ export class DVG {
     this.refs = parse.elementsByName(svg) // stores object references for each HTML element of given SVG
 
     this.addComponents(DuplicateComponent.getComponent(svg), 'duplicate')
+    this.addComponents(VisibilityComponent.getComponent(svg), 'visibility')
     this.addComponents(TextComponent.getComponent(svg), 'text')
     this.addComponents(TransformComponent.getComponent(svg), 'transform')
     this.addComponents(StyleComponent.getComponent(svg), 'style')
@@ -143,7 +145,7 @@ export class DVG {
       this.assignUnifiers()
 
       // Then apply the other components
-      for (let comp of this.getComponents(['transform', 'style', 'text'])) {
+      for (let comp of this.getComponents(['visibility', 'transform', 'style', 'text'])) {
         if (comp.filters.length <= 0) {
           comp.apply(full, this)
         } else {

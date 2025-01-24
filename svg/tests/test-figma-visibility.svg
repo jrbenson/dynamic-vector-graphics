@@ -1,0 +1,18 @@
+<svg width="420" height="176" viewBox="0 0 420 176" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="test-figma-visibility">
+<g id="Basic">
+<rect x="16" y="16" width="388" height="81" rx="32" fill="black"/>
+<g id="{{duplicate:@0,guide:line}}">
+<circle id="{{visible:@0=Alpha}}" cx="56" cy="56" r="24" fill="#33A3FF"/>
+<path id="{{visible:@0=Beta}}" d="M80 56C80 69.2548 69.2548 80 56 80C42.7452 80 32 69.2548 32 56C32 42.7452 48.7452 49.5 62 49.5C75.2548 49.5 80 42.7452 80 56Z" fill="#FFCC32"/>
+<path id="{{visible:@0=Gamma}}" d="M56 56C56 69.2548 69.2548 80 56 80C42.7452 80 32 69.2548 32 56C32 42.7452 42.7452 32 56 32C69.2548 32 56 42.7452 56 56Z" fill="#9471FF"/>
+</g>
+<line id="{{line}}" x1="32" y1="80.5" x2="340" y2="80.5" stroke="black"/>
+</g>
+<g id="Static">
+<rect x="16" y="113" width="388" height="47" rx="23.5" fill="black"/>
+<text id="{{visible:false}}" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="32" y="140.864">Hidden</tspan></text>
+<text id="{{visible:true}}" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="350" y="140.864">Visible</tspan></text>
+</g>
+</g>
+</svg>

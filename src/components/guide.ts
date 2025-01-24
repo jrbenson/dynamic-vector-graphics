@@ -1,7 +1,8 @@
 import { getBBox } from '../utils/svg'
+import { KEYS } from '../utils/syntax'
 
 export class Guide {
-  static keys: string[] = ['guide', 'g']
+  static keys: string[] = KEYS.guide.both
   element: SVGGraphicsElement
   tag: string = ''
   linear: boolean = true

@@ -17,7 +17,11 @@ export const KEYS = {
   filter: ['filter', 'f'],
   origin: ['origin', 'o'],
   textAlign: ['textAlign', 'ta'],
-  guide: ['guide', 'g'],
+  guide: {
+    color: ['guideColor', 'gc'],
+    position: ['guidePosition', 'gp'],
+    both: ['guide', 'g'],
+  },
   style: {
     fill: ['fill', 'f'],
     stroke: ['line', 'l'],
@@ -46,6 +50,7 @@ export const KEYS = {
       justify: ['justify', 'j'],
     },
   },
+  visibility: ['visible', 'v'],
 }
 
 export const RE_SYNTAXCONTAINER = /{{([^}]+)}}/g

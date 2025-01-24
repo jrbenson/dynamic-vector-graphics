@@ -10,6 +10,7 @@ import TextComponent from '../components/text'
 import TransformComponent from '../components/transform'
 import StyleComponent from '../components/style'
 import { SYNTAX_ATTRIBUTE } from '../utils/syntax'
+import VisibilityComponent from './visibilty'
 
 /**
  * The duplicate component creates a copy of a an element for each value in the data.
@@ -146,6 +147,7 @@ export default class DuplicateComponent extends Component {
     }
 
     // Run component addition and tag with uuid, should probably abstract this set eventually.
+    dvg.addComponents(VisibilityComponent.getComponent(this.element), ['visibility', this.uuid])
     dvg.addComponents(TextComponent.getComponent(this.element), ['text', this.uuid])
     dvg.addComponents(TransformComponent.getComponent(this.element), ['transform', this.uuid])
     dvg.addComponents(StyleComponent.getComponent(this.element), ['style', this.uuid])

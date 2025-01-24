@@ -1,7 +1,7 @@
-<svg width="512" height="305" viewBox="0 0 512 305" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="figma-test-unification">
+<svg width="420" height="305" viewBox="0 0 420 305" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="test-figma-unification">
 <g id="Markers {{unify:#0}}">
-<rect x="16" y="16" width="480" height="96" rx="32" fill="black"/>
+<rect x="16" y="16" width="388" height="96" rx="32" fill="black"/>
 <g id="Marker">
 <circle id="Base" cx="48" cy="48" r="16" fill="#444444"/>
 <circle id="Color {{scale:#0,o:0.5..0.5}}" cx="48" cy="48" r="16" fill="#287FC7"/>
@@ -70,47 +70,27 @@
 <circle id="Base_17" cx="364" cy="48" r="16" fill="#444444"/>
 <circle id="Color {{scale:#0,o:0.5..0.5}}_17" cx="364" cy="48" r="16" fill="#287FC7"/>
 </g>
-<g id="Marker_18">
-<circle id="Base_18" cx="384" cy="80" r="16" fill="#444444"/>
-<circle id="Color {{scale:#0,o:0.5..0.5}}_18" cx="384" cy="80" r="16" fill="#287FC7"/>
-</g>
-<g id="Marker_19">
-<circle id="Base_19" cx="404" cy="48" r="16" fill="#444444"/>
-<circle id="Color {{scale:#0,o:0.5..0.5}}_19" cx="404" cy="48" r="16" fill="#287FC7"/>
-</g>
-<g id="Marker_20">
-<circle id="Base_20" cx="420" cy="80" r="16" fill="#444444"/>
-<circle id="Color {{scale:#0,o:0.5..0.5}}_20" cx="420" cy="80" r="16" fill="#287FC7"/>
-</g>
-<g id="Marker_21">
-<circle id="Base_21" cx="440" cy="48" r="16" fill="#444444"/>
-<circle id="Color {{scale:#0,o:0.5..0.5}}_21" cx="440" cy="48" r="16" fill="#287FC7"/>
-</g>
-<g id="Marker_22">
-<circle id="Base_22" cx="456" cy="80" r="16" fill="#444444"/>
-<circle id="Color {{scale:#0,o:0.5..0.5}}_22" cx="456" cy="80" r="16" fill="#287FC7"/>
-</g>
 </g>
 <g id="Bars">
-<rect x="16" y="128" width="480" height="161" rx="32" fill="black"/>
-<path id="{{axis}}" d="M54 255L458 255" stroke="#888888"/>
+<rect x="16" y="128" width="388" height="161" rx="32" fill="black"/>
+<path id="{{axis}}" d="M54 255L366 255" stroke="#888888"/>
 <g id="Bar {{dx:@0,g:axis}}">
 <g id="{{unify:#0}}">
-<g id="Marker_23">
-<ellipse id="Base_23" cx="55.5" cy="239.75" rx="12.5" ry="13.25" fill="#444444"/>
-<ellipse id="Color {{scale:#0,o:0.5..0.5}}_23" cx="55.5" cy="239.75" rx="12.5" ry="13.25" fill="#287FC7"/>
+<g id="Marker_18">
+<ellipse id="Base_18" cx="55.5" cy="239.75" rx="12.5" ry="13.25" fill="#444444"/>
+<ellipse id="Color {{scale:#0,o:0.5..0.5}}_18" cx="55.5" cy="239.75" rx="12.5" ry="13.25" fill="#287FC7"/>
 </g>
-<g id="Marker_24">
-<ellipse id="Base_24" cx="55.5" cy="213.25" rx="12.5" ry="13.25" fill="#444444"/>
-<ellipse id="Color {{scale:#0,o:0.5..0.5}}_24" cx="55.5" cy="213.25" rx="12.5" ry="13.25" fill="#287FC7"/>
+<g id="Marker_19">
+<ellipse id="Base_19" cx="55.5" cy="213.25" rx="12.5" ry="13.25" fill="#444444"/>
+<ellipse id="Color {{scale:#0,o:0.5..0.5}}_19" cx="55.5" cy="213.25" rx="12.5" ry="13.25" fill="#287FC7"/>
 </g>
-<g id="Marker_25">
-<ellipse id="Base_25" cx="55.5" cy="186.75" rx="12.5" ry="13.25" fill="#444444"/>
-<ellipse id="Color {{scale:#0,o:0.5..0.5}}_25" cx="55.5" cy="186.75" rx="12.5" ry="13.25" fill="#287FC7"/>
+<g id="Marker_20">
+<ellipse id="Base_20" cx="55.5" cy="186.75" rx="12.5" ry="13.25" fill="#444444"/>
+<ellipse id="Color {{scale:#0,o:0.5..0.5}}_20" cx="55.5" cy="186.75" rx="12.5" ry="13.25" fill="#287FC7"/>
 </g>
-<g id="Marker_26">
-<ellipse id="Base_26" cx="55.5" cy="160.25" rx="12.5" ry="13.25" fill="#444444"/>
-<ellipse id="Color {{scale:#0,o:0.5..0.5}}_26" cx="55.5" cy="160.25" rx="12.5" ry="13.25" fill="#287FC7"/>
+<g id="Marker_21">
+<ellipse id="Base_21" cx="55.5" cy="160.25" rx="12.5" ry="13.25" fill="#444444"/>
+<ellipse id="Color {{scale:#0,o:0.5..0.5}}_21" cx="55.5" cy="160.25" rx="12.5" ry="13.25" fill="#287FC7"/>
 </g>
 </g>
 <text id="{{ta:middle}}" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="37" y="272.864">{{@0}}</tspan></text>
