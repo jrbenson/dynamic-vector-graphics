@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="style-tests" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 512 1196.1">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+  <defs>
+    <linearGradient id="linear-gradient" x1="59.6" y1="49.7" x2="91.6" y2="49.7" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bdbf32"/>
+      <stop offset=".5" stop-color="#007dbf"/>
+      <stop offset="1" stop-color="#a9206a"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient1" x1="97.6" y1="49.7" x2="133.6" y2="49.7" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#089447"/>
+      <stop offset="1" stop-color="#9f3e97"/>
+    </linearGradient>
+  </defs>
+  <g id="Styles">
+    <rect id="Background" x="51" y="25.2" width="411" height="129.1" rx="20" ry="20"/>
+    <circle id="_x7B__x7B_fill:_x23_0_x7D__x7D_" cx="75.6" cy="49.7" r="16" fill="url(#linear-gradient)"/>
+    <circle id="_x7B__x7B_line:_x23_0_x7D__x7D_" cx="115.6" cy="49.7" r="16" fill="#636466" stroke="url(#linear-gradient1)" stroke-miterlimit="10" stroke-width="4"/>
+  </g>
+</svg>

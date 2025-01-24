@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="vis-2024-example" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 512 1196.1">
+  <!-- Generator: Adobe Illustrator 29.1.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 142)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #414042;
+      }
+
+      .st1 {
+        fill: #fff;
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 12px;
+      }
+
+      .st2 {
+        stroke: #000;
+        stroke-width: 40px;
+      }
+
+      .st2, .st3 {
+        fill: none;
+        stroke-linecap: round;
+      }
+
+      .st3 {
+        stroke: #fff;
+        stroke-dasharray: 2 4;
+        stroke-width: 2px;
+      }
+
+      .st4 {
+        fill: #0664d0;
+      }
+    </style>
+  </defs>
+  <g id="Horizontal_Example">
+    <path d="M440.5,55.3H72c-11,0-20-9-20-20s9-20,20-20h368.5c11,0,20,9,20,20s-9,20-20,20Z"/>
+    <line id="_x7B__x7B_line_x5F_h_x7D__x7D_" class="st3" x1="72" y1="35.3" x2="440.5" y2="35.3"/>
+    <g id="Marker__x7B__x7B_dx:_x40_0_x2C_guide:line_x5F_h_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="72" cy="35.3" r="18"/>
+    </g>
+  </g>
+  <g id="Curve_Example">
+    <path id="Background" class="st2" d="M72,127c50,0,63-36,102-36s54,77,155,77,99,.7,99-38.5-52-38.5-98-38.5-46,0-46,0"/>
+    <path id="_x7B__x7B_line_x5F_c_x7D__x7D_" class="st3" d="M72,127c50,0,63-36,102-36s54,77,155,77,99,.7,99-38.5-52-38.5-98-38.5-46,0-46,0"/>
+    <g id="Marker__x7B__x7B_d:_x40_0_x2C_guide:line_x5F_c_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_1" data-name="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="72" cy="127.4" r="18"/>
+    </g>
+  </g>
+  <g id="Wrap_Example">
+    <rect id="Back" x="51" y="352.6" width="411" height="131.3" rx="20" ry="20"/>
+    <rect id="_x7B__x7B_rect_x5F_wrap_x5F_b_x7D__x7D_" class="st3" x="72" y="373.6" width="368.5" height="89.3"/>
+    <g id="Marker__x7B__x7B_dw:_x40_0_x2C_j:end_x2C_guide:rect_x5F_wrap_x5F_b_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_2" data-name="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="72" cy="373.6" r="15.8"/>
+    </g>
+    <rect id="Back1" data-name="Back" x="51" y="205.7" width="411" height="131.3" rx="20" ry="20"/>
+    <rect id="_x7B__x7B_rect_x5F_wrap_x5F_a_x7D__x7D_" class="st3" x="72" y="226.7" width="368.5" height="89.3"/>
+    <g id="Marker__x7B__x7B_dw:_x40_0_x2C_guide:rect_x5F_wrap_x5F_a_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_3" data-name="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="72" cy="226.7" r="15.8"/>
+    </g>
+    <rect id="Back2" data-name="Back" x="51" y="499.5" width="411" height="131.3" rx="20" ry="20"/>
+    <rect id="_x7B__x7B_rect_x5F_wrap_x5F_c_x7D__x7D_" class="st3" x="72" y="520.5" width="368.5" height="89.3"/>
+    <g id="Marker__x7B__x7B_dw:_x40_0_x2C_guide:rect_x5F_wrap_x5F_c_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_4" data-name="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="72" cy="520.5" r="15.8"/>
+    </g>
+    <rect id="Back3" data-name="Back" x="51" y="646.4" width="411" height="131.3" rx="20" ry="20"/>
+    <rect id="_x7B__x7B_rect_x5F_wrap_x5F_d_x7D__x7D_" class="st3" x="72" y="667.4" width="368.5" height="89.3"/>
+    <g id="Marker__x7B__x7B_dw:_x40_0_x2C_j:between_x2C_guide:rect_x5F_wrap_x5F_d_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_5" data-name="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="72" cy="667.4" r="15.8"/>
+    </g>
+    <rect id="Back4" data-name="Back" x="51" y="798.5" width="411" height="116.3" rx="20" ry="20"/>
+    <rect class="st3" x="72" y="819.5" width="368.5" height="74.3"/>
+    <g id="_x7B__x7B_slots_x7D__x7D_">
+      <circle class="st0" cx="414.5" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="394.5" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="374.4" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="354.4" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="334.4" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="314.4" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="294.4" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="274.4" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="254.3" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="234.3" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="214.3" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="194.3" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="174.3" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="154.3" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="134.2" cy="842.2" r="15.8"/>
+      <circle class="st0" cx="114.2" cy="872.3" r="15.8"/>
+      <circle class="st0" cx="94.2" cy="842.2" r="15.8"/>
+    </g>
+    <g id="Marker__x7B__x7B_ds:_x40_0_x2C_guide:slots_x7D__x7D_">
+      <circle id="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_6" data-name="Interior__x7B__x7B_scale:_x23_0_x2C_o:0.5..0.5_x7D__x7D_" class="st4" cx="94.2" cy="842.2" r="15.8"/>
+    </g>
+    <text class="st1" transform="translate(174.4 330.6)"><tspan x="0" y="0">ds:@0 , j:start , g:dotted_rect</tspan></text>
+    <text class="st1" transform="translate(174.4 477.4)"><tspan x="0" y="0">ds:@0 , j:start , g:dotted_rect</tspan></text>
+    <text class="st1" transform="translate(174.4 624.1)"><tspan x="0" y="0">ds:@0 , j:start , g:dotted_rect</tspan></text>
+    <text class="st1" transform="translate(174.4 770.8)"><tspan x="0" y="0">ds:@0 , j:start , g:dotted_rect</tspan></text>
+    <text class="st1" transform="translate(153.9 908.2)"><tspan x="0" y="0">ds:@0 , g:slots_group , g:dotted_rect</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,80 @@
+<svg width="420" height="463" viewBox="0 0 420 463" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="figma-test-styles">
+<g id="Basic">
+<rect x="16" y="16" width="388" height="80" rx="32" fill="black"/>
+<circle id="{{alpha:#0}}" cx="56" cy="56" r="24" fill="#33A3FF"/>
+<circle id="{{alpha:#0}}_2" opacity="0.5" cx="117" cy="56" r="24" fill="#33A3FF"/>
+<circle id="{{fillAlpha:#0}}" cx="178" cy="56" r="26" fill="#33A3FF" stroke="#FFCC32" stroke-width="4"/>
+<circle id="{{lineAlpha:#0}}" cx="239" cy="56" r="26" fill="#FFCC32" stroke="#33A3FF" stroke-width="4"/>
+<circle id="{{alpha:#0}}_3" cx="300" cy="56" r="26" fill="#FFCC32" stroke="#33A3FF" stroke-width="4"/>
+</g>
+<g id="Basic_2">
+<rect x="16" y="112" width="388" height="80" rx="32" fill="black"/>
+<circle id="{{fill:#0}}" cx="56" cy="152" r="24" fill="#33A3FF"/>
+<circle id="{{fill:#0}}_2" cx="117" cy="152" r="24" fill="url(#paint0_linear_1018_3)"/>
+</g>
+<g id="Basic_3">
+<rect x="16" y="208" width="388" height="47" rx="23.5" fill="black"/>
+<text id="{{textAlign:start,textWeight:#0}}" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="32" y="235.864">{{@0}}</tspan></text>
+<text id="{{textAlign:middle}}" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="191.5" y="235.864">{{@0}}</tspan></text>
+<text id="{{textAlign:end,textSize:#0}}" fill="white" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="12" letter-spacing="0em"><tspan x="351" y="235.864">{{@0}}</tspan></text>
+</g>
+<g id="Basic_4">
+<rect x="16" y="271" width="388" height="80" rx="32" fill="black"/>
+<circle id="{{line:#0}}" cx="56" cy="311" r="22" stroke="#33A3FF" stroke-width="4"/>
+<circle id="{{line:#0}}_2" cx="117" cy="311" r="22" stroke="url(#paint1_linear_1018_3)" stroke-width="4"/>
+<circle id="{{line:#0}}_3" cx="178" cy="311" r="22" stroke="url(#paint2_linear_1018_3)" stroke-width="4"/>
+<circle id="{{lineWidth:#0}}" cx="239" cy="311" r="20" stroke="#33A3FF" stroke-width="8"/>
+<circle id="{{lineDash:#0}}" cx="300" cy="311" r="22" stroke="#33A3FF" stroke-width="4"/>
+<circle id="{{lineDash:#0}}_2" cx="361" cy="311" r="22" stroke="#33A3FF" stroke-width="4" stroke-dasharray="8 16 24 32"/>
+</g>
+<g id="Unified {{unify:#0}}">
+<rect x="16" y="367" width="388" height="80" rx="32" fill="black"/>
+<circle id="{{fill:#0}}_3" cx="56" cy="407" r="24" fill="url(#paint3_linear_1018_3)"/>
+<circle id="{{fill:#0}}_4" cx="117" cy="407" r="24" fill="url(#paint4_linear_1018_3)"/>
+<circle id="{{fill:#0}}_5" cx="178" cy="407" r="24" fill="url(#paint5_linear_1018_3)"/>
+<circle id="{{fill:#0}}_6" cx="239" cy="407" r="24" fill="url(#paint6_linear_1018_3)"/>
+<circle id="{{fill:#0}}_7" cx="300" cy="407" r="24" fill="url(#paint7_linear_1018_3)"/>
+<circle id="{{fill:#0}}_8" cx="361" cy="407" r="24" fill="url(#paint8_linear_1018_3)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_1018_3" x1="117" y1="128" x2="117" y2="176" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="0.50002" stop-color="#CC9829"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+<linearGradient id="paint1_linear_1018_3" x1="117" y1="287" x2="117" y2="335" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFFF33"/>
+<stop offset="1" stop-color="#1F993B"/>
+</linearGradient>
+<linearGradient id="paint2_linear_1018_3" x1="178" y1="287" x2="178" y2="335" gradientUnits="userSpaceOnUse">
+<stop offset="0.500833" stop-color="#33A3FF"/>
+<stop offset="0.530833" stop-color="#F69116"/>
+</linearGradient>
+<linearGradient id="paint3_linear_1018_3" x1="56" y1="383" x2="56" y2="431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+<linearGradient id="paint4_linear_1018_3" x1="117" y1="383" x2="117" y2="431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+<linearGradient id="paint5_linear_1018_3" x1="178" y1="383" x2="178" y2="431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+<linearGradient id="paint6_linear_1018_3" x1="239" y1="383" x2="239" y2="431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+<linearGradient id="paint7_linear_1018_3" x1="300" y1="383" x2="300" y2="431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+<linearGradient id="paint8_linear_1018_3" x1="361" y1="383" x2="361" y2="431" gradientUnits="userSpaceOnUse">
+<stop stop-color="#33A3FF"/>
+<stop offset="1" stop-color="#7C1F99"/>
+</linearGradient>
+</defs>
+</svg>
