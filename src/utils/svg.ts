@@ -275,3 +275,12 @@ export function getURLId(element: Element, attribute: string) {
   }
   return undefined
 }
+
+export function setPropertyTransitions(elem: SVGGraphicsElement, properties: string[]) {
+  let transProps: Array<string> = []
+  transProps.concat(...elem.style.transitionProperty.split(','))
+  transProps.concat(properties)
+  elem.style.transitionProperty = transProps.join(',')
+  elem.style.transitionDuration = '1s'
+  elem.style.transitionTimingFunction = 'cubic-bezier(0.25, .1, 0.25, 1)'
+}

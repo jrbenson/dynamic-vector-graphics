@@ -34,8 +34,9 @@ export default class DuplicateComponent extends Component {
 
   private template: string = ''
   private tileLayout: { x: number; y: number }[] = []
-  private duplicates: SVGElement[] = []
+  private duplicates: Map<string, SVGGElement> = new Map()
   private uuid: string = uuidv4()
+  private firstApply: boolean = true
 
   private guideBounds: DOMRect | undefined = undefined
   private templateBounds: DOMRect | undefined = undefined
@@ -61,6 +62,7 @@ export default class DuplicateComponent extends Component {
     // Set up component's element for apply() call
     const svgElem = this.element as SVGGraphicsElement
     this.template = svgElem.innerHTML
+    this.templateBounds = svg.getBBox(svgElem)
   }
 
   /**
@@ -70,6 +72,10 @@ export default class DuplicateComponent extends Component {
    */
   apply(data: DataView, dvg: DVG) {
     const svgElem = this.element as SVGGraphicsElement
+    if (this.firstApply) {
+      this.firstApply = false
+      svgElem.innerHTML = ''
+    }
 
     const gkey = parse.firstObjectKey(this.opts, Guide.keys)
     if (gkey && !this.guide) {
@@ -79,22 +85,21 @@ export default class DuplicateComponent extends Component {
     if (!this.guideBounds && this.guide) {
       this.guideBounds = this.guide.getBBox()
     }
-    if (!this.templateBounds) {
-      this.templateBounds = svg.getBBox(svgElem)
-    }
+    // if (!this.templateBounds) {
+    //   this.templateBounds = svg.getBBox(svgElem)
+    // }
 
     let justify = 'start'
-    const justifyKey = parse.firstObjectKey(this.opts, ['justify', 'j'])
+    const justifyKey = parse.firstObjectKey(this.opts, parse.KEYS.transform.opts.justify)
     if (justifyKey) {
       justify = this.opts[justifyKey].toString()
     }
 
     const slotLayout = this.getSlotLayout(this.guide)
-    // console.log(slotLayout)
 
     // Clear existing duplicate content
-    svgElem.innerHTML = ''
-    dvg.removeComponents(this.uuid)
+    // svgElem.innerHTML = ''
+    // dvg.removeComponents(this.uuid)
 
     // Create duplicates by iterating through unique values
     const key = parse.firstObjectKey(this.opts, DuplicateComponent.keys)
@@ -102,18 +107,33 @@ export default class DuplicateComponent extends Component {
       const col_str = this.opts[key].toString()
       const col = parse.columnFromData(col_str, data)
       if (col) {
-        const vals = data.unique(col.name)
-        let index = 0
+        const vals = data.unique(col.name).map((v) => `${v}`)
+        const existingVals = Array.from(this.duplicates.keys()).map((v) => `${v}`)
         if (this.guideBounds && this.templateBounds) {
           this.tileLayout = this.getWrappedLayout(this.guideBounds, this.templateBounds, vals.length, justify)
         }
+        // Remove duplicates that are no longer in the data
+        for (let existingVal of this.duplicates.keys()) {
+          if (!vals.includes(existingVal)) {
+            this.duplicates.get(existingVal)?.remove()
+            this.duplicates.delete(existingVal)
+            dvg.removeComponents(`${existingVal}${this.uuid}`)
+          }
+        }
+        // Add groups and update existing duplicates
+        let index = 0
         for (let val of vals) {
-          const group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-          group.setAttribute(SYNTAX_ATTRIBUTE, `{{f:${col.name}=${val}}}`)
-          group.innerHTML = this.template
+          let group = this.duplicates.get(val)
+          let newVal = false
+          if (!group) {
+            group = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+            group.setAttribute(SYNTAX_ATTRIBUTE, `{{f:${col.name}=${val}}}`)
+            group.innerHTML = this.template
+            this.duplicates.set(val, group)
+            newVal = true
+          }
           if (this.guide) {
             const coord = this.guide.get(index / (vals.length - 1))
-
             switch (key) {
               case 'duplicateX':
               case 'dx':
@@ -139,60 +159,22 @@ export default class DuplicateComponent extends Component {
                 group.style.transform = `translate(${coord.x}px,${coord.y}px)`
                 break
             }
+            if (newVal) {
+              svgElem.appendChild(group)
+              svg.setPropertyTransitions(group, ['transform'])
+            }
           }
-          this.element.append(group)
+
+          // Run component addition and tag with uuid, should probably abstract this set eventually.
+          dvg.addComponents(VisibilityComponent.getComponent(group), ['visibility', `${val}${this.uuid}`])
+          dvg.addComponents(TextComponent.getComponent(group), ['text', `${val}${this.uuid}`])
+          dvg.addComponents(TransformComponent.getComponent(group), ['transform', `${val}${this.uuid}`])
+          dvg.addComponents(StyleComponent.getComponent(group), ['style', `${val}${this.uuid}`])
+
           index += 1
         }
       }
     }
-
-    // Run component addition and tag with uuid, should probably abstract this set eventually.
-    dvg.addComponents(VisibilityComponent.getComponent(this.element), ['visibility', this.uuid])
-    dvg.addComponents(TextComponent.getComponent(this.element), ['text', this.uuid])
-    dvg.addComponents(TransformComponent.getComponent(this.element), ['transform', this.uuid])
-    dvg.addComponents(StyleComponent.getComponent(this.element), ['style', this.uuid])
-
-    //   const svgElem = this.copy(this.element as SVGGraphicsElement)
-    //   console.log(true)
-
-    //   const key = parse.firstObjectKey(this.opts, DuplicateComponent.keys)
-    //   if (key) {
-    //     const col_str = this.opts[key].toString()
-    //     const col = parse.columnFromData(col_str, data)
-
-    //   if (col?.stats) {
-    //     const val = data.get(0, col.name) as number
-    //     if (val !== undefined) {
-    //       const norm = (val - col.stats.min) / (col.stats.max - col.stats.min)
-    //       style.set(svgElem, norm, svgElem)
-    //     }
-    //   }
-  }
-
-  /**
-   *
-   * Makes a structural copy a given SVG element
-   * @param source SVGGraphicElement to be replicated
-   * @returns Copy of a given SVGGraphicsElement
-   */
-  private copy(source: SVGGraphicsElement) {
-    // Note that element is wrapped with group when called
-    const dest = this.element as Element
-
-    if (!source.children) {
-      const attributes = source.getAttributeNames()
-      for (let a in attributes) {
-        dest.setAttribute(a, source.getAttribute(a) as string)
-      }
-
-      dest.insertAdjacentElement('beforeend', source)
-    } else {
-      for (let node of source.children) {
-        dest.append(this.copy(source.firstElementChild as SVGGraphicsElement))
-      }
-    }
-
-    return dest
   }
 
   private getWrappedLayout(

@@ -61,9 +61,6 @@ export default class Component {
         const unifier = this.getUnifierByColumn(col_str)
         if (unifier) {
           norm = unifier.adjustNorm(norm)
-          if (unifier.total === 4) {
-            console.log(norm, unifier)
-          }
         }
         return [key, norm]
       }

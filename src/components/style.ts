@@ -59,9 +59,7 @@ export default class StyleComponent extends Component {
       // Fill color
       keys: parse.KEYS.style.fill,
       set: function (e, t, dynStyle) {
-        console.log(e.style.fill)
         if (dynStyle.fillColorGradient) {
-          console.log(dynStyle.fillColorGradient.get(t))
           e.style.fill = dynStyle.fillColorGradient.get(t)
         } else {
           e.style.fill = '#FF0000'
