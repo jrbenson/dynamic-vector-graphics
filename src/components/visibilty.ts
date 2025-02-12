@@ -1,4 +1,5 @@
-import * as parse from '../utils/syntax'
+import * as syntax from '../syntax/syntax'
+import * as markup from '../syntax/markup'
 import * as svg from '../utils/svg'
 import { DataView } from '../data/data'
 import Component from './component'
@@ -7,7 +8,7 @@ import { compare, Filter } from '../data/filter'
 
 export default class VisibilityComponent extends Component {
   static getComponent(svg: Element): Array<Component> {
-    return parse.elementsWithOptions(svg, parse.KEYS.visibility).map((e) => new VisibilityComponent(e))
+    return markup.elementsWithOptions(svg, markup.KEYS.visibility).map((e) => new VisibilityComponent(e))
   }
 
   static HIDDEN_VALUES = ['false', 'f', 'no']
@@ -29,9 +30,9 @@ export default class VisibilityComponent extends Component {
   }
 
   intializeContext() {
-    let key = parse.firstObjectKey(this.opts, parse.KEYS.visibility)
+    let key = markup.firstObjectKey(this.opts, markup.KEYS.visibility)
     if (key) {
-      this.visibiltyFilter = parse.filter(this.opts[key].toString())
+      this.visibiltyFilter = markup.filter(this.opts[key].toString())
       if (!this.visibiltyFilter) {
         if (VisibilityComponent.HIDDEN_VALUES.includes(this.opts[key].toString())) {
           this.staticallyHidden = true
@@ -43,7 +44,7 @@ export default class VisibilityComponent extends Component {
   apply(data: DataView, dvg: DVG) {
     const svgElem = this.element as SVGGraphicsElement
     if (this.visibiltyFilter && this.visibiltyFilter.condition) {
-      const col = parse.columnFromData(this.visibiltyFilter.condition.column, data)
+      const col = markup.columnFromData(this.visibiltyFilter.condition.column, data)
       if (col) {
         const curValue = data.get(0, col.name)
         if (compare(curValue, this.visibiltyFilter.condition.value, this.visibiltyFilter.condition.comparison)) {

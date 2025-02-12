@@ -2,7 +2,8 @@ import Component from './components/component'
 import { Data, DataView } from './data/data'
 import { SourceData } from './data/data'
 import { cleanSVG, initFonts, mangleSVG } from './utils/svg'
-import * as parse from './utils/syntax'
+import * as parse from './syntax/syntax'
+import * as markup from './syntax/markup'
 import { getLoader } from './loader'
 
 import TextComponent from './components/text'
@@ -102,7 +103,7 @@ export class DVG {
     this.loader = getLoader(this.svg)
     this.loader.style.transition = 'opacity 0.5s ease'
 
-    this.refs = parse.elementsByName(svg) // stores object references for each HTML element of given SVG
+    this.refs = markup.elementsByName(svg) // stores object references for each HTML element of given SVG
 
     this.addComponents(DuplicateComponent.getComponent(svg), 'duplicate')
     this.addComponents(VisibilityComponent.getComponent(svg), 'visibility')
@@ -193,7 +194,7 @@ export class DVG {
       for (let comp of this.components) {
         comp.unifiers = []
       }
-      const unifierElems = parse.elementsWithOptions(this.svg, Unifier.keys)
+      const unifierElems = markup.elementsWithOptions(this.svg, Unifier.keys)
       for (let comp of this.components) {
         for (let unifierElem of unifierElems) {
           const children = Array.from(unifierElem.children)
@@ -211,7 +212,7 @@ export class DVG {
    * Sets a new base data object for the dynamic object.
    * @param data Data object to apply
    */
-  update(data: SourceData): void {
+  update(data: SourceData | string): void {
     this.data = new Data(data)
     this.apply()
   }

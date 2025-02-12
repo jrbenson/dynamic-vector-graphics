@@ -1,4 +1,5 @@
-import { condition, columnIdentifier } from '../utils/syntax'
+import { condition } from '../syntax/markup'
+import { columnIdentifier } from '../syntax/markup'
 import { Condition, compare } from './filter'
 
 export type Value = string | number | Date | undefined

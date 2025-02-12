@@ -1,4 +1,5 @@
-import * as parse from '../utils/syntax'
+import * as syntax from '../syntax/syntax'
+import * as markup from '../syntax/markup'
 import { DataView } from '../data/data'
 import { DVG } from '../dvg'
 import { Filter } from '../data/filter'
@@ -12,6 +13,7 @@ export default class Component {
   opts: Record<string, string | number | boolean>
   filters: Filter[] = []
   unifiers: Unifier[] = []
+  syntax: syntax.Syntax = {}
 
   /**
    * Override with dynamic specific parsing and precomputation.
@@ -19,8 +21,9 @@ export default class Component {
    */
   constructor(element: Element) {
     this.element = element
-    this.opts = parse.getMarkup(element).opts
-    this.filters = parse.filtersForElement(this.element)
+    this.opts = markup.elementMarkup(element).opts
+    this.filters = markup.filtersForElement(this.element)
+    // this.syntax = parse.parseElementSyntax(this.element)
   }
 
   /** CHANGE: Renamed to clarify that each component is retrieved by this
@@ -52,10 +55,10 @@ export default class Component {
   }
 
   getKeyAndAdjustedValue(keys: string[], data: DataView): [string | undefined, number | undefined] {
-    const key = parse.firstObjectKey(this.opts, keys)
+    const key = markup.firstObjectKey(this.opts, keys)
     if (key) {
       const col_str = this.opts[key].toString()
-      const col = parse.columnFromData(col_str, data)
+      const col = markup.columnFromData(col_str, data)
       if (col?.stats) {
         let norm = data.getNormalized(0, col.name) as number
         const unifier = this.getUnifierByColumn(col_str)

@@ -1,3 +1,4 @@
+import { ColumnType } from './column'
 import { Value } from './row'
 
 export interface Filter {
@@ -7,6 +8,7 @@ export interface Filter {
 
 export interface Condition {
   column: string
+  indexColumn?: { type: string; index: number }
   value: string
   comparison?: string
 }

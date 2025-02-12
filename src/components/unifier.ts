@@ -1,4 +1,5 @@
-import { firstObjectKey, getMarkup } from '../utils/syntax'
+import { firstObjectKey } from '../syntax/markup'
+import { elementMarkup } from '../syntax/markup'
 
 export class Unifier {
   static keys: string[] = ['unify', 'u']
@@ -14,7 +15,7 @@ export class Unifier {
   constructor(element: Element, position: number, total: number) {
     this.element = element
     if (this.element) {
-      let syn = getMarkup(element)
+      let syn = elementMarkup(element)
       let key = firstObjectKey(syn.opts, Unifier.keys)
       if (key) {
         this.cols = (syn.opts[key] as string).split(';')

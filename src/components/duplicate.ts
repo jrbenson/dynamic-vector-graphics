@@ -1,4 +1,5 @@
-import * as parse from '../utils/syntax'
+import * as syntax from '../syntax/syntax'
+import * as markup from '../syntax/markup'
 import * as svg from '../utils/svg'
 import { DataView } from '../data/data'
 import Component from './component'
@@ -9,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid'
 import TextComponent from '../components/text'
 import TransformComponent from '../components/transform'
 import StyleComponent from '../components/style'
-import { SYNTAX_ATTRIBUTE } from '../utils/syntax'
+import { SYNTAX_ATTRIBUTE } from '../syntax/syntax'
 import VisibilityComponent from './visibilty'
 
 /**
@@ -48,7 +49,7 @@ export default class DuplicateComponent extends Component {
    * @returns - Array of duplicate components for each SVGElement in DVG
    */
   static getComponent(svg: Element): Array<Component> {
-    return parse.elementsWithOptions(svg, DuplicateComponent.keys).map((e) => new DuplicateComponent(e))
+    return markup.elementsWithOptions(svg, DuplicateComponent.keys).map((e) => new DuplicateComponent(e))
   }
 
   /**
@@ -77,7 +78,7 @@ export default class DuplicateComponent extends Component {
       svgElem.innerHTML = ''
     }
 
-    const gkey = parse.firstObjectKey(this.opts, Guide.keys)
+    const gkey = markup.firstObjectKey(this.opts, Guide.keys)
     if (gkey && !this.guide) {
       this.guide = new Guide(dvg.refs.get(this.opts[gkey].toString()) as SVGGraphicsElement)
     }
@@ -90,7 +91,7 @@ export default class DuplicateComponent extends Component {
     // }
 
     let justify = 'start'
-    const justifyKey = parse.firstObjectKey(this.opts, parse.KEYS.transform.opts.justify)
+    const justifyKey = markup.firstObjectKey(this.opts, markup.KEYS.transform.opts.justify)
     if (justifyKey) {
       justify = this.opts[justifyKey].toString()
     }
@@ -102,10 +103,10 @@ export default class DuplicateComponent extends Component {
     // dvg.removeComponents(this.uuid)
 
     // Create duplicates by iterating through unique values
-    const key = parse.firstObjectKey(this.opts, DuplicateComponent.keys)
+    const key = markup.firstObjectKey(this.opts, DuplicateComponent.keys)
     if (key) {
       const col_str = this.opts[key].toString()
-      const col = parse.columnFromData(col_str, data)
+      const col = markup.columnFromData(col_str, data)
       if (col) {
         const vals = data.unique(col.name).map((v) => `${v}`)
         const existingVals = Array.from(this.duplicates.keys()).map((v) => `${v}`)
@@ -162,14 +163,13 @@ export default class DuplicateComponent extends Component {
             if (newVal) {
               svgElem.appendChild(group)
               svg.setPropertyTransitions(group, ['transform'])
+              // Run component addition and tag with uuid, should probably abstract this set eventually.
+              dvg.addComponents(VisibilityComponent.getComponent(group), ['visibility', `${val}${this.uuid}`])
+              dvg.addComponents(TextComponent.getComponent(group), ['text', `${val}${this.uuid}`])
+              dvg.addComponents(TransformComponent.getComponent(group), ['transform', `${val}${this.uuid}`])
+              dvg.addComponents(StyleComponent.getComponent(group), ['style', `${val}${this.uuid}`])
             }
           }
-
-          // Run component addition and tag with uuid, should probably abstract this set eventually.
-          dvg.addComponents(VisibilityComponent.getComponent(group), ['visibility', `${val}${this.uuid}`])
-          dvg.addComponents(TextComponent.getComponent(group), ['text', `${val}${this.uuid}`])
-          dvg.addComponents(TransformComponent.getComponent(group), ['transform', `${val}${this.uuid}`])
-          dvg.addComponents(StyleComponent.getComponent(group), ['style', `${val}${this.uuid}`])
 
           index += 1
         }
@@ -252,10 +252,12 @@ export default class DuplicateComponent extends Component {
     const slots: { x: number; y: number }[] = []
     if (guide) {
       const guideBox = guide.getBBox()
-      for (let i = 0; i < guide.element.children.length; i++) {
-        const child = guide.element.children[i] as SVGGraphicsElement
-        const bbox = child.getBBox()
-        slots.push({ x: bbox.x - guideBox.x, y: bbox.y - guideBox.y })
+      if (guideBox) {
+        for (let i = 0; i < guide.element.children.length; i++) {
+          const child = guide.element.children[i] as SVGGraphicsElement
+          const bbox = child.getBBox()
+          slots.push({ x: bbox.x - guideBox.x, y: bbox.y - guideBox.y })
+        }
       }
     }
     return slots

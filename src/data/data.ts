@@ -2,7 +2,9 @@ import { parseFormat, defaultFormatter, Formatter, SourceFormat, FORMAT_FAIL_OUT
 import { Column, ColumnType } from './column'
 import { Row, Value } from './row'
 import { Filter } from './filter'
-import * as parse from '../utils/syntax'
+import * as parse from '../syntax/parse'
+import * as markup from '../syntax/markup'
+import * as syntax from '../syntax/syntax'
 
 import * as Papa from 'papaparse'
 
@@ -101,7 +103,7 @@ export class DataView {
   filteredView(filter: Filter | string): DataView {
     let f = undefined
     if (typeof filter === 'string') {
-      f = parse.filter(filter)
+      f = markup.filter(filter)
     } else {
       f = filter
     }
@@ -114,7 +116,7 @@ export class DataView {
         }
       } else if (f.condition !== undefined) {
         const condition = f.condition
-        const col = parse.columnFromData(condition.column, this)
+        const col = markup.columnFromData(condition.column, this)
         if (col !== undefined) {
           const newIndex = []
           for (let i = 0; i < this.index.length; i += 1) {
@@ -469,18 +471,18 @@ export class Data {
 
   private extractColumnMetadata() {
     for (let col_name of this.cols) {
-      const match = col_name.match(parse.RE_SYNTAXCONTAINER)
+      const match = col_name.match(syntax.RE_SYNTAXCONTAINER)
       if (match) {
         const col = this.getColumn(col_name)
         if (col) {
-          const s = parse.getMarkupFromString(col_name)
-          const col_base_name = col_name.replace(parse.RE_SYNTAXCONTAINER, '').trim()
+          const s = markup.parseMarkup(col_name)
+          const col_base_name = col_name.replace(syntax.RE_SYNTAXCONTAINER, '').trim()
           this.renameColumn(col.name, col_base_name)
-          const r = parse.range(s.name)
+          const r = parse.parseRange(s.name)
           if (r[0] !== undefined && r[1] !== undefined) {
             this.setColumnStats(col_base_name, { min: r[0], max: r[1] })
           }
-          const key = parse.firstObjectKey(s.opts, ['format', 'f'])
+          const key = markup.firstObjectKey(s.opts, ['format', 'f'])
           if (key) {
             const format_str = s.opts[key].toString()
             this.setColumnFormat(col_base_name, parseFormat(format_str))

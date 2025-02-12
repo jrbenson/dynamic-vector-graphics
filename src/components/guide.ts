@@ -1,5 +1,5 @@
 import { getBBox } from '../utils/svg'
-import { KEYS } from '../utils/syntax'
+import { KEYS } from '../syntax/markup'
 
 export class Guide {
   static keys: string[] = KEYS.guide.both
@@ -48,7 +48,9 @@ export class Guide {
           return { x: cur_pos.x - beg_pos.x, y: cur_pos.y - beg_pos.y }
         default:
           const gbox = getBBox(this.element)
-          return { x: gbox.width * t, y: gbox.height * t }
+          if (gbox) {
+            return { x: gbox.width * t, y: gbox.height * t }
+          }
       }
     }
     return { x: 0, y: 0 }

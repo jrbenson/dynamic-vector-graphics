@@ -1,7 +1,7 @@
 import { requiredFonts } from './font'
 import { decodeUnicode } from './string'
 import WebFont from 'webfontloader'
-import { SYNTAX_ATTRIBUTE, RE_SYNTAXCONTAINER } from './syntax'
+import { SYNTAX_ATTRIBUTE, RE_SYNTAXCONTAINER } from '../syntax/syntax'
 
 var IRI_TAG_PROPERTIES_MAP = {
   clipPath: ['clip-path'],
@@ -30,15 +30,17 @@ let iriMap = new Map<string, string[]>([
 let suffix = 'id_no:'
 
 export function getBBox(element: SVGGraphicsElement) {
-  const mask = getMask(element)
-  if (mask != undefined) {
-    const copy = element.cloneNode(true)
-    mask.before(copy)
-    const bbox = (copy as SVGGraphicsElement).getBBox()
-    mask?.parentNode?.removeChild(copy)
-    return bbox
+  if (element) {
+    const mask = getMask(element)
+    if (mask != undefined) {
+      const copy = element.cloneNode(true)
+      mask.before(copy)
+      const bbox = (copy as SVGGraphicsElement).getBBox()
+      mask?.parentNode?.removeChild(copy)
+      return bbox
+    }
+    return element.getBBox()
   }
-  return element.getBBox()
 }
 
 export function getMask(element: Element | null) {
@@ -53,7 +55,9 @@ export function getMask(element: Element | null) {
 
 export function getAbsoluteOrigin(element: SVGGraphicsElement, relativeOrigin: { x: number; y: number }) {
   const bbox = getBBox(element)
-  return { x: bbox.x + bbox.width * relativeOrigin.x, y: bbox.y + bbox.height * relativeOrigin.y }
+  if (bbox) {
+    return { x: bbox.x + bbox.width * relativeOrigin.x, y: bbox.y + bbox.height * relativeOrigin.y }
+  }
 }
 
 /**
@@ -283,4 +287,17 @@ export function setPropertyTransitions(elem: SVGGraphicsElement, properties: str
   elem.style.transitionProperty = transProps.join(',')
   elem.style.transitionDuration = '1s'
   elem.style.transitionTimingFunction = 'cubic-bezier(0.25, .1, 0.25, 1)'
+}
+/**
+ * Returns a list of all parent SVG elements of a given element, up to but not including the root SVG element.
+ */
+
+export function getAllParentSVGNodes(element: Element) {
+  const parents: Element[] = []
+  let elem: Element | null = element
+  while (elem && elem.tagName !== 'SVG') {
+    parents.push(elem)
+    elem = elem.parentElement
+  }
+  return parents
 }

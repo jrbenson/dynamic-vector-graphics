@@ -40,3 +40,9 @@ export function decodeUnicode(text: string) {
     return String.fromCharCode(parseInt('0x' + g1))
   })
 }
+
+export function toTitleCase(text: string) {
+  return text.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+  })
+}

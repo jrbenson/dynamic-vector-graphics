@@ -1,4 +1,6 @@
-import * as parse from '../utils/syntax'
+import * as syntax from '../syntax/syntax'
+import * as markup from '../syntax/markup'
+import * as parse from '../syntax/parse'
 import * as svg from '../utils/svg'
 import { DataView } from '../data/data'
 import Easer from '../utils/easer'
@@ -38,7 +40,7 @@ export default class TransformComponent extends Component {
       keys: ['rotate', 'r'],
       get: function (t, opts, guide?) {
         let limit = 1.0
-        const key = parse.firstObjectKey(opts, ['rotateRatio', 'rr'])
+        const key = markup.firstObjectKey(opts, ['rotateRatio', 'rr'])
         if (key) {
           limit = Number(opts[key])
         }
@@ -79,15 +81,17 @@ export default class TransformComponent extends Component {
 
   static getComponent(svg: Element): Array<Component> {
     const options = ([] as string[]).concat(...TransformComponent.transforms.map((t) => t.keys))
-    return parse.elementsWithOptions(svg, options).map((e) => new TransformComponent(e))
+    return markup.elementsWithOptions(svg, options).map((e) => new TransformComponent(e))
   }
 
-  bbox: { x: number; y: number; width: number; height: number }
-  origin: { x: number; y: number }
+  bbox: { x: number; y: number; width: number; height: number } | undefined
+  origin: { x: number; y: number } | undefined
   base_transforms: Array<string> = []
   guide: Guide | undefined = undefined
-  nonlinear_pos_group: SVGGElement
-  nonlinear_pos_easer: Easer = new Easer(this.setNonlinearPosition.bind(this))
+  mainGroup: SVGGElement
+  nonlinearPosGroup: SVGGElement
+  nonlinearPosEaser: Easer = new Easer(this.setNonlinearPosition.bind(this))
+  firstApply = true
 
   constructor(element: Element) {
     super(element)
@@ -97,24 +101,21 @@ export default class TransformComponent extends Component {
     this.bbox = svg.getBBox(svgElem)
     this.origin = this.getOrigin()
     this.base_transforms = svg.getBaseTransforms(svgElem)
-    svg.wrapWithGroup(svgElem)
-    this.nonlinear_pos_group = svg.wrapWithGroup(svgElem)
+    this.mainGroup = svg.wrapWithGroup(svgElem)
+    this.nonlinearPosGroup = svg.wrapWithGroup(svgElem)
 
     svgElem.setAttribute('vector-effect', 'non-scaling-stroke')
-    let transProps: Array<string> = []
-    transProps.concat(...svgElem.style.transitionProperty.split(','))
-    transProps.push('transform')
-    svgElem.style.transitionProperty = transProps.join(',')
-    svgElem.style.transitionDuration = '1s'
-    svgElem.style.transitionTimingFunction = 'cubic-bezier(0.25, .1, 0.25, 1)'
-    svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
+    svg.setPropertyTransitions(svgElem, ['transform'])
+    if (this.origin) {
+      svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
+    }
   }
 
   getOrigin() {
     let relOrigin = { x: 0, y: 0 }
-    const key = parse.firstObjectKey(this.opts, ['origin', 'o'])
+    const key = markup.firstObjectKey(this.opts, ['origin', 'o'])
     if (key) {
-      const origin_range = parse.range(this.opts[key]?.toString())
+      const origin_range = parse.parseRange(this.opts[key]?.toString())
       if (origin_range[1] !== undefined) {
         relOrigin.x = origin_range[0]
         relOrigin.y = origin_range[1]
@@ -127,15 +128,18 @@ export default class TransformComponent extends Component {
 
   apply(data: DataView, dynSVG: DVG) {
     const svgElem = this.element as SVGGraphicsElement
+    if (this.firstApply) {
+      svgElem.remove()
+    }
 
-    const gkey = parse.firstObjectKey(this.opts, Guide.keys)
+    const gkey = markup.firstObjectKey(this.opts, Guide.keys)
     if (gkey && !this.guide) {
       this.guide = new Guide(dynSVG.refs.get(this.opts[gkey].toString()) as SVGGraphicsElement)
     }
 
     let transform_strs: Array<string> = []
 
-    if (this.base_transforms.length > 0) {
+    if (this.base_transforms.length > 0 && this.origin) {
       transform_strs.push('translate(' + -this.origin.x + 'px,' + -this.origin.y + 'px)')
       transform_strs.push(...this.base_transforms)
       transform_strs.push('translate(' + this.origin.x + 'px,' + this.origin.y + 'px)')
@@ -156,27 +160,35 @@ export default class TransformComponent extends Component {
           transform_strs.push(transform.get(value, this.opts))
         }
         if (pos_keys.includes(key) && this.guide && !this.guide.linear) {
-          this.nonlinear_pos_easer.ease(this.nonlinear_pos_easer.curT, value)
+          this.nonlinearPosEaser.ease(this.nonlinearPosEaser.curT, value)
         }
       }
     }
     svgElem.style.transform = transform_strs.join(' ')
+
+    if (this.firstApply) {
+      this.firstApply = false
+      this.nonlinearPosGroup.appendChild(svgElem)
+    }
   }
 
   setNonlinearPosition(t: number) {
     if (this.guide) {
       const coord = this.guide.get(t)
-      this.nonlinear_pos_group.style.transform = 'translate(' + coord.x + 'px,' + coord.y + 'px)'
+      this.nonlinearPosGroup.style.transform = 'translate(' + coord.x + 'px,' + coord.y + 'px)'
     }
   }
 
   draw(state: DVG) {
     // console.log( this.origin, this.bbox, this.guide )
+
     const svgElem = this.element as SVGGraphicsElement
     svgElem.style.transform = ''
     this.bbox = svg.getBBox(svgElem)
     this.origin = this.getOrigin()
-    svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
+    if (this.origin) {
+      svgElem.style.transformOrigin = this.origin.x + 'px ' + this.origin.y + 'px'
+    }
     // const gkey = parse.firstObjectKey(this.opts, Guide.keys)
     // if (gkey) {
     //   console.log( 'YES')

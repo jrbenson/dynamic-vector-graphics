@@ -4,6 +4,7 @@ export enum ColumnType {
   String,
   Number,
   Date,
+  Any,
 }
 
 interface Stats {

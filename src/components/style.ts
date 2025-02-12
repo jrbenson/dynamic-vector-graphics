@@ -1,4 +1,5 @@
-import * as parse from '../utils/syntax'
+import * as syntax from '../syntax/syntax'
+import * as markup from '../syntax/markup'
 import * as svg from '../utils/svg'
 import { DataView } from '../data/data'
 import Easer from '../utils/easer'
@@ -57,7 +58,7 @@ export default class StyleComponent extends Component {
   static styles: Array<Style> = [
     {
       // Fill color
-      keys: parse.KEYS.style.fill,
+      keys: markup.KEYS.style.fill,
       set: function (e, t, dynStyle) {
         if (dynStyle.fillColorGradient) {
           e.style.fill = dynStyle.fillColorGradient.get(t)
@@ -68,42 +69,42 @@ export default class StyleComponent extends Component {
     },
     {
       // Stroke color
-      keys: parse.KEYS.style.stroke,
+      keys: markup.KEYS.style.stroke,
       set: function (e, t, dynStyle) {
         e.style.stroke = dynStyle.strokeColorGradient?.get(t) || '#FF0000'
       },
     },
     {
       // Stroke width
-      keys: parse.KEYS.style.strokeWidth,
+      keys: markup.KEYS.style.strokeWidth,
       set: function (e, t, dynStyle) {
         e.style.strokeWidth = (dynStyle.baseStrokeWidth * t).toString()
       },
     },
     {
       // Opacity
-      keys: parse.KEYS.style.opacity,
+      keys: markup.KEYS.style.opacity,
       set: function (e, t, dynStyle) {
         e.style.opacity = (dynStyle.baseOpacity * t).toString()
       },
     },
     {
       // Fill opacity
-      keys: parse.KEYS.style.fillOpacity,
+      keys: markup.KEYS.style.fillOpacity,
       set: function (e, t, dynStyle) {
         e.style.fillOpacity = (dynStyle.baseFillOpacity * t).toString()
       },
     },
     {
       // Stroke opacity
-      keys: parse.KEYS.style.strokeOpacity,
+      keys: markup.KEYS.style.strokeOpacity,
       set: function (e, t, dynStyle) {
         e.style.strokeOpacity = (dynStyle.baseStrokeOpacity * t).toString()
       },
     },
     {
       // Dash array
-      keys: parse.KEYS.style.strokeDash,
+      keys: markup.KEYS.style.strokeDash,
       set: function (e, t, dynStyle) {
         if (dynStyle.baseDashArray.length <= 1) {
           let baseWidth = dynStyle.baseStrokeWidth * 2
@@ -125,14 +126,14 @@ export default class StyleComponent extends Component {
     },
     {
       // Font weight
-      keys: parse.KEYS.style.fontWeight,
+      keys: markup.KEYS.style.fontWeight,
       set: function (e, t, dynStyle) {
         e.style.fontWeight = (dynStyle.baseFontWeight * t).toString()
       },
     },
     {
       // Font size
-      keys: parse.KEYS.style.fontSize,
+      keys: markup.KEYS.style.fontSize,
       set: function (e, t, dynStyle) {
         e.style.fontSize = (dynStyle.baseFontSize * t).toString()
       },
@@ -141,7 +142,7 @@ export default class StyleComponent extends Component {
 
   static getComponent(svg: Element): Array<Component> {
     const allKeys = ([] as string[]).concat(...StyleComponent.styles.map((s) => s.keys))
-    return parse.elementsWithOptions(svg, allKeys).map((e) => new StyleComponent(e))
+    return markup.elementsWithOptions(svg, allKeys).map((e) => new StyleComponent(e))
   }
 
   baseOpacity: number = 1.0

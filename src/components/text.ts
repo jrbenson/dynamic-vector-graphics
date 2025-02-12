@@ -1,4 +1,5 @@
-import * as parse from '../utils/syntax'
+import * as syntax from '../syntax/syntax'
+import * as markup from '../syntax/markup'
 import { DataView } from '../data/data'
 import Component from './component'
 import { DVG } from '../dvg'
@@ -20,16 +21,20 @@ export default class TextComponent extends Component {
 
     const svgElem = this.element as SVGGraphicsElement
     const bbox = getBBox(svgElem)
-    this.initialX = bbox.x
-    this.initialY = bbox.y
-
+    if (bbox) {
+      this.initialX = bbox.x
+      this.initialY = bbox.y
+    } else {
+      this.initialX = 0
+      this.initialY = 0
+    }
     this.setAnchor()
     this.setOffset()
   }
 
   private setAnchor() {
     const svgElem = this.element as SVGGraphicsElement
-    this.anchor = parse.textAlignmentForElement(svgElem)
+    this.anchor = markup.textAlignmentForElement(svgElem)
     if (this.anchor !== undefined) {
       svgElem.setAttribute('text-anchor', this.anchor)
     }
@@ -38,7 +43,7 @@ export default class TextComponent extends Component {
   private setOffset() {
     const svgElem = this.element as SVGGraphicsElement
     const bbox = getBBox(svgElem)
-    if (this.anchor !== undefined) {
+    if (this.anchor !== undefined && bbox) {
       switch (this.anchor) {
         case 'start':
           break
@@ -61,7 +66,7 @@ export default class TextComponent extends Component {
         elems.push(text)
       }
     })
-    elems = elems.filter((e) => e.textContent && e.textContent.match(parse.RE_SYNTAXCONTAINER))
+    elems = elems.filter((e) => e.textContent && e.textContent.match(syntax.RE_SYNTAXCONTAINER))
     return elems.map((e) => new TextComponent(e))
   }
 
@@ -70,13 +75,13 @@ export default class TextComponent extends Component {
     this.setOffset()
     if (this.template) {
       this.element.textContent = this.template.replace(
-        parse.RE_SYNTAXCONTAINER,
+        syntax.RE_SYNTAXCONTAINER,
         function (match: string) {
-          const syntax = parse.getMarkupFromString(match)
-          const col = parse.columnFromData(syntax.name, data)
+          const syntax = markup.parseMarkup(match)
+          const col = markup.columnFromData(syntax.name, data)
           if (col) {
-            const nkey = parse.firstObjectKey(syntax.opts, ['name', 'n'])
-            const rkey = parse.firstObjectKey(syntax.opts, ['range', 'r'])
+            const nkey = markup.firstObjectKey(syntax.opts, ['name', 'n'])
+            const rkey = markup.firstObjectKey(syntax.opts, ['range', 'r'])
             if (nkey && syntax.opts[nkey]) {
               return col.name
             } else if (rkey) {
@@ -89,7 +94,7 @@ export default class TextComponent extends Component {
                 if (min !== undefined && max !== undefined) {
                   const value = min + ratio * (max - min)
                   let str_value
-                  const ckey = parse.firstObjectKey(syntax.opts, ['compact', 'c'])
+                  const ckey = markup.firstObjectKey(syntax.opts, ['compact', 'c'])
                   if (ckey && syntax.opts[ckey]) {
                     str_value = format.compactFormat(value)
                   } else {
@@ -102,7 +107,7 @@ export default class TextComponent extends Component {
               }
               return FORMAT_FAIL_OUTPUT
             } else {
-              const ckey = parse.firstObjectKey(syntax.opts, ['compact', 'c'])
+              const ckey = markup.firstObjectKey(syntax.opts, ['compact', 'c'])
               if (ckey && syntax.opts[ckey]) {
                 return data.getFormatted(0, col.name, true)
               } else {
